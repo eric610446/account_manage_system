@@ -1,6 +1,6 @@
-﻿<?	/*秉霖版本的配色*//*	$header_bg_color = "#FF9999" ; 	$aside_bg_color = "#5b88f6" ; 	$main_bg_color = "#FFFFCC" ; 	*/
+<?	/*秉霖版本的配色*//*	$header_bg_color = "#FF9999" ; 	$aside_bg_color = "#5b88f6" ; 	$main_bg_color = "#FFFFCC" ; 	*/
 	
-	/*標題列配置*/ /*git test*/
+	/*標題列配置*/
 	$header_height 			= "10%";					/*標題列高度*/
 	$header_bg_color 		= "#472D1E" ;				/*標題列底色*/
 	$header_font_color 		= "#efefef";				/*標題文字顏色*/
