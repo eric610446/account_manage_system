@@ -131,6 +131,7 @@ content ul li select {
 	outline: none ;
 	font-size: <? echo $default_input_font_size ?> ;
 	color: <? echo $default_font_color ?> ;
+	background-color: <? echo $main_bg_color; ?> ;
 }
 
 content ul li input {
@@ -144,17 +145,19 @@ content ul li input {
 	outline: none ;
 	font-size: <? echo $default_input_font_size ?> ;
 	color: <? echo $default_font_color ?> ;
+	background-color: <? echo $main_bg_color; ?> ;
 }
 
 
 content ul li label {
 	display: block ;
-	background-color: white ;
+	background-color: <? echo $main_bg_color; ?> ;
 	color: <? echo $default_div_color ?> ;
 	float: left ;
 	padding: 5px 10px ;
 	margin: -20px 10px 0px 10px ;	
 	font-size: <? echo $default_input_font_size+4 ?> ;
+	
 }
 
 content ul li span {
