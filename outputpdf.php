@@ -26,8 +26,8 @@
 		
 		/*
 		// new font ，第一次加入 ttf 字型到 tcpdf 
-		//刪除本區的前後註解跑一次輸出網頁，再回到這個網頁加回註解
-		//(可能會有錯誤訊息，setfont之類的，忽視看看)
+		// 刪除本區的前後註解跑一次輸出網頁，再回到這個網頁加回註解
+		// (可能會有錯誤訊息，setfont之類的，理論上應該是可以忽視不理)
 		require_once('tcpdf/config/tcpdf_config.php') ;
 		require_once('tcpdf/tcpdf.php') ;
 		$fontname=TCPDF_FONTS::addTTFfont('tcpdf/fonts/big5/kaiu.ttf', 'TrueTypeUnicode'); //DroidSansFallback kaiu.ttf
