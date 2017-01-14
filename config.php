@@ -1,5 +1,5 @@
 <?	/*秉霖初版配色	$header_bg_color = "#FF9999" ; 	$asideL_bg_color = "#5b88f6" ; 	$main_bg_color = "#FFFFCC" ; 	*/
-	/*家睿初版配色	$header_bg_color = "#472D1E" ;	//秉霖二版配色 $asideL_bg_color	= "#DDD" ;	$asideM_bg_color = "#EEE" ;	$main_bg_color	= "#FFF" ;	$asideR_bg_color = "#EEE" ;	*/
+	/*家睿初版配色	$header_bg_color = "#472D1E" ; 	$even_rows_bg_color		= "#FFD2BF";	$even_rows_font_color	= "#280E00";	// + 秉霖二版配色 $main_bg_color	= "#FFF" ;		*/
 	
 	/*標題列配置*/
 	$header_height 			= "10%";					/*標題列高度*/
@@ -23,9 +23,9 @@
 	
 	/*主頁面配置*/
 	$root_font_size			= 3 ;						/*主頁面的字體大小以此為基準，數值為 3em = 48px */
-	$odd_rows_bg_color		= "#FFC0A5";				/*主查詢頁面 奇數行底色*/
+	$odd_rows_bg_color		= "#DACD93";				/*主查詢頁面 奇數行底色*/
 	$odd_rows_font_color	= "#280E00";				/*主查詢頁面 奇數行文字顏色*/
-	$even_rows_bg_color		= "#FFD2BF";				/*主查詢頁面 偶數行底色*/
+	$even_rows_bg_color		= "#EBDFB7";				/*主查詢頁面 偶數行底色*/
 	$even_rows_font_color	= "#280E00";				/*主查詢頁面 偶數行文字顏色*/	
 	
 	/*設定頁面配置*/	
