@@ -1,10 +1,11 @@
-<?	/*秉霖版本的配色*//*	$header_bg_color = "#FF9999" ; 	$aside_bg_color = "#5b88f6" ; 	$main_bg_color = "#FFFFCC" ; 	*/
+<?	/*秉霖初版配色	$header_bg_color = "#FF9999" ; 	$asideL_bg_color = "#5b88f6" ; 	$main_bg_color = "#FFFFCC" ; 	*/
+	/*家睿初版配色	$header_bg_color = "#472D1E" ;	//秉霖二版配色 $asideL_bg_color	= "#DDD" ;	$asideM_bg_color = "#EEE" ;	$main_bg_color	= "#FFF" ;	$asideR_bg_color = "#EEE" ;	*/
 	
 	/*標題列配置*/
 	$header_height 			= "10%";					/*標題列高度*/
-	$header_bg_color 		= "#472D1E" ;				/*標題列底色*/
-	$header_font_color 		= "#efefef";				/*標題文字顏色*/
-	$header_shadow_color 	= "#efefef";				/*標題文字陰影顏色*/
+	$header_bg_color 		= "#c9cbb1" ;				/*標題列底色*/ //078285 #c9cbb1 : #333147
+	$header_font_color 		= "#333147";				/*標題文字顏色*/
+	$header_shadow_color 	= "#333147";				/*標題文字陰影顏色*/
 	$header_shadow_style 	= "0.03em 0.03em 0.2em";	/*標題文字陰影樣式*/
 	$header_font_size 		= "100%";					/*以主頁面的字體大小為基準，100% = 3em = 48px */
 														/*標題列內容*/
@@ -17,7 +18,7 @@
 	$default_background_color="#FDFDFD" ;				/*預設背景顏色*/
 	$asideL_bg_color 		= "#DDD" ;					/*最左側欄底色 PS.#123=#112233*/
 	$asideM_bg_color 		= "#EEE" ;					/*內側側欄底色*/
-	$main_bg_color 			= "#FFF" ;					/*主區塊底色*/
+	$main_bg_color 			= "#FBFBFB" ;				/*主區塊底色*/
 	$asideR_bg_color 		= "#EEE" ;					/*最右側欄底色*/
 	
 	/*主頁面配置*/
@@ -61,7 +62,7 @@
 	
 	
 	/*底層配置*/
-	$footer_bg_color 		= "#472D1E";				/*底層底色*/
+	$footer_bg_color 		= "#c9cbb1";				/*底層底色*/
 	$footer_height 			= "3%";						/*底層高度*/
 	$footer_context 		=							/*底層內容*/
 							"最佳瀏覽解析度：1920*1080 
