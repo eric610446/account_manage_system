@@ -439,7 +439,7 @@ function quotation_detail( $qu_id ) {
 				echo "<td ><div class=quo_r_marg1>".$_SESSION["Pre_Page_cust_info"][1]."</div></td>" ;
 				echo "<td ><div class=quo_r_marg1>".$row_s['date']."</div></td>";
 				echo "<td ><div class=quo_r_marg1>".$row_s['currency']."$ ".number_format($row_s['price'])."</div></td>";
-				if($row_s['date']==1)
+				if($row_s['sales_tax']==1)
 					echo "<td ><div class=quo_r_marg1>是</div></td>";
 				else
 					echo "<td ><div class=quo_r_marg1>否</div></td>";
@@ -802,12 +802,14 @@ function create_quo_pdf( $action_choose , $qu_id ,$view_or_save) {
 	$temp = mysql_query( $sql_cmd, $conn ) ;
 	$item_amount=0;
 	$qud_item=array();
+	$sum_price=0;
 	for( $item_amount=1 ; $row = mysql_fetch_array($temp) ; $item_amount++){
 		$qud_item[$item_amount][0]=$item_array[  $row['item_id']  ][1];						
         $qud_item[$item_amount][1]=$item_array[  $row['item_id']  ][2];
 		$qud_item[$item_amount][2]=$row['amount'];
 		$qud_item[$item_amount][3]=$row['price'];
 		$qud_item[$item_amount][4]=$row['amount']*$row['price'];
+		$sum_price+=$qud_item[$item_amount][4];
     }
 	
 	/*$i = 0 ;
@@ -998,15 +1000,19 @@ function create_quo_pdf( $action_choose , $qu_id ,$view_or_save) {
 		$total_amount++;
 	}
 	if( $total_amount > $break_page_amount && ($total_amount % $break_page_amount) == 1 ){
-		$output= '<table border="0" RULES="ALL">《項目列表結束》</table>';
+		$output= '<table border="0" RULES="ALL"><tr><td>《項目列表結束》</td></tr></table>';
 		$pdf->writeHTML($output, true, false, false, false, '');
 		$pdf->AddPage();
 	}
 	else{
-		$output= '<table border="0" RULES="ALL">《項目列表結束》</table>';
+		$output= '<table border="0" RULES="ALL"><tr><td>《項目列表結束》</td></tr></table>';
 		$pdf->writeHTML($output, true, false, false, false, '');
 	}
-	
+		if($qus_result['sales_tax']==1)
+			$output= '<table border="2" rules="all" width="100%" cellpadding="5"><tr align="right" ><td width="35%">合　計 : '.$qus_result['currency'].' $'.number_format($sum_price,2).'</td><td width="30%">營業稅 : '.$qus_result['currency'].' $'.number_format($sum_price*0.05,2).'</td><td width="35%">總　計 : '.$qus_result['currency'].' $'.number_format($sum_price*1.05,2).'</td></tr><tr><td colspan="2">備註：<br><br></td><td>訂購確認簽章：<br><br>(確認後回傳傳真：'.$company_result['company_fax'].')</td></tr></table>';
+		else
+			$output= '<table border="2" rules="all" width="100%" cellpadding="5"><tr align="right" ><td width="35%">合　計 : '.$qus_result['currency'].' $'.number_format($sum_price,2).'</td><td width="30%">營業稅 : 內　含</td><td width="35%">總　計 : '.$qus_result['currency'].' $'.number_format($sum_price,2).'</td></tr><tr><td colspan="2">備註：<br><br></td><td>訂購確認簽章：<br><br>(確認後回傳傳真：'.$company_result['company_fax'].')</td></tr></table>';
+		$pdf->writeHTML($output, true, false, false, false, '');
 	
 	
 	// -----------------------------------------------------------------------------

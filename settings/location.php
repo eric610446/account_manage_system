@@ -331,7 +331,7 @@
 					<li id='list3'>
 						<div id='modify'>".$button1."</div>
 						<div id='create'>".$button2."</div>
-						<div id='invalid'>".$button3."</div>
+						<!--<div id='invalid'>".$button3."</div>-->
 						<div id='others'></div>
 					</li>
 					" ;
