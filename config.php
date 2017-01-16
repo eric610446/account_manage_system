@@ -9,7 +9,7 @@
 	$header_shadow_style 	= "0.03em 0.03em 0.2em";	/*標題文字陰影樣式*/
 	$header_font_size 		= "100%";					/*以主頁面的字體大小為基準，100% = 3em = 48px */
 														/*標題列內容*/
-	$header_context 		= "SIX 六 MONSTER 妖 ACCOUNT MANAGEMENT SYSTEM";
+	$header_context 		= "六妖資訊 ACCOUNT MANAGEMENT SYSTEM";
 	
 	/*共通配置*/
 	$default_main_height 	= "87%" ;					/*主要區塊高度*/
@@ -66,7 +66,7 @@
 	$footer_height 			= "3%";						/*底層高度*/
 	$footer_context 		=							/*底層內容*/
 							"最佳瀏覽解析度：1920*1080 
-							《 Developed by Six Monster Information Corp.,Ltd. 》
+							《 Developed by Six Monster Information Corp. 》
 							業務聯絡人：陳敬宗   
 							<a href='mailto:kentchen@mail2000.com.tw'>kentchen@mail2000.com.tw</a>";
 ?>
