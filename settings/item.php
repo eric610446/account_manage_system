@@ -2,6 +2,14 @@
 
 <head>
 	<title>地點資料建立/修改/查詢</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script>
+	$(document).keypress(function(e) {
+		if(e.which == 13) {
+			return false ;
+		}
+	});
+	</script>
 </head>
 
 <body class='settings-item'>

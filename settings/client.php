@@ -2,11 +2,18 @@
 
 <head>
 	<title>產品資料建立/修改/查詢</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script>
+	$(document).keypress(function(e) {
+		if(e.which == 13) {
+			return false ;
+		}
+	});
+	</script>
 </head>
 
 
 <body class='settings'>
-<p></p>
 <?
 //----------------------------------------------------------------------------------------------
 //-									   INITIALIZE						     				   -
@@ -48,7 +55,7 @@
 		}
 		if(isset($_POST['find_mode']) or ($_GET["mode"]=="find") ) {
 			$mode = "find" ;
-			$button1='<button type="submit" name="find_button" class="com_info">找客戶</button>';
+			$button1='<button type="submit" name="find_button" class="com_info" id="find_button">找客戶</button>';
 			var_init();
 			$test=$test.' find mode<br/>';
 			$only_get_info=1;
@@ -69,7 +76,7 @@
 				$disabled="disabled" ;
 				echo "			
 				<script>
-					alert('錯誤！　請填寫客戶名稱後再[<span>找客戶</span>]。') ;
+					alert('錯誤！　請填寫客戶名稱後再[找客戶]。') ;
 				</script>
 				" ;
 			}
@@ -121,7 +128,7 @@
 			// 建立選取地點的下拉式選單
 			$location = location_select_option($conn, $client_location) ;
 
-			$button1='<button type="submit" name="find_button" class="com_info">找客戶</button>';
+			$button1='<button type="submit" name="find_button" class="com_info" id="find_button">找客戶</button>';
 		}			
 		
 
@@ -188,7 +195,7 @@
 							alert('錯誤！　修改客戶".$client_name."　的資料發生錯誤！ 錯誤訊息：".$conn->error."') ;
 						</script>
 						" ;
-						$button2 = '<button type="submit" name="modify_button" class="com_info">修改</button>';
+						$button2 = '<button type="submit" name="modify_button" class="com_info" id="btn_button2">修改</button>';
 						$button3 = "<button type='submit' name='invalid_button' class='com_info' id='btn_button3'>作廢</button>" ;
 					}
 				}
@@ -199,14 +206,14 @@
 					alert('錯誤！　修改客戶".$client_name."　的資料發生錯誤！ 錯誤訊息：名稱不可是空值') ;
 				</script>
 				" ;
-				$button2 = '<button type="submit" name="modify_button" class="com_info">修改</button>';
+				$button2 = '<button type="submit" name="modify_button" class="com_info" id="btn_button2">修改</button>';
 				$button3 = "<button type='submit' name='invalid_button' class='com_info' id='btn_button3'>作廢</button>" ;
 			}
 
 			// 建立選取地點的下拉式選單
 			$location = location_select_option($conn, $client_location) ;
 
-			$button1='<button type="submit" name="find_button" class="com_info">找商品</button>';
+			$button1='<button type="submit" name="find_button" class="com_info" id="find_button">找商品</button>';
 		}
 
 
@@ -295,7 +302,7 @@
 				</script>
 				" ;				
 			}
-			$button2='<button type="submit" name="create_button" class="com_info">建立</button>';
+			$button2='<button type="submit" name="create_button" class="com_info" id="btn_button2">建立</button>';
 			
 			// 建立選取地點的下拉式選單
 			$location = location_select_option($conn, $client_location) ;
@@ -335,14 +342,14 @@
 					alert('錯誤！　作廢客戶 ".$client_name."　的資料發生錯誤！ 錯誤訊息：".$conn->error."') ;
 				</script>
 				" ;
-				$button2 = '<button type="submit" name="modify_button" class="com_info">修改</button>';
+				$button2 = '<button type="submit" name="modify_button" class="com_info" id="btn_button2">修改</button>';
 				$button3="<button type='submit' name='invalid_button' class='com_info' id='btn_button3'>作廢</button>" ;
 			}
 
 			// 建立選取地點的下拉式選單
 			$location = location_select_option($conn, $client_location) ;
 
-			$button1='<button type="submit" name="find_button" class="com_info">找商品</button>';
+			$button1='<button type="submit" name="find_button" class="com_info" id="find_button">找商品</button>';
 
 		}
 
