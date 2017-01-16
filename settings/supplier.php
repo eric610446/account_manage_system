@@ -141,49 +141,61 @@
 			$h1_mod_color="color:#5b88f6;";
 
 
+			// 確認至少 name 不可以是空的
+			if( $supplier_name != "" ) {
+				// 建立流水號
+				$supplier_s_id = sid_create($conn, "supplier") ;
 
-			// 建立流水號
-			$supplier_s_id = sid_create($conn, "supplier") ;
-
-			$sql_cmd = "update client_info.supplier_db set 
-				s_id='".$supplier_s_id."',
-				name='".$supplier_name."',
-				nickname='".$supplier_nickname."',
-				ubn='".$supplier_ubn."',
-				company_phone='".$supplier_company_phone."',
-				company_fax='".$supplier_company_fax."',
-				email='".$supplier_email."',
-				location='".$supplier_location."',
-				address='".$supplier_address."',
-				contact='".$supplier_contact."',
-				contact_phone='".$supplier_contact_phone."' 
-			where supplier_id='".$supplier_supplier_id."'
-			";
-			$result = $conn->query($sql_cmd) ;
-			if( $result > 0 ) {
-				$final_status = $final_status.' <br/>成功修改供應商資料 ...<br/>';
-				echo "			
-				<script>
-					alert('成功修改供應商　".$supplier_name."　的資料。') ;
-				</script>
-				" ;
-				$button2="" ;
-				$button3="" ;
-				var_init() ;
-				$readonly = "readonly" ;				
-				$default_div_color = $default_sleep_input ;
-				$disabled = "disabled" ;
-			} 
-			else {			
-				$final_status = $final_status.' <br/>修改供應商資料失敗，錯誤訊息:'.$conn->error.'<br/>';
-				echo "			
-				<script>
-					alert('錯誤！　供應商　".$supplier_name."　的資料修改錯誤！錯誤訊息：".$conn->error."') ;
-				</script>
-				" ;
-				$button2='<button type="submit" name="modify_button" >修改</button>';
-				$button3="<button type='submit' name='invalid_button' class='com_info' id='btn_button3'>作廢</button>" ;
+				$sql_cmd = "update client_info.supplier_db set 
+					s_id='".$supplier_s_id."',
+					name='".$supplier_name."',
+					nickname='".$supplier_nickname."',
+					ubn='".$supplier_ubn."',
+					company_phone='".$supplier_company_phone."',
+					company_fax='".$supplier_company_fax."',
+					email='".$supplier_email."',
+					location='".$supplier_location."',
+					address='".$supplier_address."',
+					contact='".$supplier_contact."',
+					contact_phone='".$supplier_contact_phone."' 
+				where supplier_id='".$supplier_supplier_id."'
+				";
+				$result = $conn->query($sql_cmd) ;
+				if( $result > 0 ) {
+					$final_status = $final_status.' <br/>成功修改供應商資料 ...<br/>';
+					echo "			
+					<script>
+						alert('成功修改供應商　".$supplier_name."　的資料。') ;
+					</script>
+					" ;
+					$button2="" ;
+					$button3="" ;
+					var_init() ;
+					$readonly = "readonly" ;				
+					$default_div_color = $default_sleep_input ;
+					$disabled = "disabled" ;
+				} 
+				else {			
+					$final_status = $final_status.' <br/>修改供應商資料失敗，錯誤訊息:'.$conn->error.'<br/>';
+					echo "			
+					<script>
+						alert('錯誤！　供應商　".$supplier_name."　的資料修改錯誤！錯誤訊息：".$conn->error."') ;
+					</script>
+					" ;
+					$button2='<button type="submit" name="modify_button" >修改</button>';
+					$button3="<button type='submit' name='invalid_button' class='com_info' id='btn_button3'>作廢</button>" ;
+				}
 			}
+			else {
+				echo "			
+				<script>
+					alert('錯誤！　修改供應商 ".$supplier_name."　的資料發生錯誤！ 錯誤訊息：名稱不可是空值') ;
+				</script>
+				" ;
+				$button2 = '<button type="submit" name="modify_button" class="com_info">修改</button>';
+				$button3 = "<button type='submit' name='invalid_button' class='com_info' id='btn_button3'>作廢</button>" ;
+			}
+			
 
 			// 建立選取地點的下拉式選單
 			$location = location_select_option($conn, $supplier_location) ;

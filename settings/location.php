@@ -112,38 +112,51 @@
 			location_get_html_input();
 			$test=$test.' modify button<br/>';
 
-
-			$sql_cmd = "update client_info.location_db set 
-				country='".$location_country."',
-				country_sid='".$location_country_sid."',
-				city='".$location_city."',
-				city_sid='".$location_city_sid."'
-			where location_id='".$location_id."'
-			";
-			$result = $conn->query($sql_cmd) ;
-			if( $result > 0 ) {
-				$final_status = $final_status.' <br/>成功修改地點資料 ...<br/>';
-				echo "			
-				<script>
-					alert('成功修改地點　".$item_name."　的資料') ;
-				</script>
-				" ;
-				$button2 = "" ;
-				$button3 = "" ;
-				$readonly='readonly';
-				var_init() ;
-				$default_div_color = $default_sleep_input ;
-			} 
-			else {			
-				$final_status = $final_status.' <br/>修改地點資料失敗，錯誤訊息:'.$conn->error.'<br/>';
-				echo "			
-				<script>
-					alert('錯誤！　修改地點資料錯誤！錯誤訊息：".$conn->error."') ;
-				</script>
-				" ;
-				$button2 = '<button type="submit" name="modify_button" >修改</button>';
-				$button3 = "<button type='submit' name='invalid_button' class='com_info' id='btn_button3'>作廢</button>" ;
+			// 確認至少 sid 不可以是空的
+			if( $location_city_sid != "" and $location_country_sid != "" ) {
+				$sql_cmd = "update client_info.location_db set 
+					country='".$location_country."',
+					country_sid='".$location_country_sid."',
+					city='".$location_city."',
+					city_sid='".$location_city_sid."'
+				where location_id='".$location_id."'
+				";
+				$result = $conn->query($sql_cmd) ;
+				if( $result > 0 ) {
+					$final_status = $final_status.' <br/>成功修改地點資料 ...<br/>';
+					echo "			
+					<script>
+						alert('成功修改地點　".$item_name."　的資料') ;
+					</script>
+					" ;
+					$button2 = "" ;
+					$button3 = "" ;
+					$readonly='readonly';
+					var_init() ;
+					$default_div_color = $default_sleep_input ;
+				} 
+				else {			
+					$final_status = $final_status.' <br/>修改地點資料失敗，錯誤訊息:'.$conn->error.'<br/>';
+					echo "			
+					<script>
+						alert('錯誤！　修改地點資料錯誤！錯誤訊息：".$conn->error."') ;
+					</script>
+					" ;
+					$button2 = '<button type="submit" name="modify_button" >修改</button>';
+					$button3 = "<button type='submit' name='invalid_button' class='com_info' id='btn_button3'>作廢</button>" ;
+				}
 			}
+			else {
+				$final_status = $final_status.' <br/>修改客戶資料失敗，錯誤訊息:'.$conn->error.'<br/>';
+					echo "			
+					<script>
+						alert('錯誤！　修改資料發生錯誤！ 錯誤訊息：國際代碼不可以是空值') ;
+					</script>
+					" ;
+					$button2 = '<button type="submit" name="modify_button" >修改</button>';
+					$button3 = "<button type='submit' name='invalid_button' class='com_info' id='btn_button3'>作廢</button>" ;
+			}
+			
 
 
 			$button1='<button type="submit" name="find_button">尋找</button>' ;	

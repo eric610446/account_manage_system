@@ -127,44 +127,58 @@
 			$mode = "modify" ;
 			item_get_html_input();
 			$test=$test.' modify button<br/>';
+			// 確認至少 name 不可以是空的
+			if( $item_name != "" ) {
+				// 建立流水號
+				$item_s_id = item_sid_create($conn, $item_type_id) ;
 
-			// 建立流水號
-			$item_s_id = item_sid_create($conn, $item_type_id) ;
+				$sql_cmd = "update client_info.item_db set 
+					s_id        = '".$item_s_id."',
+					name='".$item_name."',
+					supplier_id ='".$item_supplier_id."',
+					price       ='".$item_price."',
+					currency    ='".$item_currency."'
+				where item_id='".$item_id."'
+				";
 
-			$sql_cmd = "update client_info.item_db set 
-				s_id        = '".$item_s_id."',
-				name='".$item_name."',
-				supplier_id ='".$item_supplier_id."',
-				price       ='".$item_price."',
-				currency    ='".$item_currency."'
-			where item_id='".$item_id."'
-			";
-
-			$result = $conn->query($sql_cmd) ;
-			if( $result > 0 ) {
-				$final_status = $final_status.' <br/>成功修改物品資料 ...<br/>';
-				echo "			
-				<script>
-					alert('成功修改物品　".$item_name."　的資料') ;
-				</script>
-				" ;
-				var_init() ;
-				$default_div_color = $default_sleep_input ;
-				$readonly = "readonly" ;
-				$disabled="disabled" ;
-				$button1 = "<button type='submit' name='find_button'>尋找</button>" ;	
-				$button3 = "" ;
-				$supplier_select_option = supplier_select_option( $conn ) ;
-				$item_type_select_option = item_type_select_option( "ro" ) ;
-			} 
-			else {			
-				$final_status = $final_status.' <br/>修改物品資料失敗，錯誤訊息:'.$conn->error.'<br/>';
-				echo "			
-				<script>
-					alert('錯誤！　修改物品　".$item_name."　的資料錯誤！錯誤訊息：".$conn->error."') ;
-				</script>
-				" ;
+				$result = $conn->query($sql_cmd) ;
+				if( $result > 0 ) {
+					$final_status = $final_status.' <br/>成功修改物品資料 ...<br/>';
+					echo "			
+					<script>
+						alert('成功修改物品　".$item_name."　的資料') ;
+					</script>
+					" ;
+					var_init() ;
+					$default_div_color = $default_sleep_input ;
+					$readonly = "readonly" ;
+					$disabled="disabled" ;
+					$button1 = "<button type='submit' name='find_button'>尋找</button>" ;	
+					$button3 = "" ;
+					$supplier_select_option = supplier_select_option( $conn ) ;
+					$item_type_select_option = item_type_select_option( "ro" ) ;
+				} 
+				else {			
+					$final_status = $final_status.' <br/>修改物品資料失敗，錯誤訊息:'.$conn->error.'<br/>';
+					echo "			
+					<script>
+						alert('錯誤！　修改物品　".$item_name."　的資料錯誤！錯誤訊息：".$conn->error."') ;
+					</script>
+					" ;
+					$button2 = '<button type="submit" name="modify_button" class="com_info">修改</button>';
+					$button3 = "<button type='submit' name='invalid_button' class='com_info' id='btn_button3'>作廢</button>" ;
+				}
 			}
+			else {
+				echo "			
+				<script>
+					alert('錯誤！　修改 ".$item_name."　的資料發生錯誤！ 錯誤訊息：名稱不可是空值') ;
+				</script>
+				" ;
+				$button2 = '<button type="submit" name="modify_button" class="com_info">修改</button>';
+				$button3 = "<button type='submit' name='invalid_button' class='com_info' id='btn_button3'>作廢</button>" ;
+			}
+			
 			$button1 = "<button type='submit' name='find_button'>尋找</button>" ;
 
 		}
