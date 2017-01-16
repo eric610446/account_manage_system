@@ -134,47 +134,63 @@
 			
 			// 確認至少 name 不可以是空的
 			if( $client_name != "" ) {
-				// 建立流水號
-				$client_s_id = sid_create($conn, "customer") ;
-
-				$sql_cmd = "update client_info.customer_db set 
-					s_id              ='".$client_s_id."',
-					name              ='".$client_name."',
-					nickname          ='".$client_nickname."',
-					ubn               ='".$client_ubn."',
-					company_phone     ='".$client_company_phone."',
-					company_fax       ='".$client_company_fax."',
-					email             ='".$client_email."',
-					location          ='".$client_location."',
-					address           ='".$client_address."',
-					contact           ='".$client_contact."',
-					contact_phone     ='".$client_contact_phone."' 
-				where customer_id ='".$client_customer_id."'
-				";
+				//檢查 Database 有沒有重複建立的 client
+				$sql_cmd = "select name from client_info.customer_db where name='".$client_name."' and invalid='0'" ;
 				$result = $conn->query($sql_cmd) ;
-				if( $result > 0 ) {	
-					$final_status = $final_status.' <br/>成功修改客戶資料 ...<br/>';
-					echo "			
-					<script>
-						alert('成功修改客戶　".$client_name."　的資料。') ;
-					</script>
-					" ;
+				if ($result->num_rows > 0) {
 
-					var_init() ;
-					$default_div_color = $default_sleep_input ;
-					$disabled="disabled" ;				
-					$button2 = "" ;
-					$button3 = "" ;
-				} 
-				else {			
-					$final_status = $final_status.' <br/>修改客戶資料失敗，錯誤訊息:'.$conn->error.'<br/>';
+					$final_status = $final_status.'<br/>建立產品資料失敗！<br/>原因：'.$client_name.' 不可重複建立！<br/>';
+					
 					echo "			
 					<script>
-						alert('錯誤！　修改客戶".$client_name."　的資料發生錯誤！ 錯誤訊息：".$conn->error."') ;
+						alert('錯誤！　".$client_name."不可重複建立！') ;
 					</script>
 					" ;
-					$button2 = '<button type="submit" name="modify_button" class="com_info">修改</button>';
-					$button3 = "<button type='submit' name='invalid_button' class='com_info' id='btn_button3'>作廢</button>" ;
+					var_init() ;
+				}
+				else {
+					// 建立流水號
+					$client_s_id = sid_create($conn, "customer") ;
+
+					$sql_cmd = "update client_info.customer_db set 
+						s_id              ='".$client_s_id."',
+						name              ='".$client_name."',
+						nickname          ='".$client_nickname."',
+						ubn               ='".$client_ubn."',
+						company_phone     ='".$client_company_phone."',
+						company_fax       ='".$client_company_fax."',
+						email             ='".$client_email."',
+						location          ='".$client_location."',
+						address           ='".$client_address."',
+						contact           ='".$client_contact."',
+						contact_phone     ='".$client_contact_phone."' 
+					where customer_id ='".$client_customer_id."'
+					";
+					$result = $conn->query($sql_cmd) ;
+					if( $result > 0 ) {	
+						$final_status = $final_status.' <br/>成功修改客戶資料 ...<br/>';
+						echo "			
+						<script>
+							alert('成功修改客戶　".$client_name."　的資料。') ;
+						</script>
+						" ;
+
+						var_init() ;
+						$default_div_color = $default_sleep_input ;
+						$disabled="disabled" ;				
+						$button2 = "" ;
+						$button3 = "" ;
+					} 
+					else {			
+						$final_status = $final_status.' <br/>修改客戶資料失敗，錯誤訊息:'.$conn->error.'<br/>';
+						echo "			
+						<script>
+							alert('錯誤！　修改客戶".$client_name."　的資料發生錯誤！ 錯誤訊息：".$conn->error."') ;
+						</script>
+						" ;
+						$button2 = '<button type="submit" name="modify_button" class="com_info">修改</button>';
+						$button3 = "<button type='submit' name='invalid_button' class='com_info' id='btn_button3'>作廢</button>" ;
+					}
 				}
 			}
 			else {

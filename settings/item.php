@@ -129,44 +129,60 @@
 			$test=$test.' modify button<br/>';
 			// 確認至少 name 不可以是空的
 			if( $item_name != "" ) {
-				// 建立流水號
-				$item_s_id = item_sid_create($conn, $item_type_id) ;
-
-				$sql_cmd = "update client_info.item_db set 
-					s_id        = '".$item_s_id."',
-					name='".$item_name."',
-					supplier_id ='".$item_supplier_id."',
-					price       ='".$item_price."',
-					currency    ='".$item_currency."'
-				where item_id='".$item_id."'
-				";
-
+				//檢查 Database 有沒有重複建立的資料
+				$sql_cmd = "select * from client_info.item_db where name='".$item_name."' and invalid='0'" ;
+				//echo $sql_cmd ;
 				$result = $conn->query($sql_cmd) ;
-				if( $result > 0 ) {
-					$final_status = $final_status.' <br/>成功修改物品資料 ...<br/>';
+				if ($result->num_rows > 0) {
+					$final_status = $final_status."<br/>建立 item 資料失敗！<br/>原因： ".$item_name."不可重複建立！<br/>";
+					$button2 = "<button type='submit' name='create_button'>建立</button>" ;
 					echo "			
 					<script>
-						alert('成功修改物品　".$item_name."　的資料') ;
+						alert('錯誤！　物品　".$item_name."　不可重複建立！') ;
 					</script>
 					" ;
 					var_init() ;
-					$default_div_color = $default_sleep_input ;
-					$readonly = "readonly" ;
-					$disabled="disabled" ;
-					$button1 = "<button type='submit' name='find_button'>尋找</button>" ;	
-					$button3 = "" ;
-					$supplier_select_option = supplier_select_option( $conn ) ;
-					$item_type_select_option = item_type_select_option( "ro" ) ;
-				} 
-				else {			
-					$final_status = $final_status.' <br/>修改物品資料失敗，錯誤訊息:'.$conn->error.'<br/>';
-					echo "			
-					<script>
-						alert('錯誤！　修改物品　".$item_name."　的資料錯誤！錯誤訊息：".$conn->error."') ;
-					</script>
-					" ;
-					$button2 = '<button type="submit" name="modify_button" class="com_info">修改</button>';
-					$button3 = "<button type='submit' name='invalid_button' class='com_info' id='btn_button3'>作廢</button>" ;
+				}
+				else {
+					// 建立流水號
+					$item_s_id = item_sid_create($conn, $item_type_id) ;
+
+					$sql_cmd = "update client_info.item_db set 
+						s_id        = '".$item_s_id."',
+						name='".$item_name."',
+						supplier_id ='".$item_supplier_id."',
+						price       ='".$item_price."',
+						currency    ='".$item_currency."'
+					where item_id='".$item_id."'
+					";
+
+					$result = $conn->query($sql_cmd) ;
+					if( $result > 0 ) {
+						$final_status = $final_status.' <br/>成功修改物品資料 ...<br/>';
+						echo "			
+						<script>
+							alert('成功修改物品　".$item_name."　的資料') ;
+						</script>
+						" ;
+						var_init() ;
+						$default_div_color = $default_sleep_input ;
+						$readonly = "readonly" ;
+						$disabled="disabled" ;
+						$button1 = "<button type='submit' name='find_button'>尋找</button>" ;	
+						$button3 = "" ;
+						$supplier_select_option = supplier_select_option( $conn ) ;
+						$item_type_select_option = item_type_select_option( "ro" ) ;
+					} 
+					else {			
+						$final_status = $final_status.' <br/>修改物品資料失敗，錯誤訊息:'.$conn->error.'<br/>';
+						echo "			
+						<script>
+							alert('錯誤！　修改物品　".$item_name."　的資料錯誤！錯誤訊息：".$conn->error."') ;
+						</script>
+						" ;
+						$button2 = '<button type="submit" name="modify_button" class="com_info">修改</button>';
+						$button3 = "<button type='submit' name='invalid_button' class='com_info' id='btn_button3'>作廢</button>" ;
+					}
 				}
 			}
 			else {
@@ -192,7 +208,7 @@
 			
 			if ($item_name != "" ) {	
 				
-				//檢查 Database 有沒有重複建立的 location
+				//檢查 Database 有沒有重複建立的資料
 				$sql_cmd = "select * from client_info.item_db where name='".$item_name."' and invalid='0'" ;
 				//echo $sql_cmd ;
 				$result = $conn->query($sql_cmd) ;
