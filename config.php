@@ -8,6 +8,7 @@
 	$header_shadow_color 	= "#333147";				/*標題文字陰影顏色*/
 	$header_shadow_style 	= "0.03em 0.03em 0.2em";	/*標題文字陰影樣式*/
 	$header_font_size 		= "100%";					/*以主頁面的字體大小為基準，100% = 3em = 48px */
+	$header_line_height		= "170%";					/*標題列單行行高 (這邊用來調整標提列位置)*/
 														/*標題列內容*/
 	$header_context 		= "六妖資訊 ACCOUNT MANAGEMENT SYSTEM";
 	
@@ -38,6 +39,9 @@
 	$default_input_font_size= "16px" ;					/*輸入區字體大小*/
 	$default_active_color 	= "#28f" ;					/*輸入區顏色(啟動狀態)*/
 	$default_sleep_color 	= "#d0d0d0" ;				/*輸入區顏色(休眠狀態)*/
+	$input_bottom_bg 		= "#f5f5f5" ;				/*輸入區說明區塊底色*/
+	$input_bottom_color 	= "#c0c0c0" ;				/*輸入區說明區塊文字顏色*/
+	$input_bottom_a_color	= $default_active_color;	/*輸入區說明區塊連結顏色*/
 	
 	$Type_btn_activate		= "#F64" ;					/*資料種類選擇按鈕顏色(已選中)*/
 	$Type_btn_disable		= "#F85" ;					/*資料種類選擇按鈕顏色(未選中)*/
