@@ -78,7 +78,7 @@
 				$disabled="disabled" ;
 				echo "			
 				<script>
-					alert('錯誤！　請輸入物品名稱後再尋找') ;
+					alert('錯誤！　請輸入 [物品名稱] 後，再按下 [尋找] 。') ;
 				</script>
 				" ;
 				$item_type_select_option = item_type_select_option("ro") ;

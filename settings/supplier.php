@@ -79,7 +79,7 @@
 				$disabled="disabled" ;
 				echo "			
 				<script>
-					alert('錯誤！　請輸入供應商名稱後再[尋找]。') ;
+					alert('錯誤！　請輸入 [供應商名稱] 後，再按下 [尋找] 。') ;
 				</script>
 				" ;
 			}

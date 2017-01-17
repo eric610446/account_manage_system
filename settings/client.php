@@ -76,7 +76,7 @@
 				$disabled="disabled" ;
 				echo "			
 				<script>
-					alert('錯誤！　請填寫客戶名稱後再[找客戶]。') ;
+					alert('錯誤！　請填寫 [客戶名稱] 後，再按下 [找客戶] 。') ;
 				</script>
 				" ;
 			}

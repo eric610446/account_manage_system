@@ -73,7 +73,7 @@
 				$default_div_color = $default_sleep_input ;
 				echo "			
 				<script>
-					alert('錯誤！　請輸入要查詢的地點 sid 再尋找') ;
+					alert('錯誤！　請輸入要查詢地點的 [國家 國際代碼] 與 [城市 國際代碼] 兩者後，再按下 [尋找] 。') ;
 				</script>
 				" ;
 			}
