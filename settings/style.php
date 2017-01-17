@@ -22,6 +22,8 @@ body {
 }
 
 header {
+	line-height:<?php echo $header_line_height; ?>;
+	valign: center;
 	height: <? echo $header_height; ?> ;
     text-align: center ;  
     color: <? echo $header_font_color; ?> ;
@@ -162,13 +164,15 @@ content ul li label {
 
 content ul li span {
 	display: block ;
-	background-color: #f5f5f5 ;
-	color: #c0c0c0 ;
+	background-color: <? echo $input_bottom_bg ?> ;
+	color: <? echo $input_bottom_color ?> ;
 	padding : 3px ;
 	font-size: 8px ;
 	height: 13px ;
 	border-radius: <? echo $input_border_radius ?> ;
 }
+content ul li span a:link {	color: <? echo $input_bottom_a_color ?> ; }
+content ul li span a:visited { color: <? echo $input_bottom_a_color ?> ; }
 
 content list[id='list5'] > div {
 	border: 0 ;
