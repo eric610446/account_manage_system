@@ -19,7 +19,6 @@
 	text-decoration:underline;
 }
 
-
 Button {
 	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
@@ -241,6 +240,7 @@ Button:active {
 }
 
 header {
+	line-height:<?php echo $header_line_height; ?>;
 	background-color: <?php echo $header_bg_color; ?> ;
 	font-size: <? echo $header_font_size; ?>;
 	text-align: center;
