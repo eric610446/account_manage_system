@@ -217,7 +217,7 @@ function Sub_Aside($main_choose){
 		$active_way=3;
 	else
 		$active_way=0;*/
-	if($clear_way==1)
+	if(isset($_REQUEST['main_choose']))
 		$active_way=0;
 	else if(isset($_REQUEST['srch_way_choose']))
 		$active_way=$_REQUEST['srch_way_choose'];
@@ -341,11 +341,17 @@ function cities_of_country($tgt_cntry){ //target country
 	connect2db() ;
 	global $conn ;			
 	
+	//是否篩選掉不是訂單的報價單
+	if( $_REQUEST['Which_Main_choose']==2 )
+		$check_order = 0;
+	else
+		$check_order = 1;
+	
 	//抓出所有有報價單的客戶的所在位置
 	$sql_cmd = "SELECT DISTINCT C.location,L.city FROM client_info.quotation_simple_db AS QS
 					LEFT JOIN client_info.customer_db AS C ON QS.customer_id=C.customer_id
 					LEFT JOIN client_info.location_db AS L ON C.location=L.location_id
-					WHERE QS.invalid = 0 AND L.country_sid = '".$tgt_cntry."'
+					WHERE QS.invalid = 0 AND L.country_sid = '".$tgt_cntry."' AND QS.is_order >= ".$check_order."
 					ORDER BY C.location;" ;
 	$result = mysql_query( $sql_cmd, $conn ) ;
 	
@@ -383,13 +389,209 @@ function cities_of_country($tgt_cntry){ //target country
 function echo_city_customer($main_choose,$location){
 	echo "<input type='hidden' name='Which_Main_choose' value='".$main_choose."' >";
 	echo "<input type='hidden' name='Which_Sub_choose' value='".$_REQUEST['Which_Sub_choose']."' >";
-	echo "<b>".$location."</b> ";
-	echo   "<div class = div_btn_cities>
-					<button type=submit class='btn_List'
-						name=btn_city_to_customer value=".($location+1)." >"
-						.($location+1).
-					"</button></div>" ;
 	
+	connect2db() ;
+	global $conn ;			
+	
+	//抓出所有該城市的客戶(以及該城市的資料)
+	$sql_cmd = "SELECT *
+				FROM client_info.customer_db AS C
+				LEFT JOIN client_info.location_db AS L
+				ON C.location = L.location_id
+				WHERE C.location = ".$location." and C.invalid = 0 ;" ;
+	$result = mysql_query( $sql_cmd, $conn ) ;
+	
+	//echo $result;
+	//echo "swc:".$_REQUEST['srch_way_choose']."_</div>";
+	
+	if(mysql_num_rows($result)>0){
+		
+		if( $main_choose==2 )
+			$content_qorp = "報價單";
+		else
+			$content_qorp = "訂單";
+		
+		$row_no=1;
+		while( $row = mysql_fetch_array( $result, MYSQL_ASSOC ) ) 
+		{
+			if($row_no==1){
+				echo "<div class='art_top'> 以下為在 <b>".$row['city']."</b> 的客戶：</div>";
+				echo "<div class='div_List_top_header'>";
+				echo "<table class='table_List_top_header'>";
+					echo "<tr class='tr_List_top_header'>";
+						echo "<th class='th_List_top_header'>編號";
+						echo "</th>";
+						echo "<th class='th_List_top_header'>客戶流水號";
+						echo "</th>";
+						echo "<th class='th_List_top_header'>客戶名稱";
+						echo "</th>";
+						echo "<th class='th_List_top_header'>客戶<br>詳細資料";
+						echo "</th>";
+						echo "<th class='th_List_top_header'>查看<br>".$content_qorp;
+						echo "</th>";
+					echo "</tr>";
+			}
+			
+			echo "<tr class='tr_List_top_header'>";
+				echo "<td class='td_List_top_header'>".$row_no;
+				echo "</td>";
+				echo "<td class='td_List_top_header'>".$row['s_id'];
+				echo "</td>";
+				echo "<td class='td_List_top_header'>".$row['name']."";
+				echo "</td>";
+				echo "<td class='td_List_top_header'>";
+					echo "<button type=submit class='btn_List' name=btn_detail_customer value=".$row['customer_id']." '>詳細資料</button>" ;
+				echo "</td>";
+				echo "<td class='td_List_top_header'>";
+					echo "<button type=submit class='btn_List' name=btn_list_simple_quo value=".$row['customer_id']." >查看".$content_qorp."</button>" ;
+				echo "</td>";
+			echo "</tr>";
+			$row_no++;
+		}
+		echo "</table>";
+		echo "</div>";
+		
+	}
+	else{
+		echo "<div class='art_top'> 對不起，查無資料。</div>";
+	}
+}
+
+//列出供應商或客戶的詳細資料
+function list_detail_cus_or_sup_info($type,$type_info){
+	
+	echo "<input type='hidden' name='Which_Main_choose' value='".$_REQUEST['Which_Main_choose']."' >";
+	echo "<input type='hidden' name='Which_Sub_choose' value='".$_REQUEST['Which_Sub_choose']."' >";
+	
+	connect2db() ;
+	global $conn ;			
+	
+	//列出客戶的詳細資料
+	if($type=1){
+		$sql_cmd = "SELECT C.*, L.country, L.city
+					FROM client_info.customer_db AS C
+                    LEFT JOIN client_info.location_db AS L
+                    ON C.location = L.location_id
+					WHERE customer_id = ".$type_info." ;" ;
+	}
+	//列出供應商的詳細資料
+	else{
+		$sql_cmd = "SELECT I.name AS iname, S.*, L.country, L.city
+					FROM client_info.item_db AS I 
+					LEFT JOIN client_info.supplier_db AS S 
+					ON I.supplier_id = S.supplier_id 
+                    LEFT JOIN client_info.location_db AS L
+                    ON S.location = L.location_id
+					WHERE I.item_id =  ".$type_info." ;" ;
+	}
+	$result = mysql_query( $sql_cmd, $conn ) ;
+	
+	//echo $result;
+	//echo "swc:".$_REQUEST['srch_way_choose']."_</div>";
+	
+	if(mysql_num_rows($result)>0){		
+		
+		$row = mysql_fetch_array( $result, MYSQL_ASSOC ) ;
+		if($type==1){
+			echo "<div class='art_top'> 以下為 <b>".$row['name']."</b> 的客戶詳細資料：</div>";				
+		}
+		else{
+			echo "<div class='art_top'> 以下為 <b>".$row['iname']."</b> 的供應商詳細資料：</div>";
+		}
+			echo "<div class='div_List_left_header'>";
+			echo "<table class='table_List_left_header'>";
+			
+			echo "<tr class='tr_List_left_header'>";
+				echo "<th class='th_List_left_header'>流水編號";
+				echo "</th>";
+				echo "<td class='td_List_left_header'>".$row['s_id'];
+				echo "</td>";
+			echo "</tr>";
+			
+			echo "<tr class='tr_List_left_header'>";
+				echo "<th class='th_List_left_header'>統一編號";
+				echo "</th>";
+				echo "<td class='td_List_left_header'>".$row['ubn'];
+				echo "</td>";
+			echo "</tr>";
+			
+			echo "<tr class='tr_List_left_header'>";
+				echo "<th class='th_List_left_header'>名稱全名";
+				echo "</th>";
+				echo "<td class='td_List_left_header'>".$row['name'];
+				echo "</td>";
+			echo "</tr>";
+			
+			echo "<tr class='tr_List_left_header'>";
+				echo "<th class='th_List_left_header'>名稱簡稱";
+				echo "</th>";
+				echo "<td class='td_List_left_header'>".$row['nickname'];
+				echo "</td>";
+			echo "</tr>";
+			
+			echo "<tr class='tr_List_left_header'>";
+				echo "<th class='th_List_left_header'>所在國家";
+				echo "</th>";
+				echo "<td class='td_List_left_header'>".$row['country'];
+				echo "</td>";
+			echo "</tr>";
+			
+			echo "<tr class='tr_List_left_header'>";
+				echo "<th class='th_List_left_header'>所在城市";
+				echo "</th>";
+				echo "<td class='td_List_left_header'>".$row['city'];
+				echo "</td>";
+			echo "</tr>";
+			
+			echo "<tr class='tr_List_left_header'>";
+				echo "<th class='th_List_left_header'>聯絡人";
+				echo "</th>";
+				echo "<td class='td_List_left_header'>".$row['contact'];
+				echo "</td>";
+			echo "</tr>";
+			
+			echo "<tr class='tr_List_left_header'>";
+				echo "<th class='th_List_left_header'>聯絡人電話";
+				echo "</th>";
+				echo "<td class='td_List_left_header'>".$row['contact_phone'];
+				echo "</td>";
+			echo "</tr>";
+			
+			echo "<tr class='tr_List_left_header'>";
+				echo "<th class='th_List_left_header'>公司電話";
+				echo "</th>";
+				echo "<td class='td_List_left_header'>".$row['company_phone'];
+				echo "</td>";
+			echo "</tr>";
+			
+			echo "<tr class='tr_List_left_header'>";
+				echo "<th class='th_List_left_header'>傳真";
+				echo "</th>";
+				echo "<td class='td_List_left_header'>".$row['company_fax'];
+				echo "</td>";
+			echo "</tr>";
+			
+			echo "<tr class='tr_List_left_header'>";
+				echo "<th class='th_List_left_header'>地址";
+				echo "</th>";
+				echo "<td class='td_List_left_header'>".$row['address'];
+				echo "</td>";
+			echo "</tr>";
+			
+			echo "<tr class='tr_List_left_header'>";
+				echo "<th class='th_List_left_header'>信箱";
+				echo "</th>";
+				echo "<td class='td_List_left_header'>".$row['email'];
+				echo "</td>";
+			echo "</tr>";
+			
+		echo "</table>";
+		echo "</div>";
+		
+	}
+	else{
+		echo "<div class='art_top'> 對不起，查無資料。</div>";
+	}
 }
 
 //顯示出各個國家的 button

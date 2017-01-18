@@ -127,10 +127,12 @@
 		}
 
 		if($_POST['main_choose']==2) {
+			$clear_way=1;
 			main_search_way(2,1) ;
 		}		
 
 		if($_POST['main_choose']==3) {
+			$clear_way=1;
 			main_search_way(3,1) ;
 		}				
 //////////////----↓ 偉安工作區域 ↓----------------------------------------------------------------------------------------------------
@@ -217,9 +219,15 @@
 		}
 		
 		/*列出特定物品的供應商詳細資料*/
+		if(isset($_POST['btn_detail_customer'])) {	
+			//給的是客戶id
+			list_detail_cus_or_sup_info(1,$_POST['btn_detail_customer']) ;
+		}
 		if(isset($_POST['btm_detail_supplier'])) {	
-			$item_id = $_POST['btm_detail_supplier'] ;
-			supplier_detail($item_id) ;
+			//給的是物品id
+			list_detail_cus_or_sup_info(2,$_POST['btn_detail_customer']) ;
+			//$item_id = $_POST['btm_detail_supplier'] ;
+			//supplier_detail($item_id) ;
 		}
 		
 		
