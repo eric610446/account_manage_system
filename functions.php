@@ -204,6 +204,194 @@ function save_quotation( $client, $quotation_arr ) {
 // ---------- ↑創建報價單區↑ ----------
 
 // ---------- ↓查詢報價單訂單區↓ ----------
+
+//選擇要查詢報價單的方式 依時間 國內客戶 國外客戶
+function Sub_Aside($main_choose){
+	echo "<input type='hidden' name='Which_Main_choose' value='".$main_choose."' >";
+	/*
+	if($_REQUEST['srch_way_choose']==1  )
+		$active_way=1;
+	else if($_REQUEST['srch_way_choose']==2  )
+		$active_way=2;
+	else if($_REQUEST['srch_way_choose']==3  )
+		$active_way=3;
+	else
+		$active_way=0;*/
+	if($clear_way==1)
+		$active_way=0;
+	else if(isset($_REQUEST['srch_way_choose']))
+		$active_way=$_REQUEST['srch_way_choose'];
+	else if(isset($_REQUEST['Which_Sub_choose']))
+		$active_way=$_REQUEST['Which_Sub_choose'];
+	else
+		$active_way=0;
+			
+	echo "<div class='Sub_aside'>";	
+		echo "	<div id='srch_way'>	
+					<ul>";
+					
+	$way_content=array("0"=>"說　明","1"=>"流水編號","2"=>"本國客戶","3"=>"外國客戶");
+	
+	for($sw=0;$sw<4;$sw++){
+		if($active_way==$sw)
+					echo "<li id='sw_li_active'><button type=submit id='sw_btn_active' name='srch_way_choose' value=".$sw." >";
+		else
+					echo "<li><button type=submit name='srch_way_choose' value=".$sw." >";
+				
+		echo $way_content[$sw]."</button></li>";
+	}
+			echo "	</ul>
+				</div>";
+	//echo "mc:".$_REQUEST['srch_way_choose']."_</div>";
+
+}
+
+function main_search_way($main_choose,$clear_way){
+	echo "<input type='hidden' name='Which_Main_choose' value='".$main_choose."' >";
+	echo "<input type='hidden' name='Which_Sub_choose' value='".$_REQUEST['srch_way_choose']."' >";
+	
+	//跟首頁的狀況一樣，要小心優先權被記憶變數搶走
+	if($clear_way==1)
+		$active_way=0;
+	else if(isset($_REQUEST['srch_way_choose']))
+		$active_way=$_REQUEST['srch_way_choose'];
+	else if(isset($_REQUEST['Which_Sub_choose']))
+		$active_way=$_REQUEST['Which_Sub_choose'];
+	else
+		$active_way=0;
+	
+	if( $main_choose==2 )
+		$content_qorp = "報價單";
+	else
+		$content_qorp = "已成交訂單";
+	
+	if($active_way==1)
+	{
+		connect2db() ;
+		global $conn ;															
+		//抓出某個城市的所有客戶資料
+		$sql_cmd = "SELECT nickname FROM `customer_db` WHERE s_id='CTWTPE002';" ;
+		$result = mysql_query( $sql_cmd, $conn ) ;
+		if($result==NULL)
+			$AM=1;
+		else
+			$AM=0;
+		echo "<div>查詢功能:".$AM." 開發中</div>";
+		//echo "mc:".$_REQUEST['srch_way_choose']."_</div>";
+	}
+	else if($active_way==2)
+	{
+		//echo "mc:".$_REQUEST['srch_way_choose']."_</div>";
+		cities_of_country('TW');
+	}
+	else if($active_way==3)
+	{
+		echo "<div>查詢功能:".$active_way." 開發中</div>";
+		//echo "mc:".$_REQUEST['srch_way_choose']."_</div>";
+	}
+	else
+	{
+		echo "<div class ='srch_docun'>";
+			echo "<table class='table_srch_docun'>";
+			
+				echo "<tr>";
+				echo "<th class='th_srch_docun'>按鈕名稱";
+				echo "</th>";
+				echo "<th class='th_srch_docun'>功能說明";
+				echo "</th>";
+				echo "</tr>";
+				
+				echo "<tr class='tr_srch_docun'>";
+				echo "<td class='td_srch_docun'>流水編號";
+				echo "</td>";
+				echo "<td class='td_srch_docun'>
+						列出有<b>".$content_qorp."</b>紀錄的月份，<br>
+						選擇月份後列出該月所有<b>".$content_qorp."</b>。";
+				echo "</td>";
+				echo "</tr>";
+				
+				echo "<tr class='tr_srch_docun'>";
+				echo "<td class='td_srch_docun'>本國客戶";
+				echo "</td>";
+				echo "<td class='td_srch_docun'>
+						依照台灣縣市來區分客戶，列出有客戶的縣市，<br>
+						選擇縣市後列出屬於該縣市的所有客戶，<br>
+						選擇客戶後列出屬於該客戶的所有<b>".$content_qorp."</b>。";
+				echo "</td>";
+				echo "</tr>";
+				
+				echo "<tr class='tr_srch_docun'>";
+				echo "<td class='td_srch_docun'>外國客戶";
+				echo "</td>";
+				echo "<td class='td_srch_docun'>
+						列出所有外國的客戶，<br>
+						選擇客戶後列出屬於該客戶的所有<b>".$content_qorp."</b>。";
+				echo "</td>";
+				echo "</tr>";
+				
+			echo "</table>";
+		echo "</div>";
+	}
+}
+
+function cities_of_country($tgt_cntry){ //target country
+	echo "<input type='hidden' name='Which_Main_choose' value='".$_REQUEST['Which_Main_choose']."' >";
+	echo "<input type='hidden' name='Which_Sub_choose' value='".$_REQUEST['srch_way_choose']."' >";
+	
+	connect2db() ;
+	global $conn ;			
+	
+	//抓出所有有報價單的客戶的所在位置
+	$sql_cmd = "SELECT DISTINCT C.location,L.city FROM client_info.quotation_simple_db AS QS
+					LEFT JOIN client_info.customer_db AS C ON QS.customer_id=C.customer_id
+					LEFT JOIN client_info.location_db AS L ON C.location=L.location_id
+					WHERE QS.invalid = 0 AND L.country_sid = '".$tgt_cntry."'
+					ORDER BY C.location;" ;
+	$result = mysql_query( $sql_cmd, $conn ) ;
+	
+	//echo $sql_cmd;
+	//echo "swc:".$_REQUEST['srch_way_choose']."_</div>";
+	
+	if(mysql_num_rows($result)>0){
+		$location_city_arr=array();
+		
+		for( $i=0 ; $row = mysql_fetch_array($result) ; $i++){
+				$location_city_arr[$i][0]=$row['location'];		//將城市"編號"各別放入location_country_arr['城市'][0]
+				$location_city_arr[$i][1]=$row['city'];			//將城市"名稱"各別放入location_country_arr['城市'][1]
+		}
+		/*//test output
+		for( $i=0 ; $i<$location_city_amount ; $i++){
+				echo "編號 ".$location_city_arr[$i][0]." ";
+				echo "地名 ".$location_city_arr[$i][1]." <br>";
+		}*/
+		
+		echo "<div class='art_top'> 請選擇客戶所在的城市：</div>";
+		for ( $i=0 ; $i<sizeof($location_city_arr) ; $i++ ) {
+																				
+			echo   "<div class = div_btn_cities>
+					<button type=submit class='btn_List'
+						name=btn_city_to_customer value=".$location_city_arr[$i][0]." >"
+						.$location_city_arr[$i][1].
+					"</button></div>" ;
+		}
+	}
+	else{
+		echo "<div class='art_top'> 對不起，查無資料。</div>";
+	}
+}
+
+function echo_city_customer($main_choose,$location){
+	echo "<input type='hidden' name='Which_Main_choose' value='".$main_choose."' >";
+	echo "<input type='hidden' name='Which_Sub_choose' value='".$_REQUEST['Which_Sub_choose']."' >";
+	echo "<b>".$location."</b> ";
+	echo   "<div class = div_btn_cities>
+					<button type=submit class='btn_List'
+						name=btn_city_to_customer value=".($location+1)." >"
+						.($location+1).
+					"</button></div>" ;
+	
+}
+
 //顯示出各個國家的 button
 function main_echo_location_btm() {
 	echo "<div class='art_top'> 請選擇客戶所在的國家：</div>";
@@ -301,7 +489,7 @@ function echo_location_client( $l ) {
 		}
 	}
 	else{
-		echo "<div class='art_top'> 對不起，查無客戶資料</div>";
+		echo "<div class='art_top'> 對不起，查無客戶資料。</div>";
 		//die(' ' . mysql_error()) ;		
 	}
 	
@@ -337,20 +525,20 @@ function list_client_quotations( $client ) {
 		if($_SESSION["action_choose"]==2)
 			echo "<div class='art_top'> 客戶 <b>".$_SESSION["cust_info"][$client]."</b> 的報價單：</div>";
 		else
-			echo "<div class='art_top'> 客戶 <b>".$_SESSION["cust_info"][$client]."</b> 的訂單：</div>";
+			echo "<div class='art_top'> 客戶 <b>".$_SESSION["cust_info"][$client]."</b> 的已成交訂單：</div>";
 
 		$row_no=1;
 		echo "<div>";
 		echo "<table id=table_squo>";
 		echo "<tr class=table_even>";
-			echo "	<th id=table_squo_01>流水編號</td>";
+			echo "	<th id=table_squo_01>流水編號</th>";
 		if($_SESSION["action_choose"]==2)
-			echo "	<th id=table_squo_01>報價單創建時間</td>";
+			echo "	<th id=table_squo_01>報價單創建時間</th>";
 		else
-			echo "	<th id=table_squo_02>訂單創建時間</td>";
-			echo "	<th id=table_squo_03>重點採買項目</td>";
-			echo "	<th id=table_squo_04>總金額</td>";
-			echo "	<th id=table_squo_05></td>";
+			echo "	<th id=table_squo_02>訂單創建時間</th>";
+			echo "	<th id=table_squo_03>重點採買項目</th>";
+			echo "	<th id=table_squo_04>總金額</th>";
+			echo "	<th id=table_squo_05></th>";
 		echo "</tr>";
 		while( $row = mysql_fetch_array( $result, MYSQL_ASSOC ) ) 
 		{
@@ -382,7 +570,7 @@ function list_client_quotations( $client ) {
 		echo "</div>";
 	}
 	else{
-		echo "<div class='art_top'> 對不起，查無客戶帳務資料</div>";
+		echo "<div class='art_top'> 對不起，查無客戶帳務資料。</div>";
 		//die(' ' . mysql_error()) ;		
 	}
 	echo "<div class='separation'><hr></div>";	
@@ -420,7 +608,7 @@ function quotation_detail( $qu_id ) {
 		$sql_cmd = "select * from client_info.quotation_simple_db Where quo_id = ".$qu_id ;
 		$simple_result = mysql_query( $sql_cmd, $conn ) ;
 		if(mysql_num_rows($simple_result)<=0)
-			echo "<div class='art_top'> 對不起，查無客戶帳務資料s</div>";
+			echo "<div class='art_top'> 對不起，查無客戶帳務資料。</div>";
 		
 		$row_no=1;
 		echo "<div>";
@@ -490,7 +678,7 @@ function quotation_detail( $qu_id ) {
 			
 	}
 	else{
-		echo "<div class='art_top'> 對不起，查無客戶帳務資料d</div>";
+		echo "<div class='art_top'> 對不起，查無客戶帳務資料。d</div>";
 		//die(' ' . mysql_error()) ;		
 	}
 
@@ -578,9 +766,9 @@ function supplier_detail( $item_id ) {
 		$row = mysql_fetch_array( $detail_result, MYSQL_ASSOC );
 		echo "<table id=table_supp>";
 		echo "<tr class=table_even>";
-			echo "	<th id=table_supplier_11><b>流水號</td>";
-			echo "	<th id=table_supplier_12><b>客戶全名</td>";
-			echo "	<th id=table_supplier_13><b>統一編號</td>";
+			echo "	<th id=table_supplier_11><b>流水號</th>";
+			echo "	<th id=table_supplier_12><b>客戶全名</th>";
+			echo "	<th id=table_supplier_13><b>統一編號</th>";
 		echo "</tr>";
 		echo "<tr class='table_odd table_content_center'>";
 			echo "	<td >".$row['s_id']."</td>";
@@ -591,10 +779,10 @@ function supplier_detail( $item_id ) {
 		
 		echo "<table id=table_supp>";
 		echo "<tr class=table_even>";
-			echo "	<th id=table_supplier_21><b>聯絡人</td>";
-			echo "	<th id=table_supplier_22><b>聯絡人電話</td>";
-			echo "	<th id=table_supplier_23><b>公司電話</td>";
-			echo "	<th id=table_supplier_24><b>公司傳真</td>";
+			echo "	<th id=table_supplier_21><b>聯絡人</th>";
+			echo "	<th id=table_supplier_22><b>聯絡人電話</th>";
+			echo "	<th id=table_supplier_23><b>公司電話</th>";
+			echo "	<th id=table_supplier_24><b>公司傳真</th>";
 		echo "</tr>";
 		echo "<tr class='table_odd table_content_center'>";
 			echo "	<td >".$row['contact']."</td>";
@@ -605,7 +793,7 @@ function supplier_detail( $item_id ) {
 		
 		echo "<table id=table_supp>";
 		echo "<tr class=table_even>";
-			echo "	<th ><b>地址</td>";
+			echo "	<th ><b>地址</th>";
 		echo "</tr>";
 		echo "<tr class='table_odd table_content_center'>";
 			echo "	<td >".$row['address']."</td>";
@@ -613,7 +801,7 @@ function supplier_detail( $item_id ) {
 
 		echo "<table id=table_supp>";
 		echo "<tr class=table_even>";
-			echo "	<th ><b>信箱</td>";
+			echo "	<th ><b>信箱</th>";
 		echo "</tr>";
 		echo "<tr class='table_odd table_content_center'>";
 			echo "	<td >".$row['email']."</td>";
@@ -625,7 +813,7 @@ function supplier_detail( $item_id ) {
 		echo "<div class='separation'><hr></div>	";		
 	}
 	else{
-		echo "<div class='art_top'> 對不起，查無客戶帳務資料d</div>";
+		echo "<div class='art_top'> 對不起，查無客戶帳務資料。</div>";
 		//die(' ' . mysql_error()) ;		
 	}
 

@@ -22,12 +22,29 @@
 	$main_bg_color 			= "#FBFBFB" ;				/*主區塊底色*/
 	$asideR_bg_color 		= "#EEE" ;					/*最右側欄底色*/
 	
+	$Main_btn_activate		= "#F64" ;					/*主選單按鈕顏色(已選中)*/
+	$Main_btn_disable		= "#F85" ;					/*主選單按鈕顏色(未選中)*/
+	$Main_btn_color			= "#FFF" ;					/*主選單按鈕文字顏色*/
+	
+	$Sub_btn_activate		= "#0FA" ;					/*次選單按鈕顏色(已選中)*/
+	$Sub_btn_disable		= "#FFF" ;					/*次選單按鈕顏色(未選中)*/
+	$Sub_content_color		= "#404040" ;				/*次選單按鈕文字顏色*/
+	$Sub_content_shadow		= "#909090" ;				/*次選單按鈕文字陰影(已選中)*/
+	
+	
 	/*主頁面配置*/
 	$root_font_size			= 3 ;						/*主頁面的字體大小以此為基準，數值為 3em = 48px */
 	$odd_rows_bg_color		= "#DACD93";				/*主查詢頁面 奇數行底色*/
 	$odd_rows_font_color	= "#280E00";				/*主查詢頁面 奇數行文字顏色*/
 	$even_rows_bg_color		= "#EBDFB7";				/*主查詢頁面 偶數行底色*/
 	$even_rows_font_color	= "#280E00";				/*主查詢頁面 偶數行文字顏色*/	
+	$Index_Sub_btn_width	= "100%";					/*次選單按鈕寬度*/
+	$Index_Sub_btn_height	= "14.5%";					/*次選單按鈕高度 秉霖預設100px*/
+	
+	$List_btn_activate		= "#3C6" ;					/*主頁面城市/清單按鈕顏色(hover)*/
+	$List_btn_disable		= "#FFF" ;					/*主頁面城市/清單按鈕顏色(一般)*/
+	$List_content_color		= "#404040" ;				/*主頁面城市/清單按鈕文字顏色*/
+	$List_border_color		= "#c0c0c0";				/*主頁面城市/清單按鈕邊框顏色*/
 	
 	/*設定頁面配置*/	
 	$default_font_color 	= "#404040" ;				/*預設文字顏色*/
@@ -43,16 +60,8 @@
 	$input_bottom_color 	= "#c0c0c0" ;				/*輸入區說明區塊文字顏色*/
 	$input_bottom_a_color	= $default_active_color;	/*輸入區說明區塊連結顏色*/
 	
-	$Type_btn_activate		= "#F64" ;					/*資料種類選擇按鈕顏色(已選中)*/
-	$Type_btn_disable		= "#F85" ;					/*資料種類選擇按鈕顏色(未選中)*/
-	$Type_btn_color			= "#FFF" ;					/*資料種類選擇按鈕文字顏色*/
-	
-	$Mode_btn_activate		= "#0FA" ;					/*模式選擇選擇按鈕顏色(已選中)*/
-	$Mode_btn_disable		= "#FFF" ;					/*模式選擇選擇按鈕顏色(未選中)*/
-	$Mode_content_color		= "#404040" ;				/*模式選擇選擇按鈕文字顏色*/
-	$Mode_content_shadow	= "#909090" ;				/*模式選擇選擇按鈕文字陰影(已選中)*/
-	$mode_btn_width 		= "80%";					/*模式選擇按鈕寬度*/
-	$mode_btn_height 		= "14.5%";					/*模式選擇按鈕高度 秉霖預設100px*/
+	$Setting_Sub_btn_width	= "80%";					/*次選單按鈕寬度*/
+	$Setting_Sub_btn_height	= "14.5%";					/*次選單按鈕高度 秉霖預設100px*/
 	
 	$submit_btn_color		= "#48f";					/*提交按鈕的本體顏色*/
 	$submit_btn_shadow		= "#37f";					/*提交按鈕的陰影顏色*/
@@ -61,8 +70,8 @@
 		
 	$table_border_color		= "#c0c0c0";				/*表格邊框顏色*/
 	$table_header_color		= "#5CF";					/*表格標題底色*/
-	$odd_rows_tb_color		= "#fffffa";				/*表格奇數行底色*/
-	$even_rows_tb_color		= "#faffff";				/*表格偶數行底色*/
+	$odd_rows_color			= "#fffffa";				/*表格奇數行底色*/
+	$even_rows_color		= "#faffff";				/*表格偶數行底色*/
 	
 	
 	/*底層配置*/

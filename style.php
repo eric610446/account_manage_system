@@ -11,15 +11,37 @@
 	text-align: center;
 }
 
-.btm_main_btm{
-	width:100%;
-	height:100%;
+.btn_main{
+	width:90%;
+	height:99%;
+	background-color: <?php echo $Main_btn_disable; ?>;
+	color: <? echo $Main_btn_color; ?> ;
 }
-.btm_main_btm:hover{
+
+.btn_main_active{	
+	background-color: <?php echo $Main_btn_activate; ?>;	
+}
+.btn_main_active:hover{
 	text-decoration:underline;
+}
+.btn_main_disable{
+	
+}
+.btn_main_disable:hover{
+	text-decoration:underline;
+	background-color: <?php echo $Main_btn_activate; ?>;
 }
 
 Button {
+	font-family: <?php echo $body_font_family; ?> ;	
+	font-size:80%;
+	height:80%;
+	width: 90%;
+	border : 0;
+}
+
+/*舊版button 全捨棄*/
+/*Button {
 	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
 	box-shadow:inset 0px 1px 0px 0px #ffffff;
@@ -61,6 +83,52 @@ Button:hover {
 Button:active {
 	position:relative;
 	top:1px;
+}*/
+
+/*查詢功能說明區塊*/
+.srch_docun{
+	font-size: 100%;
+	margin: 5% 25% ;
+	height: 64%;
+	
+}
+.table_srch_docun{
+	font-size: 100%;
+	width : 100%;
+	height : 100%;
+	border: 1px solid <? echo $table_border_color; ?> ;
+}
+
+.th_srch_docun{
+	font-size: 62.5%;
+	height : 25%;
+	background-color: <? echo $table_header_color; ?> ;
+}
+.th_srch_docun:nth-child(odd) {
+	width : 20% ;
+}
+.tr_srch_docun{
+	font-size: 55%;
+	height : 25%;
+}
+
+.td_srch_docun {
+	border: 1px solid <? echo $table_border_color; ?> ;	
+	border-radius: <? echo $input_border_radius ?> ;
+}
+.td_srch_docun:nth-child(odd) {
+	text-align:center ;
+}
+.td_srch_docun:nth-child(even) {
+	padding-left:1%;
+}
+
+
+.tr_srch_docun:nth-child(odd) {
+	background-color: <? echo $odd_rows_color; ?> ;
+}
+.tr_srch_docun:nth-child(even) {
+	background-color: <? echo $even_rows_color; ?> ;
 }
 
 /*國家按鈕*/
@@ -72,6 +140,7 @@ Button:active {
 	text-align: center ;
 }
 /*城市按鈕*/
+
 #div_city_btm{
 	height: 13.5%;
 	width: 16.66%;
@@ -87,6 +156,22 @@ Button:active {
 	top:50%;
 	float:left;
 	text-align: center ;
+}
+.div_btn_cities{
+	height: 19%;
+	width: 20%;
+	float:left;
+	text-align: center ;
+}
+
+.btn_List{
+	border-radius: <? echo $input_border_radius ?> ;
+	background-color: <?php echo $List_btn_disable; ?>;
+	border: 1px solid <?php echo $List_border_color; ?>;
+}
+.btn_List:hover{
+	background-color: <?php echo $List_btn_activate; ?>;
+	border: 1px solid <?php echo $List_btn_activate; ?>;
 }
 
 /* 顧客清單的頁面 */
@@ -253,29 +338,115 @@ header {
 }
 
 /*  側邊選單 */
-.div_aside{
-	margin:3%;
+.div_Main_aside{
 	height:19.5%;
+	text-align: left;
 }
-aside {
-	background-color: <?php echo $asideL_bg_color; ?> ;
-	width:10%;
-	height: <? echo $default_main_height ?>;
-	float:left;	/*其他標籤會如何圍繞著它，影響到 article 能不能夠在 nav 的右邊*/
+.div_Main_asideR{
+	height:19.5%;
+	text-align: right;
+}
+.div_Sub_aside{
+	height:19.5%;
 	text-align: center;
 }
+.Main_aside{
+	width:50%;
+	background-color: <?php echo $asideL_bg_color; ?> ;
+	height: <? echo $default_main_height ?>;
+	float:left;
+}
+.Main_aside_Style_1{
+	width:100%;
+}
+.Main_aside_Style_2{
+	width:50%;
+}
+
+.Sub_aside{
+	width:50%;
+	background-color: <?php echo $asideM_bg_color; ?> ;
+	height: <? echo $default_main_height ?>;
+	float:left;
+}
+.aside_Style_2 {
+	width:20%;
+	float:left;
+}
+.aside_Style_1 {
+	width:10%;
+	float:left;
+}
+div[id='srch_way'] ul {
+	margin: 0 ;
+	padding: 0 ;
+	list-style: none ;
+	text-align: center ;
+	padding-left: 2% ;
+}
+
+div[id='srch_way'] ul li {
+	background-color: #666 ;
+	width: <? echo $Index_Sub_btn_width; ?> ;
+	height: <? echo $Index_Sub_btn_height; ?> ;
+	margin: 10% auto ;
+	border-radius: <? echo $button_border_radius."px" ?> ;
+}
+div[id='srch_way'] ul li button {
+	font-size: 60%;
+	width: 95% ;
+	height: 95% ;
+	margin-left: -1 ;
+	padding: 0 ;
+	
+	color: <? echo $Sub_content_color; ?> ;
+	border-radius: <? echo ((string)((int)$button_border_radius)-2)."px" ?> ;
+}
+div[id='srch_way'] ul li button:hover {
+	background-color: <? echo $Sub_btn_activate; ?> ;
+}
+div[id='srch_way'] ul li button[id='sw_btn_active'] {
+	color: <? echo $Sub_content_color; ?> ;
+	background-color: <? echo $Sub_btn_activate; ?> ;
+	width: 99% ;
+	height: 97% ;
+	margin: 0 ;	
+	text-shadow: <? echo $Sub_content_shadow; ?> 0.03em 0.03em 0.05em;
+}
+div[id='srch_way'] ul li[id='sw_btn_active'] {
+	width: 76% ;
+}
+div[id='srch_way'] button {
+	font-family: <?php echo $body_font_family; ?> ;
+	
+	display: block ;
+	width: 80% ;
+	height: 10% ;
+	background-color: <? echo $Sub_btn_disable; ?> ;
+	margin: 10% auto ;
+}
+div[id='srch_way'] ul {
+	margin: 40% auto ;
+	width: 80% ;
+}
+
 
 
 /* 主要區塊 */
+.article_Style_1 {
+	width: 90%;
+}
+.article_Style_2 {
+	width: 80%;
+}
 article {
 	background-color: <?php echo $main_bg_color ; ?> ; 
-	width: 90%;		
 	height: <? echo $default_main_height ?>;
 	margin-left: 10%;
 	overflow: scroll;
 	overflow-x:hidden;
 }
-#main_section{
+section{
 	margin:0.3%;
 }
 
