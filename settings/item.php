@@ -24,7 +24,7 @@
 		include("initialize.php") ;
 		include("style.php") ;
 		include("../config.php") ;
-		$supplier_select_option = supplier_select_option($conn) ;		
+		$supplier_select_option = supplier_select_option($conn) ;
 		$item_type_select_option = item_type_select_option() ;
 		$where_am_i = "item" ;
 
@@ -46,9 +46,9 @@
 			$default_div_color = $default_sleep_input ;
 			$readonly = "readonly";
 			$disabled="disabled" ;
-			$test=$test.' edit mode<br/>';				
+			$test=$test.' edit mode<br/>';
 			$item_type_select_option = item_type_select_option("ro") ;
-			$supplier_select_option = supplier_select_option($conn) ;	
+			$supplier_select_option = supplier_select_option($conn) ;
 		}
 		if(isset($_POST['find_mode']) or ($_GET["mode"]=="find") ) {
 			$mode = "find" ;
@@ -60,15 +60,15 @@
 
 
 
-		
+
 		//開始尋找
 		if(isset($_POST['find_button'])) {
 			$mode = "modify" ;
 
 			$test=$test.' find button<br/>';
 			item_get_html_input();
-			$button1="<button type='submit' name='find_button' >尋找</button>" ;			
-			
+			$button1="<button type='submit' name='find_button' >尋找</button>" ;
+
 			//防止地點名稱沒輸入
 			if ($item_name == '') {
 				$final_status .= "請輸入要查詢的物品名稱";
@@ -76,13 +76,13 @@
 				$default_div_color = $default_sleep_input ;
 				$readonly = "readonly";
 				$disabled="disabled" ;
-				echo "			
+				echo "
 				<script>
 					alert('錯誤！　請輸入 [物品名稱] 後，再按下 [尋找] 。') ;
 				</script>
 				" ;
 				$item_type_select_option = item_type_select_option("ro") ;
-				$supplier_select_option = supplier_select_option($conn) ;	
+				$supplier_select_option = supplier_select_option($conn) ;
 			}
 			//地點名稱有輸入
 			else {
@@ -98,10 +98,11 @@
 							$item_id          = $row['item_id'] ;
 							$item_s_id        = $row['s_id'] ;
 							$item_name        = $row['name'] ;
+							$item_name_backup = $row['name'] ;
 							$item_supplier_id = $row['supplier_id'] ;
 							$item_price       = $row['price'] ;
 							$item_currency    = $row['currency'] ;
-	    				}		
+	    				}
 	    				$supplier_select_option = supplier_select_option( $conn, $item_supplier_id ) ;
 	    				$item_type_select_option = item_type_select_option( $item_s_id ) ;
 						$readonly = "" ;
@@ -116,8 +117,8 @@
 					$default_div_color = $default_sleep_input ;
 					$readonly = "readonly";
 					$disabled="disabled" ;
-					$button1 = "<button type='submit' name='find_button'>尋找</button>" ;	
-					echo "			
+					$button1 = "<button type='submit' name='find_button'>尋找</button>" ;
+					echo "
 					<script>
 						alert('錯誤！　物品　".$item_name."　的資料尚未建立') ;
 					</script>
@@ -137,25 +138,28 @@
 			$test=$test.' modify button<br/>';
 			// 確認至少 name 不可以是空的
 			if( $item_name != "" ) {
+				$go=1 ;
 				//檢查 Database 有沒有重複建立的資料
 				$sql_cmd = "select * from client_info.item_db where name='".$item_name."' and invalid='0'" ;
-				//echo $sql_cmd ;
 				$result = $conn->query($sql_cmd) ;
-				if ($result->num_rows > 0) {
-					$final_status = $final_status."<br/>建立 item 資料失敗！<br/>原因： ".$item_name."不可重複建立！<br/>";
-					$button2 = "<button type='submit' name='create_button'>建立</button>" ;
-					echo "			
-					<script>
-						alert('錯誤！　物品　".$item_name."　不可重複建立！') ;
-					</script>
-					" ;
-					var_init() ;
+				if( $item_name != $item_name_backup ) {
+					if($result->num_rows > 0) {
+						$final_status = $final_status."<br/>建立 item 資料失敗！<br/>原因： ".$item_name."不可重複建立！<br/>";
+						$button2 = "<button type='submit' name='create_button'>建立</button>" ;
+						echo "
+						<script>
+							alert('錯誤！　物品　".$item_name."　不可重複建立！') ;
+						</script>
+						" ;
+						$item_name = $item_name_backup ;
+						$go=0 ;
+					}
 				}
-				else {
+				if($go) {
 					// 建立流水號
 					$item_s_id = item_sid_create($conn, $item_type_id) ;
 
-					$sql_cmd = "update client_info.item_db set 
+					$sql_cmd = "update client_info.item_db set
 						s_id        = '".$item_s_id."',
 						name='".$item_name."',
 						supplier_id ='".$item_supplier_id."',
@@ -167,7 +171,7 @@
 					$result = $conn->query($sql_cmd) ;
 					if( $result > 0 ) {
 						$final_status = $final_status.' <br/>成功修改物品資料 ...<br/>';
-						echo "			
+						echo "
 						<script>
 							alert('成功修改物品　".$item_name."　的資料') ;
 						</script>
@@ -176,14 +180,14 @@
 						$default_div_color = $default_sleep_input ;
 						$readonly = "readonly" ;
 						$disabled="disabled" ;
-						$button1 = "<button type='submit' name='find_button'>尋找</button>" ;	
+						$button1 = "<button type='submit' name='find_button'>尋找</button>" ;
 						$button3 = "" ;
 						$supplier_select_option = supplier_select_option( $conn ) ;
 						$item_type_select_option = item_type_select_option( "ro" ) ;
-					} 
-					else {			
+					}
+					else {
 						$final_status = $final_status.' <br/>修改物品資料失敗，錯誤訊息:'.$conn->error.'<br/>';
-						echo "			
+						echo "
 						<script>
 							alert('錯誤！　修改物品　".$item_name."　的資料錯誤！錯誤訊息：".$conn->error."') ;
 						</script>
@@ -194,7 +198,7 @@
 				}
 			}
 			else {
-				echo "			
+				echo "
 				<script>
 					alert('錯誤！　修改 ".$item_name."　的資料發生錯誤！ 錯誤訊息：名稱不可是空值') ;
 				</script>
@@ -202,7 +206,7 @@
 				$button2 = '<button type="submit" name="modify_button" class="com_info">修改</button>';
 				$button3 = "<button type='submit' name='invalid_button' class='com_info' id='btn_button3'>作廢</button>" ;
 			}
-			
+
 			$button1 = "<button type='submit' name='find_button'>尋找</button>" ;
 
 		}
@@ -212,10 +216,10 @@
 		if(isset($_POST['create_button'])) {
 			$mode = "create" ;
 			$test=$test.' create button<br/>';
-			item_get_html_input();				
-			
-			if ($item_name != "" ) {	
-				
+			item_get_html_input();
+
+			if ($item_name != "" ) {
+
 				//檢查 Database 有沒有重複建立的資料
 				$sql_cmd = "select * from client_info.item_db where name='".$item_name."' and invalid='0'" ;
 				//echo $sql_cmd ;
@@ -223,7 +227,7 @@
 				if ($result->num_rows > 0) {
 					$final_status = $final_status."<br/>建立 item 資料失敗！<br/>原因： ".$item_name."不可重複建立！<br/>";
 					$button2 = "<button type='submit' name='create_button'>建立</button>" ;
-					echo "			
+					echo "
 					<script>
 						alert('錯誤！　物品　".$item_name."　不可重複建立！') ;
 					</script>
@@ -231,7 +235,7 @@
 				}
 				else {
 					$item_s_id = item_sid_create($conn, $item_type_id) ;
-					// 建立新的 item 欄位					
+					// 建立新的 item 欄位
 					$sql_cmd = "insert into client_info.item_db (
 						s_id,
 						name,
@@ -246,38 +250,38 @@
 						'".$item_currency."'
 					)
 					";
-			
+
 					if ($conn->query($sql_cmd) === TRUE) {
 						$final_status = $final_status.' <br/>成功新增物品 ...<br/>';
-						echo "			
+						echo "
 						<script>
 							alert('成功建立物品　".$item_name."。') ;
 						</script>
 						" ;
-					} 
+					}
 					else {
 						$final_status = $final_status.' <br/>新增物品失敗，錯誤訊息:'.$conn->error.'<br/>';
-						echo "			
+						echo "
 						<script>
 							alert('錯誤！　建立物品　".$item_name."　的資料錯誤！錯誤訊息：".$conn->error."') ;
 						</script>
-						" ;	
+						" ;
 					}
 					$button2 = "<button type='submit' name='create_button' id='create_button'>建立</button>" ;
-				}		
+				}
 
 			}
 			else {
 				$final_status .= "<br/>填寫完所有表格再建立<br/>" ;
 				$button2 = "<button type='submit' name='create_button' id='create_button'>建立</button>" ;
-				echo "			
+				echo "
 				<script>
 					alert('錯誤！　填寫完所有表格再建立！') ;
 				</script>
 				" ;
 			}
-			var_init() ;	
-		}	
+			var_init() ;
+		}
 
 
 		// 按下作廢按鈕
@@ -285,16 +289,16 @@
 			item_get_html_input();
 			$test=$test.' invalid_button<br/>';
 			$h1_mod_color="color:#5b88f6;";
-			
 
-			$sql_cmd = "update client_info.item_db set 
+
+			$sql_cmd = "update client_info.item_db set
 				invalid='1'
 			where item_id='".$item_id."'
 			";
 			$result = $conn->query($sql_cmd) ;
 			if( $result > 0 ) {
 				$final_status = $final_status.' <br/>成功 作廢 物品資料 ...<br/>';
-				echo "			
+				echo "
 				<script>
 					alert('成功 作廢 物品　".$supplier_name."　的資料。') ;
 				</script>
@@ -302,17 +306,17 @@
 
 				var_init() ;
 				$default_div_color = $default_sleep_input ;
-				$disabled="disabled" ;				
+				$disabled="disabled" ;
 				$button2 = "" ;
-				$button3 = "" ;				
+				$button3 = "" ;
 				$readonly = "readonly" ;
 				$supplier_find_button='<button type="submit" name="find_button" >尋找</button>';
 				$supplier_select_option = supplier_select_option( $conn ) ;
 				$item_type_select_option = item_type_select_option( "ro" ) ;
-			} 
-			else {			
+			}
+			else {
 				$final_status = $final_status.' <br/>失敗！ 作廢物品資料失敗，錯誤訊息:'.$conn->error.'<br/>';
-				echo "			
+				echo "
 				<script>
 					alert('錯誤！　作廢物品 ".$item_name."　的資料發生錯誤！ 錯誤訊息：".$conn->error."') ;
 				</script>
@@ -341,7 +345,7 @@
 			<!--<h1>SIX MONSTER ACCOUNT MANAGEMENT SYSTEM</h1>
 			<h2><font face="Droid Serif"><<物品清單>></font></h2>-->
 		</header>
-		
+
 		<nav>
 			<ul>
 				<div id='client'><a href='client.php?mode=modify' id='client'>客戶資料</a></div>
@@ -351,7 +355,7 @@
 			</ul>
 		</nav>
 
-		<div id='mode'>	
+		<div id='mode'>
 			<ul>
 				<li id='create'><button type=submit name='create_mode' id='create'>建立</button></li>
 				<li id='modify'><button type=submit name='modify_mode' id='modify'>修改</button></li>
@@ -366,6 +370,7 @@
 				if( $only_get_info != 1 ) {
 					echo "
 					<input type='hidden' name='item_id' value='$item_id'>
+					<input type='hidden' name='item_name_backup' value='$item_name_backup'>
 					<li id='list1'>
 						<div id='sid'>
 							<label for='sid'>流水號</label>
@@ -423,18 +428,18 @@
 		</content>
 
 		<footer><?php echo $footer_context; ?></footer>
-		
-		
-	
-			
-			
+
+
+
+
+
 	</form>
 
-	
+
 
 </body>
 </html>
-  
+
 
 
 <?php
