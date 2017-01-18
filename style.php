@@ -108,11 +108,12 @@ Button:active {
 	width : 20% ;
 }
 .tr_srch_docun{
-	font-size: 55%;
+	font-size: 100%;
 	height : 25%;
 }
 
 .td_srch_docun {
+	font-size: 55%;
 	border: 1px solid <? echo $table_border_color; ?> ;	
 	border-radius: <? echo $input_border_radius ?> ;
 }
@@ -168,13 +169,117 @@ Button:active {
 	border-radius: <? echo $input_border_radius ?> ;
 	background-color: <?php echo $List_btn_disable; ?>;
 	border: 1px solid <?php echo $List_border_color; ?>;
+	box-shadow: 5px 5px 8px #888888;
 }
 .btn_List:hover{
 	background-color: <?php echo $List_btn_activate; ?>;
 	border: 1px solid <?php echo $List_btn_activate; ?>;
+	box-shadow: 2px 2px 8px #888888;
+	
+	position:relative;	/*位移用參數*/
+	top:3px;			/*從上往下移動*/
+	left:3px;			/*從左往右移動*/
 }
 
-/* 顧客清單的頁面 */
+/* 客戶清單的頁面 */
+.div_List_top_header{
+	font-size:100%;
+}
+
+.table_List_top_header{
+	font-size: 100%;
+	width : 100%;
+	border: 1px solid <? echo $table_border_color; ?> ;
+}
+
+.th_List_top_header{
+	font-size: 90%;
+	height : 100%;
+	background-color: <? echo $table_header_color; ?> ;
+}
+.th_List_top_header:nth-child(1){ 	width : 7.5%; }
+.th_List_top_header:nth-child(2){ 	width : 15%; }
+.th_List_top_header:nth-child(3){ 	width : 45%; }
+.th_List_top_header:nth-child(4){ 	width : 15%; }
+.th_List_top_header:nth-child(5){ 	width : 15%; }
+
+.tr_List_top_header{
+
+	font-size: 100%;
+	height : 80% ;
+	text-align:center;
+}
+
+.td_List_top_header {
+	padding:1%;
+	font-size: 80%;
+	min-height : 50%;
+	border: 1px solid <? echo $table_border_color; ?> ;	
+	border-radius: <? echo $input_border_radius ?> ;
+}
+
+.td_List_top_header:nth-child(4),.td_List_top_header:nth-child(5) {
+	padding:0%;
+	font-size: 80%;
+	border: 0 ;	
+}
+
+.tr_List_top_header:nth-child(odd) {
+	background-color: <? echo $odd_rows_color; ?> ;
+}
+.tr_List_top_header:nth-child(even) {
+	background-color: <? echo $even_rows_color; ?> ;
+}
+
+
+/*header在左邊的清單*//*客戶或供應商詳細資料*/
+.div_List_left_header{
+	font-size:100%;
+}
+
+.table_List_left_header{
+	font-size: 100%;
+	width : 100%;
+	border: 1px solid <? echo $table_border_color; ?> ;
+}
+
+.th_List_left_header{
+	font-size: 90%;
+	width : 20%;
+	background-color: <? echo $table_header_color; ?> ;
+	text-align:center;
+}
+.th_List_left_header:nth-child(1){  }
+.th_List_left_header:nth-child(2){ 	 }
+.th_List_left_header:nth-child(3){ 	 }
+.th_List_left_header:nth-child(4){ 	 }
+.th_List_left_header:nth-child(5){ 	 }
+
+.tr_List_left_header{
+
+	font-size: 100%;
+	height : 80% ;
+	text-align:left;
+}
+
+.td_List_left_header {
+	padding-left:1%;
+	font-size: 80%;
+	border: 1px solid <? echo $table_border_color; ?> ;	
+	border-radius: <? echo $input_border_radius ?> ;
+}
+
+.tr_List_left_header:nth-child(odd) {
+	background-color: <? echo $odd_rows_color; ?> ;
+}
+.tr_List_left_header:nth-child(even) {
+	background-color: <? echo $even_rows_color; ?> ;
+}
+
+
+
+
+
 #div_cust1{
 	background: <?php echo $odd_rows_bg_color;?> ;
 	color: <?php echo $odd_rows_font_color;?> ;
