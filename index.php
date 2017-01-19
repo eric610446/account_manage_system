@@ -186,7 +186,7 @@
 
 		//在報價單查詢的畫面，選擇了任何一個地點，要顯示該地點所有的 client
 		if(isset($_POST['btn_city_to_customer'])) {
-			echo_city_customer($_POST['Which_Main_choose'],$_POST['btn_city_to_customer']) ;
+			echo_city_customer($_POST['btn_city_to_customer']) ;
 		}
 		/*//old
 		for ( $i=0 ; $i<sizeof($_SESSION["location_city_arr"]) ; $i++ ) {
@@ -200,32 +200,41 @@
 			}
 		}*/
 		
-
-		//選擇一個要查詢報價單的 client 後，依照日期列出報價單。
+		
+		//選擇一個要查詢報價單的客戶後，依照日期列出報價單。
+		if(  isset( $_POST['btn_list_simple_quo'] )  ) {
+			echo_list_single_customer_simple_quo($_POST['btn_list_simple_quo']);
+		}
+		/*
 		if(isset($_POST['btm_find_client_quotation_list'])) {
 			$client = $_POST['btm_find_client_quotation_list'] ;
 			list_client_quotations( $client ) ;
 			$_SESSION["Pre_Page_cust_info"][0]=$client;
 			$_SESSION["Pre_Page_cust_info"][1]=$_SESSION["cust_info"][$client];
-		}
-
+		}*/
+		
+		
 		//選擇要查詢客戶的其中一個報價單的詳細內容後
+		if(isset($_POST['btn_list_detail_quo'])) {	
+			echo_detail_quotation($_POST['btn_list_detail_quo']) ;
+		}
+		/*
 		if(isset($_POST['btm_detail_quotation'])) {	
 			$qu_id = $_POST['btm_detail_quotation'] ;
 			quotation_detail($qu_id) ;
 			$_SESSION["Pre_Page_quo_info"]=$qu_id;
 			//$_SESSION["Pre_Page_quo_info"][0]=$qu_id;
 			//$_SESSION["Pre_Page_quo_info"][1]=$_SESSION["quo_info"][$qu_id];
-		}
+		}*/
 		
 		/*列出特定物品的供應商詳細資料*/
 		if(isset($_POST['btn_detail_customer'])) {	
 			//給的是客戶id
 			list_detail_cus_or_sup_info(1,$_POST['btn_detail_customer']) ;
 		}
-		if(isset($_POST['btm_detail_supplier'])) {	
+		if(isset($_POST['btn_detail_supplier'])) {	
 			//給的是物品id
-			list_detail_cus_or_sup_info(2,$_POST['btn_detail_customer']) ;
+			list_detail_cus_or_sup_info(2,$_POST['btn_detail_supplier']) ;
 			//$item_id = $_POST['btm_detail_supplier'] ;
 			//supplier_detail($item_id) ;
 		}

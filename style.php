@@ -32,6 +32,27 @@
 	background-color: <?php echo $Main_btn_activate; ?>;
 }
 
+.btn_submit{
+	margin: 0 ;
+	width: 80% ;
+	height: 80% ;
+	border: 0 ;
+	border-radius: <? echo ((string)((int)$button_border_radius)-2)."px" ?> ;
+	background-color: <? echo $submit_btn_color; ?> ;
+	outline: none ;
+	font-size: 80% ;
+	color: <? echo $submit_content_color; ?> ;
+	box-shadow: 7px 7px 10px <? echo $submit_btn_shadow ?>;
+}
+.btn_submit:hover{
+	/*background-color: <?php echo $List_btn_activate; ?>;*/
+	box-shadow: 3px 3px 8px #888888;
+	
+	position:relative;	/*位移用參數*/
+	top:4px;			/*從上往下移動*/
+	left:4px;			/*從左往右移動*/
+}
+
 Button {
 	font-family: <?php echo $body_font_family; ?> ;	
 	font-size:80%;
@@ -88,7 +109,7 @@ Button:active {
 /*查詢功能說明區塊*/
 .srch_docun{
 	font-size: 100%;
-	margin: 5% 25% ;
+	margin: 5% 13% ;
 	height: 64%;
 	
 }
@@ -166,6 +187,7 @@ Button:active {
 }
 
 .btn_List{
+
 	border-radius: <? echo $input_border_radius ?> ;
 	background-color: <?php echo $List_btn_disable; ?>;
 	border: 1px solid <?php echo $List_border_color; ?>;
@@ -179,6 +201,11 @@ Button:active {
 	position:relative;	/*位移用參數*/
 	top:3px;			/*從上往下移動*/
 	left:3px;			/*從左往右移動*/
+}
+.btn_List_big{
+
+	height: 96%;
+	width: 99%;
 }
 
 /* 客戶清單的頁面 */
@@ -197,31 +224,39 @@ Button:active {
 	height : 100%;
 	background-color: <? echo $table_header_color; ?> ;
 }
-.th_List_top_header:nth-child(1){ 	width : 7.5%; }
-.th_List_top_header:nth-child(2){ 	width : 15%; }
-.th_List_top_header:nth-child(3){ 	width : 45%; }
-.th_List_top_header:nth-child(4){ 	width : 15%; }
-.th_List_top_header:nth-child(5){ 	width : 15%; }
+/*城市內客戶列表各欄位寬度*/
+.th_List_city_customer:nth-child(1){ 	width : 7.5%; }
+.th_List_city_customer:nth-child(2){ 	width : 15%; }
+.th_List_city_customer:nth-child(3){ 	width : 45%; }
+.th_List_city_customer:nth-child(4){ 	width : 15%; }
+.th_List_city_customer:nth-child(5){ 	width : 15%; }
+/*外國客戶列表各欄位寬度*/
+.th_List_worldwide_customer:nth-child(1){ 	width : 4%; }
+.th_List_worldwide_customer:nth-child(2){ 	width : 14%; }
+.th_List_worldwide_customer:nth-child(3){ 	width : 14%; }
+.th_List_worldwide_customer:nth-child(4){ 	width : 18%; }
+.th_List_worldwide_customer:nth-child(5){ 	width : 18%; }
+.th_List_worldwide_customer:nth-child(6){ 	width : 15%; }
+.th_List_worldwide_customer:nth-child(7){ 	width : 15%; }
+/*單獨客戶簡單報價單列表各欄位寬度*/
+.th_List_sgl_smpl_quo:nth-child(1){ 	width : 4%; }
+.th_List_sgl_smpl_quo:nth-child(2){ 	width : 17%; }
+.th_List_sgl_smpl_quo:nth-child(3){ 	width : 13%; }
+.th_List_sgl_smpl_quo:nth-child(4){ 	width : 33%; }
+.th_List_sgl_smpl_quo:nth-child(5){ 	width : 20%; }
+.th_List_sgl_smpl_quo:nth-child(6){ 	width : 13%; }
+/*報價單物品清單列表各欄位寬度*/
+.th_List_quo_item:nth-child(1){ 	width : 4%; }
+.th_List_quo_item:nth-child(2){ 	width : 10%; }
+.th_List_quo_item:nth-child(3){ 	width : 38%; }
+.th_List_quo_item:nth-child(4){ 	width : 15%; }
+.th_List_quo_item:nth-child(5){ 	width : 20%; }
+.th_List_quo_item:nth-child(6){ 	width : 13%; }
 
 .tr_List_top_header{
 
 	font-size: 100%;
-	height : 80% ;
 	text-align:center;
-}
-
-.td_List_top_header {
-	padding:1%;
-	font-size: 80%;
-	min-height : 50%;
-	border: 1px solid <? echo $table_border_color; ?> ;	
-	border-radius: <? echo $input_border_radius ?> ;
-}
-
-.td_List_top_header:nth-child(4),.td_List_top_header:nth-child(5) {
-	padding:0%;
-	font-size: 80%;
-	border: 0 ;	
 }
 
 .tr_List_top_header:nth-child(odd) {
@@ -230,6 +265,73 @@ Button:active {
 .tr_List_top_header:nth-child(even) {
 	background-color: <? echo $even_rows_color; ?> ;
 }
+
+.td_List_top_header{
+	min-height : 50%;
+	border-radius: <? echo $input_border_radius ?> ;
+}
+
+.td_List_city_customer {
+	font-size: 80%;
+	padding:1%;
+	border: 1px solid <? echo $table_border_color; ?> ;	
+}
+
+.td_List_city_customer:nth-child(4),.td_List_city_customer:nth-child(5) {
+	padding:0%;
+	border: 0 ;	
+}
+
+.td_List_worldwide_customer {
+	font-size: 80%;
+	padding:1%;
+	border: 1px solid <? echo $table_border_color; ?> ;	
+}
+
+.td_List_worldwide_customer:nth-child(6),.td_List_worldwide_customer:nth-child(7) {
+	padding:0%;
+	border: 0 ;	
+}
+
+.td_List_sgl_smpl_quo {
+	font-size: 60%;
+	padding:0.3%;
+	padding-top:0.8%;
+	padding-bottom:0.8%;
+	border: 1px solid <? echo $table_border_color; ?> ;	
+}
+
+.td_List_sgl_smpl_quo:nth-child(6) {
+	padding:0%;
+	padding-top:0%;
+	padding-bottom:0%;
+	border: 0 ;	
+}
+
+
+.td_List_quo_item {
+	font-size: 60%;
+	padding:0.3%;
+	padding-top:0.8%;
+	padding-bottom:0.8%;
+	border: 1px solid <? echo $table_border_color; ?> ;	
+}
+
+.td_List_quo_item:nth-child(6) {
+	padding:0%;
+	padding-top:0%;
+	padding-bottom:0%;
+	border: 0 ;	
+}
+
+.td_List_Button {
+	
+	padding:0%;
+	padding-top:0%;
+	padding-bottom:0%;
+	border: 0 ;	
+}
+
 
 
 /*header在左邊的清單*//*客戶或供應商詳細資料*/
@@ -249,16 +351,11 @@ Button:active {
 	background-color: <? echo $table_header_color; ?> ;
 	text-align:center;
 }
-.th_List_left_header:nth-child(1){  }
-.th_List_left_header:nth-child(2){ 	 }
-.th_List_left_header:nth-child(3){ 	 }
-.th_List_left_header:nth-child(4){ 	 }
-.th_List_left_header:nth-child(5){ 	 }
 
 .tr_List_left_header{
 
 	font-size: 100%;
-	height : 80% ;
+	height : 100% ;
 	text-align:left;
 }
 
@@ -347,9 +444,8 @@ Button:active {
 	min-height:100px;
 }
 .quo_option{
-	height: 19%;
+	height: 20%;
 	width: 20%;
-	top:50%;
 	text-align: center ;
 }
 .set_float_right{
@@ -421,6 +517,9 @@ Button:active {
 .separation
 {
 	height: 1%;
+}
+.set_List_border_color{
+	border: 1px solid <? echo $List_border_color; ?> ;
 }
 /*主頁面中，標題區塊用*/
 .art_top{ //
