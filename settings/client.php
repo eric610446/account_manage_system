@@ -44,7 +44,7 @@
 		}
 		if(isset($_POST['modify_mode']) or ($_GET["mode"]=="modify") ) {
 			$mode = "modify" ;
-			$button1='<button type="submit" name="find_button" class="com_info" id="find_button">找客戶</button>';
+			$button1='<button type="submit" name="find_button" class="com_info" id="find_button">尋找</button>';
 			var_init();
 			$default_div_color = $default_sleep_input ;
 			$readonly = "readonly" ;
@@ -55,7 +55,7 @@
 		}
 		if(isset($_POST['find_mode']) or ($_GET["mode"]=="find") ) {
 			$mode = "find" ;
-			$button1='<button type="submit" name="find_button" class="com_info" id="find_button">找客戶</button>';
+			$button1='<button type="submit" name="find_button" class="com_info" id="find_button">尋找</button>';
 			var_init();
 			$test=$test.' find mode<br/>';
 			$only_get_info=1;
@@ -130,7 +130,7 @@
 			// 建立選取地點的下拉式選單
 			$location = location_select_option($conn, $client_location) ;
 
-			$button1='<button type="submit" name="find_button" class="com_info" id="find_button">找客戶</button>';
+			$button1='<button type="submit" name="find_button" class="com_info" id="find_button">尋找</button>';
 		}
 
 
@@ -219,7 +219,7 @@
 			// 建立選取地點的下拉式選單
 			$location = location_select_option($conn, $client_location) ;
 
-			$button1='<button type="submit" name="find_button" class="com_info" id="find_button">找商品</button>';
+			$button1='<button type="submit" name="find_button" class="com_info" id="find_button">尋找</button>';
 		}
 
 
@@ -355,7 +355,7 @@
 			// 建立選取地點的下拉式選單
 			$location = location_select_option($conn, $client_location) ;
 
-			$button1='<button type="submit" name="find_button" class="com_info" id="find_button">找商品</button>';
+			$button1='<button type="submit" name="find_button" class="com_info" id="find_button">尋找</button>';
 
 		}
 

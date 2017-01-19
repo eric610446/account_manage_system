@@ -232,7 +232,7 @@
 			$location = location_select_option($conn, $supplier_location) ;
 
 
-			$button1='<button type="submit" name="find_button" >找商品</button>';
+			$button1='<button type="submit" name="find_button" >尋找</button>';
 		}
 
 
@@ -369,7 +369,7 @@
 			// 建立選取地點的下拉式選單
 			$location = location_select_option($conn, $client_location) ;
 
-			$button1='<button type="submit" name="find_button" class="com_info">找商品</button>';
+			$button1='<button type="submit" name="find_button" class="com_info">尋找</button>';
 
 		}
 
