@@ -94,19 +94,20 @@
 					if ( $result->num_rows > 0 ) {
 						// fetch result as an associate array
 						while( $row = $result->fetch_assoc() ) {
-							$supplier_s_id          = $row['s_id'] ;
-							$supplier_supplier_id   = $row['supplier_id'] ;
-							$supplier_name          = $row['name'] ;
-							$supplier_name_backup   = $row['name'] ;
-							$supplier_nickname      = $row['nickname'] ;
-							$supplier_ubn           = $row['ubn'] ;
-							$supplier_company_phone = $row['company_phone'] ;
-							$supplier_company_fax   = $row['company_fax'] ;
-							$supplier_email         = $row['email'] ;
-							$supplier_location      = $row['location'] ;
-							$supplier_address       = $row['address'] ;
-							$supplier_contact       = $row['contact'] ;
-							$supplier_contact_phone = $row['contact_phone'] ;
+							$supplier_s_id            = $row['s_id'] ;
+							$supplier_supplier_id     = $row['supplier_id'] ;
+							$supplier_name            = $row['name'] ;
+							$supplier_name_backup     = $row['name'] ;
+							$supplier_nickname        = $row['nickname'] ;
+							$supplier_ubn             = $row['ubn'] ;
+							$supplier_company_phone   = $row['company_phone'] ;
+							$supplier_company_fax     = $row['company_fax'] ;
+							$supplier_email           = $row['email'] ;
+							$supplier_location        = $row['location'] ;
+							$supplier_location_backup = $row['location'] ;
+							$supplier_address         = $row['address'] ;
+							$supplier_contact         = $row['contact'] ;
+							$supplier_contact_phone   = $row['contact_phone'] ;
 						}
 
 						$find_status= "查詢成功!";
@@ -171,7 +172,9 @@
 				}
 				if($go) {
 					// 建立流水號
-					$supplier_s_id = sid_create($conn, "supplier") ;
+					if( $supplier_location != $supplier_location_backup ) {
+						$supplier_s_id = sid_create($conn, "supplier") ;
+					}
 
 					$sql_cmd = "update client_info.supplier_db set
 						s_id='".$supplier_s_id."',
@@ -408,6 +411,7 @@
 					echo "
 					<input type='hidden' name='supplier_id' value='$supplier_supplier_id'>
 					<input type='hidden' name='supplier_name_backup' value='$supplier_name_backup'>
+					<input type='hidden' name='supplier_location_backup' value='$supplier_location_backup'>
 					<li id='list1'>
 						<div id='sid'>
 							<label for='sid'>流水號</label>

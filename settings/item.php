@@ -104,6 +104,8 @@
 							$item_currency    = $row['currency'] ;
 	    				}
 	    				$supplier_select_option = supplier_select_option( $conn, $item_supplier_id ) ;
+
+	    				// 建立 item 類型下拉式選單
 	    				$item_type_select_option = item_type_select_option( $item_s_id ) ;
 						$readonly = "" ;
 						$disabled = "" ;
@@ -145,7 +147,7 @@
 				if( $item_name != $item_name_backup ) {
 					if($result->num_rows > 0) {
 						$final_status = $final_status."<br/>建立 item 資料失敗！<br/>原因： ".$item_name."不可重複建立！<br/>";
-						$button2 = "<button type='submit' name='create_button'>建立</button>" ;
+						$button2 = "<button type='submit' name='modify_button'>修改</button>" ;
 						echo "
 						<script>
 							alert('錯誤！　物品　".$item_name."　不可重複建立！') ;
@@ -157,11 +159,13 @@
 				}
 				if($go) {
 					// 建立流水號
-					$item_s_id = item_sid_create($conn, $item_type_id) ;
+					if( $item_type_id != $item_type_id_backup ) {
+						$item_s_id = item_sid_create($conn, $item_type_id) ;
+					}
 
 					$sql_cmd = "update client_info.item_db set
 						s_id        = '".$item_s_id."',
-						name='".$item_name."',
+						name        ='".$item_name."',
 						supplier_id ='".$item_supplier_id."',
 						price       ='".$item_price."',
 						currency    ='".$item_currency."'
@@ -371,6 +375,7 @@
 					echo "
 					<input type='hidden' name='item_id' value='$item_id'>
 					<input type='hidden' name='item_name_backup' value='$item_name_backup'>
+					<input type='hidden' name='item_type_id_backup' value='$item_type_id_backup'>
 					<li id='list1'>
 						<div id='sid'>
 							<label for='sid'>流水號</label>

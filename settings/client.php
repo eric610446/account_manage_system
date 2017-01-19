@@ -90,19 +90,20 @@
 					if ( $result->num_rows > 0 ) {
 						// fetch result as an associate array
 						while( $row = $result->fetch_assoc() ) {
-							$client_customer_id   = $row['customer_id'] ;
-							$client_s_id		  = $row['s_id'] ;
-							$client_name		  = $row['name'] ;
-							$client_name_backup = $row['name'] ;
-							$client_nickname	  = $row['nickname'] ;
-							$client_ubn		   = $row['ubn'] ;
-							$client_company_phone = $row['company_phone'] ;
-							$client_company_fax   = $row['company_fax'] ;
-							$client_email		 = $row['email'] ;
-							$client_location	  = $row['location'] ;
-							$client_address	   = $row['address'] ;
-							$client_contact	   = $row['contact'] ;
-							$client_contact_phone = $row['contact_phone'] ;
+							$client_customer_id     = $row['customer_id'] ;
+							$client_s_id            = $row['s_id'] ;
+							$client_name            = $row['name'] ;
+							$client_name_backup     = $row['name'] ;
+							$client_nickname        = $row['nickname'] ;
+							$client_ubn             = $row['ubn'] ;
+							$client_company_phone   = $row['company_phone'] ;
+							$client_company_fax     = $row['company_fax'] ;
+							$client_email           = $row['email'] ;
+							$client_location        = $row['location'] ;
+							$client_location_backup = $row['location'] ;
+							$client_address         = $row['address'] ;
+							$client_contact         = $row['contact'] ;
+							$client_contact_phone   = $row['contact_phone'] ;
 						}
 						$default_div_color = $default_active_input ;
 						$find_status= "查詢成功!";
@@ -160,20 +161,22 @@
 				}
 				if($go) {
 					// 建立流水號
-					$client_s_id = sid_create($conn, "customer") ;
+					if( $client_location != $client_location_backup ) {
+						$client_s_id = sid_create($conn, "customer") ;
+					}
 
 					$sql_cmd = "update client_info.customer_db set
-						s_id              ='".$client_s_id."',
-						name              ='".$client_name."',
-						nickname          ='".$client_nickname."',
-						ubn               ='".$client_ubn."',
-						company_phone     ='".$client_company_phone."',
-						company_fax       ='".$client_company_fax."',
-						email             ='".$client_email."',
-						location          ='".$client_location."',
-						address           ='".$client_address."',
-						contact           ='".$client_contact."',
-						contact_phone     ='".$client_contact_phone."'
+						s_id                   ='".$client_s_id."',
+						name                   ='".$client_name."',
+						nickname               ='".$client_nickname."',
+						ubn                    ='".$client_ubn."',
+						company_phone          ='".$client_company_phone."',
+						company_fax            ='".$client_company_fax."',
+						email                  ='".$client_email."',
+						location               ='".$client_location."',
+						address                ='".$client_address."',
+						contact                ='".$client_contact."',
+						contact_phone          ='".$client_contact_phone."'
 					where customer_id ='".$client_customer_id."'
 					";
 					$result = $conn->query($sql_cmd) ;
@@ -396,6 +399,7 @@
 					echo "
 					<input type='hidden' name='client_customer_id' value='$client_customer_id'>
 					<input type='hidden' name='client_name_backup' value='$client_name_backup'>
+					<input type='hidden' name='client_location_backup' value='$client_location_backup'>
 					<li id='list1'>
 						<div id='sid'>
 							<label for='sid'>流水號</label>
