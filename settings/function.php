@@ -5,38 +5,40 @@ function client_get_html_input() {
 
 	require('var.php') ;
 
-	$client_customer_id	  = $_POST["client_customer_id"];
-	$client_s_id          = $_POST["s_id"];
-	$client_name          = $_POST["name"];
-	$client_name_backup   = $_POST["client_name_backup"];
-	$client_nickname      = $_POST["nickname"];
-	$client_ubn           = $_POST["ubn"];
-	$client_company_phone = $_POST["company_phone"];
-	$client_company_fax   = $_POST["company_fax"];
-	$client_email         = $_POST["email"];
-	$client_location      = $_POST["location"];
-	$client_address       = $_POST["address"];
-	$client_contact       = $_POST["contact"];
-	$client_contact_phone = $_POST["contact_phone"];
+	$client_customer_id     = $_POST["client_customer_id"];
+	$client_s_id            = $_POST["s_id"];
+	$client_name            = $_POST["name"];
+	$client_name_backup     = $_POST["client_name_backup"];
+	$client_nickname        = $_POST["nickname"];
+	$client_ubn             = $_POST["ubn"];
+	$client_company_phone   = $_POST["company_phone"];
+	$client_company_fax     = $_POST["company_fax"];
+	$client_email           = $_POST["email"];
+	$client_location        = $_POST["location"];
+	$client_location_backup = $_POST["client_location_backup"];
+	$client_address         = $_POST["address"];
+	$client_contact         = $_POST["contact"];
+	$client_contact_phone   = $_POST["contact_phone"];
 }
 
 function supplier_get_html_input() {
 
 	require('var.php') ;
 
-	$supplier_supplier_id   = $_POST["supplier_id"];
-	$supplier_s_id          = $_POST["supplier_s_id"];
-	$supplier_name          = $_POST["name"];
-	$supplier_name_backup   = $_POST["supplier_name_backup"];
-	$supplier_nickname      = $_POST["nickname"];
-	$supplier_ubn           = $_POST["ubn"];
-	$supplier_company_phone = $_POST["company_phone"];
-	$supplier_company_fax   = $_POST["company_fax"];
-	$supplier_email         = $_POST["email"];
-	$supplier_location      = $_POST["location"];
-	$supplier_address       = $_POST["address"];
-	$supplier_contact       = $_POST["contact"];
-	$supplier_contact_phone = $_POST["contact_phone"];
+	$supplier_supplier_id     = $_POST["supplier_id"];
+	$supplier_s_id            = $_POST["supplier_s_id"];
+	$supplier_name            = $_POST["name"];
+	$supplier_name_backup     = $_POST["supplier_name_backup"];
+	$supplier_nickname        = $_POST["nickname"];
+	$supplier_ubn             = $_POST["ubn"];
+	$supplier_company_phone   = $_POST["company_phone"];
+	$supplier_company_fax     = $_POST["company_fax"];
+	$supplier_email           = $_POST["email"];
+	$supplier_location        = $_POST["location"];
+	$supplier_location_backup = $_POST["supplier_location_backup"];
+	$supplier_address         = $_POST["address"];
+	$supplier_contact         = $_POST["contact"];
+	$supplier_contact_phone   = $_POST["contact_phone"];
 }
 
 function location_get_html_input() {
@@ -57,14 +59,15 @@ function item_get_html_input() {
 
 	require('var.php') ;
 
-	$item_id          	= $_POST["item_id"];
-	$item_s_id        	= $_POST["item_s_id"];
-	$item_name        	= $_POST["item_name"];
-	$item_name_backup   = $_POST["item_name_backup"];
-	$item_type_id     	= $_POST["item_type_id"];
-	$item_supplier_id 	= $_POST["item_supplier_id"];
-	$item_price       	= $_POST["item_price"];
-	$item_currency    	= $_POST["item_currency"];
+	$item_id             = $_POST["item_id"];
+	$item_s_id           = $_POST["item_s_id"];
+	$item_name           = $_POST["item_name"];
+	$item_name_backup    = $_POST["item_name_backup"];
+	$item_type_id        = $_POST["item_type_id"];
+	$item_type_id_backup = $_POST["item_type_id_backup"];
+	$item_supplier_id    = $_POST["item_supplier_id"];
+	$item_price          = $_POST["item_price"];
+	$item_currency       = $_POST["item_currency"];
 }
 
 function var_init() {
@@ -81,6 +84,7 @@ function var_init() {
 	$client_company_fax          = '' ;
 	$client_email                = '' ;
 	$client_location             = '' ;
+	$client_location_backup      = '' ;
 	$client_address              = '' ;
 	$client_contact              = '' ;
 	$client_contact_phone        = '' ;
@@ -95,6 +99,7 @@ function var_init() {
 	$supplier_company_fax        = '' ;
 	$supplier_email              = '' ;
 	$supplier_location           = '' ;
+	$supplier_location_backup    = '' ;
 	$supplier_address            = '' ;
 	$supplier_contact            = '' ;
 	$supplier_contact_phone      = '' ;
@@ -103,6 +108,8 @@ function var_init() {
 	$item_s_id                   = '' ;
 	$item_name                   = '' ;
 	$item_name_backup            = '' ;
+	$item_type_id                = '' ;
+	$item_type_id_backup         = '' ;
 	$item_supplier_id            = '' ;
 	$item_price                  = '' ;
 	$item_currency               = '' ;
@@ -162,17 +169,21 @@ function supplier_select_option($conn, $selected='') {
 }
 
 function item_type_select_option($selected='') {
-	//echo "$selected" ;
+	require('var.php') ;
+
 	$html_code = "<select id='item_type_id' name='item_type_id'>" ;
 	if( preg_match("/P/", $selected) ) {
+		$item_type_id_backup = "P" ;
 		$p_s = "selected='selected'" ;
 		$html_code.=">" ;
 	}
 	elseif( preg_match("/M/", $selected) ) {
+		$item_type_id_backup = "M" ;
 		$m_s = "selected='selected'" ;
 		$html_code.=">" ;
 	}
 	elseif( preg_match("/O/", $selected) ) {
+		$item_type_id_backup = "O" ;
 		$o_s = "selected='selected'" ;
 		$html_code=$html_code.">" ;
 	}
