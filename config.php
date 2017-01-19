@@ -28,8 +28,8 @@
 	
 	$Sub_btn_activate		= "#0FA" ;					/*次選單按鈕顏色(已選中)*/
 	$Sub_btn_disable		= "#FFF" ;					/*次選單按鈕顏色(未選中)*/
-	$Sub_content_color		= "#444" ;				/*次選單按鈕文字顏色*/
-	$Sub_content_shadow		= "#999" ;				/*次選單按鈕文字陰影(已選中)*/
+	$Sub_content_color		= "#444" ;					/*次選單按鈕文字顏色*/
+	$Sub_content_shadow		= "#999" ;					/*次選單按鈕文字陰影(已選中)*/
 	
 	$table_border_color		= "#CCC";					/*表格邊框顏色*/
 	$table_header_color		= "#5CF";					/*表格標題底色*/
@@ -46,7 +46,7 @@
 	$Index_Sub_btn_width	= "100%";					/*次選單按鈕寬度*/
 	$Index_Sub_btn_height	= "14.5%";					/*次選單按鈕高度 秉霖預設100px*/
 	
-	$List_btn_activate		= "#3C6" ;					/*主頁面城市/清單按鈕顏色(hover)*/
+	$List_btn_activate		= "#3C3" ;					/*主頁面城市/清單按鈕顏色(hover)*/
 	$List_btn_disable		= "#FFF" ;					/*主頁面城市/清單按鈕顏色(一般)*/
 	$List_content_color		= "#444" ;					/*主頁面城市/清單按鈕文字顏色*/
 	$List_border_color		= "#CCC";					/*主頁面城市/清單按鈕邊框顏色*/
