@@ -252,6 +252,14 @@ Button:active {
 .th_List_quo_item:nth-child(4){ 	width : 15%; }
 .th_List_quo_item:nth-child(5){ 	width : 20%; }
 .th_List_quo_item:nth-child(6){ 	width : 13%; }
+/*單獨客戶簡單報價單列表各欄位寬度*/
+.th_List_mth_smpl_quo:nth-child(1){ 	width : 4%; }
+.th_List_mth_smpl_quo:nth-child(2){ 	width : 17%; }
+.th_List_mth_smpl_quo:nth-child(3){ 	width : 12%; }
+.th_List_mth_smpl_quo:nth-child(4){ 	width : 10%; }
+.th_List_mth_smpl_quo:nth-child(5){ 	width : 25%; }
+.th_List_mth_smpl_quo:nth-child(6){ 	width : 20%; }
+.th_List_mth_smpl_quo:nth-child(7){ 	width : 12%; }
 
 .tr_List_top_header{
 
@@ -302,6 +310,21 @@ Button:active {
 }
 
 .td_List_sgl_smpl_quo:nth-child(6) {
+	padding:0%;
+	padding-top:0%;
+	padding-bottom:0%;
+	border: 0 ;	
+}
+
+.td_List_mth_smpl_quo {
+	font-size: 60%;
+	padding:0.3%;
+	padding-top:0.8%;
+	padding-bottom:0.8%;
+	border: 1px solid <? echo $table_border_color; ?> ;	
+}
+
+.td_List_mth_smpl_quo:nth-child(7) {
 	padding:0%;
 	padding-top:0%;
 	padding-bottom:0%;
@@ -493,8 +516,8 @@ Button:active {
 }
 
 #pdf_info {
-	border-top:5px black solid;　//上方邊框寬度設為 5px，顏色為黑色
-　border-right:8px red double;　//右邊的邊框寬度設為 8px，顏色為紅色，樣式為 double
+  border-top:5px black solid;　//上方邊框寬度設為 5px，顏色為黑色
+　border-right : 8px red double;　//右邊的邊框寬度設為 8px，顏色為紅色，樣式為 double
 　border-left:7px yellow dotted;　//左邊的邊框寬度設為 7px，顏色為黃色，樣式為 dotted
 　border-bottom:3px blue dashed;　//下方邊框寬度設為 3px，顏色為藍色，樣式為 dashed
 　padding:30px;
