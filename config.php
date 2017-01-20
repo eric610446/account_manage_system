@@ -78,7 +78,7 @@
 	$footer_height 			= "3%";						/*底層高度*/
 	$footer_context 		=							/*底層內容*/
 							"最佳瀏覽解析度：1920*1080 
-							《 Developed by Six Monster Information Corp. 》
+							《 Developed by Six Monster Information Inc. 》
 							業務聯絡人：陳敬宗   
 							<a href='mailto:kentchen@mail2000.com.tw'>kentchen@mail2000.com.tw</a>";
 ?>
