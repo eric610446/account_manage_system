@@ -270,16 +270,7 @@ function main_search_way($main_choose,$clear_way){
 	
 	if($active_way==1)
 	{
-		connect2db() ;
-		global $conn ;															
-		//抓出某個城市的所有客戶資料
-		$sql_cmd = "SELECT nickname FROM `customer_db` WHERE s_id='CTWTPE002';" ;
-		$result = mysql_query( $sql_cmd, $conn ) ;
-		if($result==NULL)
-			$AM=1;
-		else
-			$AM=0;
-		echo "<div>查詢功能:".$AM." 開發中</div>";
+		month_of_year();
 		//echo "mc:".$_REQUEST['srch_way_choose']."_</div>";
 	}
 	else if($active_way==2)
@@ -337,6 +328,7 @@ function main_search_way($main_choose,$clear_way){
 	}
 }
 
+/*取得該國所有有報價單的客戶的所在位置*/
 function cities_of_country($tgt_cntry){ //target country
 
 	//取得並記錄當前位置
@@ -386,6 +378,76 @@ function cities_of_country($tgt_cntry){ //target country
 						name=btn_city_to_customer value=".$location_city_arr[$i][0]." >"
 						.$location_city_arr[$i][1].
 					"</button></div>" ;
+		}
+	}
+	else{
+		echo "<div class='art_top'> 對不起，查無資料。</div>";
+	}
+}
+
+/*取得所有存在報價單的月份*/
+function month_of_year(){
+	
+	//取得並記錄當前位置
+	echo "<input type='hidden' name='Which_Main_choose' value='".$_REQUEST['Which_Main_choose']."' >";
+	echo "<input type='hidden' name='Which_Sub_choose' value='".$_REQUEST['srch_way_choose']."' >";
+	
+	connect2db() ;
+	global $conn ;			
+	
+	//是否篩選掉不是訂單的報價單
+	if( $_REQUEST['Which_Main_choose']==2 )
+	{
+		$content_qorp ="報價單";
+		$check_order = 0;
+	}
+	else
+	{	
+		$content_qorp ="訂單";
+		$check_order = 1;
+	}
+	
+	//抓出所有有報價單的客戶的所在位置
+	$sql_cmd = "SELECT DISTINCT QS.date_y,QS.date_m
+                	FROM client_info.quotation_simple_db AS QS
+				WHERE QS.invalid = 0 AND QS.is_order >= ".$check_order."
+				ORDER BY QS.date DESC;" ;
+	
+	$result = mysql_query( $sql_cmd, $conn ) ;
+	
+	//echo $sql_cmd;
+	//echo "swc:".$_REQUEST['srch_way_choose']."_</div>";
+	
+	if(mysql_num_rows($result)>0){
+		$date_arr=array();
+		
+		for( $i=0 ; $row = mysql_fetch_array($result) ; $i++){
+				$date_arr[$i][0]=$row['date_y'];		//將城市"編號"各別放入location_country_arr['城市'][0]
+				$date_arr[$i][1]=$row['date_m'];			//將城市"名稱"各別放入location_country_arr['城市'][1]
+		}
+		/*//test output
+		for( $i=0 ; $i<$location_city_amount ; $i++){
+				echo "編號 ".$date_arr[$i][0]." ";
+				echo "地名 ".$date_arr[$i][1]." <br>";
+		}*/
+		
+		echo "<div class='art_top '> 請選擇想要瀏覽".$content_qorp."的月份：<div ='separation'><hr class='set_List_border_color'></div></div>";
+		//echo "<div class='separation set_clear_right'><hr></div>";
+		for ( $i=0 ; $i<sizeof($date_arr) ; $i++ ) {
+					
+			if($date_arr[$i][1]<10)
+				echo   "<div class = div_btn_cities>
+						<button type=submit class='btn_List'
+							name=btn_date_to_quo value=".$date_arr[$i][0]."0".$date_arr[$i][1]." >"
+							.$date_arr[$i][0]." 年 ".$date_arr[$i][1]." 月
+						</button></div>" ;
+			else
+				echo   "<div class = div_btn_cities>
+						<button type=submit class='btn_List'
+							name=btn_date_to_quo value=".$date_arr[$i][0].$date_arr[$i][1]." >"
+							.$date_arr[$i][0]." 年 ".$date_arr[$i][1]." 月
+						</button></div>" ;
+
 		}
 	}
 	else{
@@ -482,6 +544,92 @@ function echo_city_customer($location){
 	else{
 		echo "<div class='art_top'> 對不起，查無資料。</div>";
 	}
+}
+
+//取得該月的所有報價單
+function echo_list_month_all_simple_quo( $dateYYYYMM ) {
+	
+	//取得並記錄當前位置
+	echo "<input type='hidden' name='Which_Main_choose' value='".$_REQUEST['Which_Main_choose']."' >";
+	echo "<input type='hidden' name='Which_Sub_choose' value='".$_REQUEST['Which_Sub_choose']."' >";
+	
+	//連接資料庫
+	connect2db() ;
+	global $conn ;
+	
+	//抓出客戶所有的 0:報價單資料   1:訂單資料
+	if($_REQUEST['Which_Main_choose']==2){
+		$check_qorp=0;
+		$content_qorp="報價單";
+		$sql_qorp="qu_s_id";
+	}
+	else{
+		$check_qorp=1;
+		$content_qorp="訂單";
+		$sql_qorp="po_s_id";
+	}
+	//抓取該客戶的所有報價單、客戶名稱、物品名稱
+	$sql_cmd = "SELECT QS.*, C.nickname AS cname, I.name AS iname
+				FROM client_info.quotation_simple_db AS QS
+				LEFT JOIN client_info.customer_db AS C
+				ON QS.customer_id = C.customer_id
+				LEFT JOIN client_info.item_db AS I
+				ON QS.item_id = I.item_id
+				WHERE QS.date_y = ".(int)($dateYYYYMM/100)." AND QS.date_m = ".($dateYYYYMM%100)." AND QS.is_order >= 0 AND QS.invalid = 0 
+				ORDER BY date DESC";
+
+	$result = mysql_query( $sql_cmd, $conn ) ;
+
+	if(mysql_num_rows($result)>0){
+		for( $row_no=1; $row = mysql_fetch_array( $result) ; $row_no++ ) 
+		{
+			if($row_no==1){
+				echo "<div class='art_top'> 客戶 <b>".$row['cname']."</b> 的".$content_qorp."：</div>";
+				echo "<div class='div_List_top_header'>";
+				echo "<table class='table_List_top_header'>";
+					echo "<tr class='tr_List_top_header'>";
+						echo "<th class='th_List_top_header th_List_sgl_smpl_quo'>項次";
+						echo "</th>";
+						echo "<th class='th_List_top_header th_List_sgl_smpl_quo'>".$content_qorp."<br>流水號";
+						echo "</th>";
+						echo "<th class='th_List_top_header th_List_sgl_smpl_quo'>報價單<br>創建日期";
+						echo "</th>";
+						echo "<th class='th_List_top_header th_List_sgl_smpl_quo'>重點<br>採買項目";
+						echo "</th>";
+						echo "<th class='th_List_top_header th_List_sgl_smpl_quo'>總金額<br>";
+						echo "</th>";
+						echo "<th class='th_List_top_header th_List_sgl_smpl_quo'>詳細<br>".$content_qorp;
+						echo "</th>";
+					echo "</tr>";
+			}
+			
+			echo "<tr class='tr_List_top_header'>";
+				echo "<td class='td_List_top_header td_List_sgl_smpl_quo'>".$row_no;
+				echo "</td>";
+				echo "<td class='td_List_top_header td_List_sgl_smpl_quo'>".$row[$sql_qorp];
+				echo "</td>";
+				//截短日期
+				$quo_time = strtotime($row['date']);
+				$quo_time = date("Y-m-d", $quo_time);
+				echo "<td class='td_List_top_header td_List_sgl_smpl_quo'>".$quo_time;
+				echo "</td>";
+				echo "<td class='td_List_top_header td_List_sgl_smpl_quo'>".$row['iname'];
+				echo "</td>";
+				echo "<td class='td_List_top_header td_List_sgl_smpl_quo'>".$row['currency']."$ ".number_format($row['price']);
+				echo "</td>";
+				echo "<td class='td_List_top_header td_List_sgl_smpl_quo'>";
+					echo "<button type=submit class='btn_List' name=btn_list_detail_quo value=".$row['quo_id']." >查看".$content_qorp."</button>" ;
+				echo "</td>";
+			echo "</tr>";
+		}
+		echo "</table>";
+		echo "</div>";		
+	}
+	else
+	{
+		echo "<div class='art_top'> 對不起，查無客戶帳務資料。</div>";
+	}
+
 }
 
 //取得國外的所有客戶名單
@@ -720,6 +868,8 @@ function list_detail_cus_or_sup_info($type,$type_info){
 		echo "<div class='art_top'> 對不起，查無資料。</div>";
 	}
 }
+
+
 
 //顯示出各個國家的 button
 /*

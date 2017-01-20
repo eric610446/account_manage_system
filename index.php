@@ -200,6 +200,10 @@
 			}
 		}*/
 		
+		//選擇一個要查詢年分月份後，依照日期列出報價單。
+		if(isset($_POST['btn_date_to_quo'])) {
+			echo_list_month_all_simple_quo($_POST['btn_date_to_quo']);
+		}
 		
 		//選擇一個要查詢報價單的客戶後，依照日期列出報價單。
 		if(  isset( $_POST['btn_list_simple_quo'] )  ) {
