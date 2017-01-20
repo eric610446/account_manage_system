@@ -166,13 +166,12 @@
 		// 家睿：下面這兩個交給偉安寫，現在是空function
 		/*<<<按鈕在查詢報價單中>>>，輸入值為某個訂單/報價單，將其is_order屬性更改為報價單/訂單，如果訂單流水號是空的，要產生新的訂單流水號*/
 		if(isset($_POST['btm_order_change'])) {	
-			$qu_id = $_POST['btm_order_change'] ;
-			order_change($qu_id) ;
+			order_change($_POST['btm_order_change']) ;
 		}			
 		/*<<<按鈕在查詢報價單中>>>，輸入值為某個訂單/報價單，可修改這個訂單的客戶、增減物品種類(ps.刪物品種類，直接把該項的invaild標記為1比較快)、更改數量*/
 		if(isset($_POST['btm_edit_quo'])) {	
 			$qu_id = $_POST['btm_edit_quo'] ;
-			create_quotation($qu_id) ;
+			edit_quotation($qu_id) ;
 		}
 		
 //////////////----↑ 偉安工作區域 ↑----------------------------------------------------------------------------------------------------
