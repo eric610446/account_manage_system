@@ -1,6 +1,6 @@
 <?	/*秉霖初版配色	$header_bg_color = "#FF9999" ; 	$asideL_bg_color = "#5b88f6" ; 	$main_bg_color = "#FFFFCC" ; 	*/
 	/*家睿初版配色	$header_bg_color = "#472D1E" ; 	$even_rows_bg_color		= "#FFD2BF";	$even_rows_font_color	= "#280E00";	// + 秉霖二版配色 $main_bg_color= "#FFF" ;$odd_rows_color= "#FAFFFF";$even_rows_color "#FFFFFA";*/
-	
+	/**/
 	/*標題列配置*/
 	$header_height 			= "10%";					/*標題列高度*/
 	$header_bg_color 		= "#C9CBB1" ;				/*標題列底色*/ //078285 #c9cbb1 : #333147
