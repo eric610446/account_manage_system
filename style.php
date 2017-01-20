@@ -11,16 +11,58 @@
 	text-align: center;
 }
 
-.btm_main_btm{
-	width:100%;
-	height:100%;
+.btn_main{
+	width:90%;
+	height:99%;
+	background-color: <?php echo $Main_btn_disable; ?>;
+	color: <? echo $Main_btn_color; ?> ;
 }
-.btm_main_btm:hover{
+
+.btn_main_active{	
+	background-color: <?php echo $Main_btn_activate; ?>;	
+}
+.btn_main_active:hover{
 	text-decoration:underline;
 }
+.btn_main_disable{
+	
+}
+.btn_main_disable:hover{
+	text-decoration:underline;
+	background-color: <?php echo $Main_btn_activate; ?>;
+}
 
+.btn_submit{
+	margin: 0 ;
+	width: 80% ;
+	height: 80% ;
+	border: 0 ;
+	border-radius: <? echo ((string)((int)$button_border_radius)-2)."px" ?> ;
+	background-color: <? echo $submit_btn_color; ?> ;
+	outline: none ;
+	font-size: 80% ;
+	color: <? echo $submit_content_color; ?> ;
+	box-shadow: 7px 7px 10px <? echo $submit_btn_shadow ?>;
+}
+.btn_submit:hover{
+	/*background-color: <?php echo $List_btn_activate; ?>;*/
+	box-shadow: 3px 3px 8px #888888;
+	
+	position:relative;	/*位移用參數*/
+	top:4px;			/*從上往下移動*/
+	left:4px;			/*從左往右移動*/
+}
 
 Button {
+	font-family: <?php echo $body_font_family; ?> ;	
+	font-size:80%;
+	height:80%;
+	width: 90%;
+	border : 0;
+}
+
+/*舊版button 全捨棄*/
+/*Button {
 	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
 	box-shadow:inset 0px 1px 0px 0px #ffffff;
@@ -62,6 +104,53 @@ Button:hover {
 Button:active {
 	position:relative;
 	top:1px;
+}*/
+
+/*查詢功能說明區塊*/
+.srch_docun{
+	font-size: 100%;
+	margin: 5% 13% ;
+	height: 64%;
+	
+}
+.table_srch_docun{
+	font-size: 100%;
+	width : 100%;
+	height : 100%;
+	border: 1px solid <? echo $table_border_color; ?> ;
+}
+
+.th_srch_docun{
+	font-size: 62.5%;
+	height : 25%;
+	background-color: <? echo $table_header_color; ?> ;
+}
+.th_srch_docun:nth-child(odd) {
+	width : 20% ;
+}
+.tr_srch_docun{
+	font-size: 100%;
+	height : 25%;
+}
+
+.td_srch_docun {
+	font-size: 55%;
+	border: 1px solid <? echo $table_border_color; ?> ;	
+	border-radius: <? echo $input_border_radius ?> ;
+}
+.td_srch_docun:nth-child(odd) {
+	text-align:center ;
+}
+.td_srch_docun:nth-child(even) {
+	padding-left:1%;
+}
+
+
+.tr_srch_docun:nth-child(odd) {
+	background-color: <? echo $odd_rows_color; ?> ;
+}
+.tr_srch_docun:nth-child(even) {
+	background-color: <? echo $even_rows_color; ?> ;
 }
 
 /*國家按鈕*/
@@ -73,6 +162,7 @@ Button:active {
 	text-align: center ;
 }
 /*城市按鈕*/
+
 #div_city_btm{
 	height: 13.5%;
 	width: 16.66%;
@@ -89,8 +179,204 @@ Button:active {
 	float:left;
 	text-align: center ;
 }
+.div_btn_cities{
+	height: 19%;
+	width: 20%;
+	float:left;
+	text-align: center ;
+}
 
-/* 顧客清單的頁面 */
+.btn_List{
+
+	border-radius: <? echo $input_border_radius ?> ;
+	background-color: <?php echo $List_btn_disable; ?>;
+	border: 1px solid <?php echo $List_border_color; ?>;
+	box-shadow: 5px 5px 8px #888888;
+}
+.btn_List:hover{
+	background-color: <?php echo $List_btn_activate; ?>;
+	border: 1px solid <?php echo $List_btn_activate; ?>;
+	box-shadow: 2px 2px 8px #888888;
+	
+	position:relative;	/*位移用參數*/
+	top:3px;			/*從上往下移動*/
+	left:3px;			/*從左往右移動*/
+}
+.btn_List_big{
+
+	height: 96%;
+	width: 99%;
+}
+
+/* 客戶清單的頁面 */
+.div_List_top_header{
+	font-size:100%;
+}
+
+.table_List_top_header{
+	font-size: 100%;
+	width : 100%;
+	border: 1px solid <? echo $table_border_color; ?> ;
+}
+
+.th_List_top_header{
+	font-size: 90%;
+	height : 100%;
+	background-color: <? echo $table_header_color; ?> ;
+}
+/*城市內客戶列表各欄位寬度*/
+.th_List_city_customer:nth-child(1){ 	width : 7.5%; }
+.th_List_city_customer:nth-child(2){ 	width : 15%; }
+.th_List_city_customer:nth-child(3){ 	width : 45%; }
+.th_List_city_customer:nth-child(4){ 	width : 15%; }
+.th_List_city_customer:nth-child(5){ 	width : 15%; }
+/*外國客戶列表各欄位寬度*/
+.th_List_worldwide_customer:nth-child(1){ 	width : 4%; }
+.th_List_worldwide_customer:nth-child(2){ 	width : 14%; }
+.th_List_worldwide_customer:nth-child(3){ 	width : 14%; }
+.th_List_worldwide_customer:nth-child(4){ 	width : 18%; }
+.th_List_worldwide_customer:nth-child(5){ 	width : 18%; }
+.th_List_worldwide_customer:nth-child(6){ 	width : 15%; }
+.th_List_worldwide_customer:nth-child(7){ 	width : 15%; }
+/*單獨客戶簡單報價單列表各欄位寬度*/
+.th_List_sgl_smpl_quo:nth-child(1){ 	width : 4%; }
+.th_List_sgl_smpl_quo:nth-child(2){ 	width : 17%; }
+.th_List_sgl_smpl_quo:nth-child(3){ 	width : 13%; }
+.th_List_sgl_smpl_quo:nth-child(4){ 	width : 33%; }
+.th_List_sgl_smpl_quo:nth-child(5){ 	width : 20%; }
+.th_List_sgl_smpl_quo:nth-child(6){ 	width : 13%; }
+/*報價單物品清單列表各欄位寬度*/
+.th_List_quo_item:nth-child(1){ 	width : 4%; }
+.th_List_quo_item:nth-child(2){ 	width : 10%; }
+.th_List_quo_item:nth-child(3){ 	width : 38%; }
+.th_List_quo_item:nth-child(4){ 	width : 15%; }
+.th_List_quo_item:nth-child(5){ 	width : 20%; }
+.th_List_quo_item:nth-child(6){ 	width : 13%; }
+
+.tr_List_top_header{
+
+	font-size: 100%;
+	text-align:center;
+}
+
+.tr_List_top_header:nth-child(odd) {
+	background-color: <? echo $odd_rows_color; ?> ;
+}
+.tr_List_top_header:nth-child(even) {
+	background-color: <? echo $even_rows_color; ?> ;
+}
+
+.td_List_top_header{
+	min-height : 50%;
+	border-radius: <? echo $input_border_radius ?> ;
+}
+
+.td_List_city_customer {
+	font-size: 80%;
+	padding:1%;
+	border: 1px solid <? echo $table_border_color; ?> ;	
+}
+
+.td_List_city_customer:nth-child(4),.td_List_city_customer:nth-child(5) {
+	padding:0%;
+	border: 0 ;	
+}
+
+.td_List_worldwide_customer {
+	font-size: 80%;
+	padding:1%;
+	border: 1px solid <? echo $table_border_color; ?> ;	
+}
+
+.td_List_worldwide_customer:nth-child(6),.td_List_worldwide_customer:nth-child(7) {
+	padding:0%;
+	border: 0 ;	
+}
+
+.td_List_sgl_smpl_quo {
+	font-size: 60%;
+	padding:0.3%;
+	padding-top:0.8%;
+	padding-bottom:0.8%;
+	border: 1px solid <? echo $table_border_color; ?> ;	
+}
+
+.td_List_sgl_smpl_quo:nth-child(6) {
+	padding:0%;
+	padding-top:0%;
+	padding-bottom:0%;
+	border: 0 ;	
+}
+
+
+.td_List_quo_item {
+	font-size: 60%;
+	padding:0.3%;
+	padding-top:0.8%;
+	padding-bottom:0.8%;
+	border: 1px solid <? echo $table_border_color; ?> ;	
+}
+
+.td_List_quo_item:nth-child(6) {
+	padding:0%;
+	padding-top:0%;
+	padding-bottom:0%;
+	border: 0 ;	
+}
+
+.td_List_Button {
+	
+	padding:0%;
+	padding-top:0%;
+	padding-bottom:0%;
+	border: 0 ;	
+}
+
+
+
+/*header在左邊的清單*//*客戶或供應商詳細資料*/
+.div_List_left_header{
+	font-size:100%;
+}
+
+.table_List_left_header{
+	font-size: 100%;
+	width : 100%;
+	border: 1px solid <? echo $table_border_color; ?> ;
+}
+
+.th_List_left_header{
+	font-size: 90%;
+	width : 20%;
+	background-color: <? echo $table_header_color; ?> ;
+	text-align:center;
+}
+
+.tr_List_left_header{
+
+	font-size: 100%;
+	height : 100% ;
+	text-align:left;
+}
+
+.td_List_left_header {
+	padding-left:1%;
+	font-size: 80%;
+	border: 1px solid <? echo $table_border_color; ?> ;	
+	border-radius: <? echo $input_border_radius ?> ;
+}
+
+.tr_List_left_header:nth-child(odd) {
+	background-color: <? echo $odd_rows_color; ?> ;
+}
+.tr_List_left_header:nth-child(even) {
+	background-color: <? echo $even_rows_color; ?> ;
+}
+
+
+
+
+
 #div_cust1{
 	background: <?php echo $odd_rows_bg_color;?> ;
 	color: <?php echo $odd_rows_font_color;?> ;
@@ -158,9 +444,8 @@ Button:active {
 	min-height:100px;
 }
 .quo_option{
-	height: 19%;
+	height: 20%;
 	width: 20%;
-	top:50%;
 	text-align: center ;
 }
 .set_float_right{
@@ -233,6 +518,9 @@ Button:active {
 {
 	height: 1%;
 }
+.set_List_border_color{
+	border: 1px solid <? echo $List_border_color; ?> ;
+}
 /*主頁面中，標題區塊用*/
 .art_top{ //
 	min-height: 8%; /*2.0 new_add*/
@@ -241,6 +529,7 @@ Button:active {
 }
 
 header {
+	line-height:<?php echo $header_line_height; ?>;
 	background-color: <?php echo $header_bg_color; ?> ;
 	font-size: <? echo $header_font_size; ?>;
 	text-align: center;
@@ -253,29 +542,115 @@ header {
 }
 
 /*  側邊選單 */
-.div_aside{
-	margin:3%;
+.div_Main_aside{
 	height:19.5%;
+	text-align: left;
 }
-aside {
-	background-color: <?php echo $asideL_bg_color; ?> ;
-	width:10%;
-	height: <? echo $default_main_height ?>;
-	float:left;	/*其他標籤會如何圍繞著它，影響到 article 能不能夠在 nav 的右邊*/
+.div_Main_asideR{
+	height:19.5%;
+	text-align: right;
+}
+.div_Sub_aside{
+	height:19.5%;
 	text-align: center;
 }
+.Main_aside{
+	width:50%;
+	background-color: <?php echo $asideL_bg_color; ?> ;
+	height: <? echo $default_main_height ?>;
+	float:left;
+}
+.Main_aside_Style_1{
+	width:100%;
+}
+.Main_aside_Style_2{
+	width:50%;
+}
+
+.Sub_aside{
+	width:50%;
+	background-color: <?php echo $asideM_bg_color; ?> ;
+	height: <? echo $default_main_height ?>;
+	float:left;
+}
+.aside_Style_2 {
+	width:20%;
+	float:left;
+}
+.aside_Style_1 {
+	width:10%;
+	float:left;
+}
+div[id='srch_way'] ul {
+	margin: 0 ;
+	padding: 0 ;
+	list-style: none ;
+	text-align: center ;
+	padding-left: 2% ;
+}
+
+div[id='srch_way'] ul li {
+	background-color: #666 ;
+	width: <? echo $Index_Sub_btn_width; ?> ;
+	height: <? echo $Index_Sub_btn_height; ?> ;
+	margin: 10% auto ;
+	border-radius: <? echo $button_border_radius."px" ?> ;
+}
+div[id='srch_way'] ul li button {
+	font-size: 60%;
+	width: 95% ;
+	height: 95% ;
+	margin-left: -1 ;
+	padding: 0 ;
+	
+	color: <? echo $Sub_content_color; ?> ;
+	border-radius: <? echo ((string)((int)$button_border_radius)-2)."px" ?> ;
+}
+div[id='srch_way'] ul li button:hover {
+	background-color: <? echo $Sub_btn_activate; ?> ;
+}
+div[id='srch_way'] ul li button[id='sw_btn_active'] {
+	color: <? echo $Sub_content_color; ?> ;
+	background-color: <? echo $Sub_btn_activate; ?> ;
+	width: 99% ;
+	height: 97% ;
+	margin: 0 ;	
+	text-shadow: <? echo $Sub_content_shadow; ?> 0.03em 0.03em 0.05em;
+}
+div[id='srch_way'] ul li[id='sw_btn_active'] {
+	width: 76% ;
+}
+div[id='srch_way'] button {
+	font-family: <?php echo $body_font_family; ?> ;
+	
+	display: block ;
+	width: 80% ;
+	height: 10% ;
+	background-color: <? echo $Sub_btn_disable; ?> ;
+	margin: 10% auto ;
+}
+div[id='srch_way'] ul {
+	margin: 40% auto ;
+	width: 80% ;
+}
+
 
 
 /* 主要區塊 */
+.article_Style_1 {
+	width: 90%;
+}
+.article_Style_2 {
+	width: 80%;
+}
 article {
 	background-color: <?php echo $main_bg_color ; ?> ; 
-	width: 90%;		
 	height: <? echo $default_main_height ?>;
 	margin-left: 10%;
 	overflow: scroll;
 	overflow-x:hidden;
 }
-#main_section{
+section{
 	margin:0.3%;
 }
 

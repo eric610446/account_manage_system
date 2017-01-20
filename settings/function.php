@@ -2,109 +2,126 @@
 
 //取得 產品名稱 數量 說明內容
 function client_get_html_input() {
-	
+
 	require('var.php') ;
-	
-	$client_customer_id	  = $_POST["client_customer_id"];
-	$client_s_id          = $_POST["s_id"];
-	$client_name          = $_POST["name"];
-	$client_nickname      = $_POST["nickname"];
-	$client_ubn           = $_POST["ubn"];
-	$client_company_phone = $_POST["company_phone"];
-	$client_company_fax   = $_POST["company_fax"];
-	$client_email         = $_POST["email"];
-	$client_location      = $_POST["location"];
-	$client_address       = $_POST["address"];
-	$client_contact       = $_POST["contact"];
-	$client_contact_phone = $_POST["contact_phone"];
+
+	$client_customer_id     = $_POST["client_customer_id"];
+	$client_s_id            = $_POST["s_id"];
+	$client_name            = $_POST["name"];
+	$client_name_backup     = $_POST["client_name_backup"];
+	$client_nickname        = $_POST["nickname"];
+	$client_ubn             = $_POST["ubn"];
+	$client_company_phone   = $_POST["company_phone"];
+	$client_company_fax     = $_POST["company_fax"];
+	$client_email           = $_POST["email"];
+	$client_location        = $_POST["location"];
+	$client_location_backup = $_POST["client_location_backup"];
+	$client_address         = $_POST["address"];
+	$client_contact         = $_POST["contact"];
+	$client_contact_phone   = $_POST["contact_phone"];
 }
 
 function supplier_get_html_input() {
-	
+
 	require('var.php') ;
 
-	$supplier_supplier_id   = $_POST["supplier_id"];	
-	$supplier_s_id          = $_POST["supplier_s_id"];
-	$supplier_name          = $_POST["name"];
-	$supplier_nickname      = $_POST["nickname"];
-	$supplier_ubn           = $_POST["ubn"];
-	$supplier_company_phone = $_POST["company_phone"];
-	$supplier_company_fax   = $_POST["company_fax"];
-	$supplier_email         = $_POST["email"];
-	$supplier_location      = $_POST["location"];
-	$supplier_address       = $_POST["address"];
-	$supplier_contact       = $_POST["contact"];
-	$supplier_contact_phone = $_POST["contact_phone"];
+	$supplier_supplier_id     = $_POST["supplier_id"];
+	$supplier_s_id            = $_POST["supplier_s_id"];
+	$supplier_name            = $_POST["name"];
+	$supplier_name_backup     = $_POST["supplier_name_backup"];
+	$supplier_nickname        = $_POST["nickname"];
+	$supplier_ubn             = $_POST["ubn"];
+	$supplier_company_phone   = $_POST["company_phone"];
+	$supplier_company_fax     = $_POST["company_fax"];
+	$supplier_email           = $_POST["email"];
+	$supplier_location        = $_POST["location"];
+	$supplier_location_backup = $_POST["supplier_location_backup"];
+	$supplier_address         = $_POST["address"];
+	$supplier_contact         = $_POST["contact"];
+	$supplier_contact_phone   = $_POST["contact_phone"];
 }
 
 function location_get_html_input() {
-	
+
 	require('var.php') ;
-	
-	$location_id          = $_POST["location_id"];
-	$location_s_id        = $_POST["location_s_id"];
-	$location_country     = $_POST["location_country"];
-	$location_country_sid = $_POST["location_country_sid"];
-	$location_city        = $_POST["location_city"];
-	$location_city_sid    = $_POST["location_city_sid"];
+
+	$location_id                 = $_POST["location_id"];
+	$location_s_id               = $_POST["location_s_id"];
+	$location_country            = $_POST["location_country"];
+	$location_country_sid        = $_POST["location_country_sid"];
+	$location_country_sid_backup = $_POST["location_country_sid_backup"];
+	$location_city               = $_POST["location_city"];
+	$location_city_sid           = $_POST["location_city_sid"];
+	$location_city_sid_backup    = $_POST["location_city_sid_backup"];
 }
 
 function item_get_html_input() {
-	
+
 	require('var.php') ;
-	
-	$item_id          	= $_POST["item_id"];
-	$item_s_id        	= $_POST["item_s_id"];
-	$item_name        	= $_POST["item_name"];
-	$item_type_id     	= $_POST["item_type_id"];
-	$item_supplier_id 	= $_POST["item_supplier_id"];
-	$item_price       	= $_POST["item_price"];
-	$item_currency    	= $_POST["item_currency"];
+
+	$item_id             = $_POST["item_id"];
+	$item_s_id           = $_POST["item_s_id"];
+	$item_name           = $_POST["item_name"];
+	$item_name_backup    = $_POST["item_name_backup"];
+	$item_type_id        = $_POST["item_type_id"];
+	$item_type_id_backup = $_POST["item_type_id_backup"];
+	$item_supplier_id    = $_POST["item_supplier_id"];
+	$item_price          = $_POST["item_price"];
+	$item_currency       = $_POST["item_currency"];
 }
 
 function var_init() {
-	
+
 	require('var.php') ;
 	// Ctrl alt a 對齊
-	$client_customer_id     = '' ;
-	$client_s_id            = '' ;
-	$client_name            = '' ;
-	$client_nickname        = '' ;
-	$client_ubn             = '' ;
-	$client_company_phone   = '' ;
-	$client_company_fax     = '' ;
-	$client_email           = '' ;
-	$client_location        = '' ;
-	$client_address         = '' ;
-	$client_contact         = '' ;
-	$client_contact_phone   = '' ;
-	
-	$supplier_supplier_id   = '' ;
-	$supplier_s_id          = '' ;
-	$supplier_name          = '' ;
-	$supplier_nickname      = '' ;
-	$supplier_ubn           = '' ;
-	$supplier_company_phone = '' ;
-	$supplier_company_fax   = '' ;
-	$supplier_email         = '' ;
-	$supplier_location      = '' ;
-	$supplier_address       = '' ;
-	$supplier_contact       = '' ;
-	$supplier_contact_phone = '' ;
-	
-	$item_id                = '' ;
-	$item_s_id              = '' ;
-	$item_name              = '' ;
-	$item_supplier_id       = '' ;
-	$item_price             = '' ;
-	$item_currency          = '' ;
-	
-	$location_id            = '' ;
-	$location_s_id          = '' ;
-	$location_country       = '' ;
-	$location_country_sid   = '' ;
-	$location_city          = '' ;
-	$location_city_sid      = '' ;
+	$client_customer_id          = '' ;
+	$client_s_id                 = '' ;
+	$client_name                 = '' ;
+	$client_name_backup          = '' ;
+	$client_nickname             = '' ;
+	$client_ubn                  = '' ;
+	$client_company_phone        = '' ;
+	$client_company_fax          = '' ;
+	$client_email                = '' ;
+	$client_location             = '' ;
+	$client_location_backup      = '' ;
+	$client_address              = '' ;
+	$client_contact              = '' ;
+	$client_contact_phone        = '' ;
+
+	$supplier_supplier_id        = '' ;
+	$supplier_s_id               = '' ;
+	$supplier_name               = '' ;
+	$supplier_name_backup        = '' ;
+	$supplier_nickname           = '' ;
+	$supplier_ubn                = '' ;
+	$supplier_company_phone      = '' ;
+	$supplier_company_fax        = '' ;
+	$supplier_email              = '' ;
+	$supplier_location           = '' ;
+	$supplier_location_backup    = '' ;
+	$supplier_address            = '' ;
+	$supplier_contact            = '' ;
+	$supplier_contact_phone      = '' ;
+
+	$item_id                     = '' ;
+	$item_s_id                   = '' ;
+	$item_name                   = '' ;
+	$item_name_backup            = '' ;
+	$item_type_id                = '' ;
+	$item_type_id_backup         = '' ;
+	$item_supplier_id            = '' ;
+	$item_price                  = '' ;
+	$item_currency               = '' ;
+
+	$location_id                 = '' ;
+	$location_s_id               = '' ;
+	$location_s_id_backup        = '' ;
+	$location_country            = '' ;
+	$location_country_sid        = '' ;
+	$location_country_sid_backup = '' ;
+	$location_city               = '' ;
+	$location_city_sid           = '' ;
 }
 
 function location_select_option($conn, $selected='') {
@@ -121,8 +138,8 @@ function location_select_option($conn, $selected='') {
 			} else {
 				$html_code = $html_code."<option value='".$row['location_id']."'>".$row['city']."</option>" ;
 			}
-			//array_push($location_arr,$row['city']);	
-		} 
+			//array_push($location_arr,$row['city']);
+		}
 		$html_code = $html_code."</select>" ;
 	} else {
 		$final_status = $final_status.'<br/>讀取地點下拉選單錯誤<br/>' ;
@@ -152,18 +169,22 @@ function supplier_select_option($conn, $selected='') {
 }
 
 function item_type_select_option($selected='') {
-	//echo "$selected" ;
+	require('var.php') ;
+
 	$html_code = "<select id='item_type_id' name='item_type_id'>" ;
 	if( preg_match("/P/", $selected) ) {
+		$item_type_id_backup = "P" ;
 		$p_s = "selected='selected'" ;
 		$html_code.=">" ;
 	}
 	elseif( preg_match("/M/", $selected) ) {
+		$item_type_id_backup = "M" ;
 		$m_s = "selected='selected'" ;
 		$html_code.=">" ;
 	}
 	elseif( preg_match("/O/", $selected) ) {
-		$o_s = "selected='selected'" ;		
+		$item_type_id_backup = "O" ;
+		$o_s = "selected='selected'" ;
 		$html_code=$html_code.">" ;
 	}
 	elseif( preg_match("/ro/", $selected) ) {
@@ -203,7 +224,7 @@ function sid_create($conn, $w) {
 
 	if ($result->num_rows > 0) {
 		$row = $result->fetch_assoc() ;
-		$arr = explode( $str, $row['s_id'] ) ;	
+		$arr = explode( $str, $row['s_id'] ) ;
 		$id_num = (int)$arr[1]+1 ;
 		if( $id_num/100 >= 1 ) {
 			return $str.$id_num ;
@@ -214,7 +235,7 @@ function sid_create($conn, $w) {
 		else {
 			return $str.'00'.$id_num ;
 		}
-	} 
+	}
 	elseif( $result->num_rows == 0 ) {
 		return $str.'001' ;
 	}
@@ -235,7 +256,7 @@ function item_sid_create($conn, $w) {
 	if ($result->num_rows > 0) {
 		$row = $result->fetch_assoc() ;
 		// P002 -> p, 002
-		$arr = explode( $str, $row['s_id'] ) ;	
+		$arr = explode( $str, $row['s_id'] ) ;
 		$id_num = (int)$arr[1]+1 ;
 		if( $id_num/100 >= 1 ) {
 			return $str.$id_num ;
@@ -246,7 +267,7 @@ function item_sid_create($conn, $w) {
 		else {
 			return $str.'00'.$id_num ;
 		}
-	} 
+	}
 	elseif( $result->num_rows == 0 ) {
 		return $str.'001' ;
 	}
@@ -364,7 +385,7 @@ function create_name_option( $where='', $conn, $input  ) {
 	$result = $conn->query( $sql_cmd ) ;
 	$str = "<table><tr><td colspan='2'>" ;
 	$str .= " <br/>您查詢的 <b>".$input."</b> 不存在在資料庫中<br/><br/>不過有以下類似的參考資料<br/><br/>" ;
-	$str .= "</td></tr>" ; 
+	$str .= "</td></tr>" ;
 	if( $where=="customer" or $where=="supplier" ) {
 		$str .= "<tr><th>名稱</th><th>聯絡人</th></tr>" ;
 	}
@@ -377,14 +398,14 @@ function create_name_option( $where='', $conn, $input  ) {
 			if( $row["name"]==$input ) {
 				$str="" ;
 				return $str ;
-			} 
+			}
 			else {
 				$str .= "<td>".$row["name"]."</td>" ;
 				if( $where=="customer" || $where=="supplier" ) {
 					$str .= "<td>".$row["contact"]."</td>" ;
 				}
 				elseif( $where=="item" ) {
-					$str .= "<td>$".$row["price"]." ".$row["currency"]."</td>" ;	
+					$str .= "<td>$".$row["price"]." ".$row["currency"]."</td>" ;
 				}
 			}
 			$str .= "</tr>" ;

@@ -13,11 +13,11 @@
 		<input type="hidden" name="action_choose" value="<?php echo $_GET["action_choose"];?>">
 		<input type="hidden" name="qu_id" value="<?php echo $_GET["qu_id"];?>">
 		
-		<div class='div_aside'>
-			<button type=submit name=view_pdf >直接預覽</button>
+		<div class='quo_option set_float_right'>
+			<button type=submit class = 'btn_submit' name=view_pdf >直接預覽</button>
 		</div>
-		<div class='div_aside'>
-			<button type=submit name=save_pdf >下載</button>
+		<div class='quo_option set_float_right'>
+			<button type=submit class = 'btn_submit' name=save_pdf >下載</button>
 		</div>
 		
 		<?php
