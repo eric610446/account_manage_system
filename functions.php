@@ -270,16 +270,7 @@ function main_search_way($main_choose,$clear_way){
 	
 	if($active_way==1)
 	{
-		connect2db() ;
-		global $conn ;															
-		//抓出某個城市的所有客戶資料
-		$sql_cmd = "SELECT nickname FROM `customer_db` WHERE s_id='CTWTPE002';" ;
-		$result = mysql_query( $sql_cmd, $conn ) ;
-		if($result==NULL)
-			$AM=1;
-		else
-			$AM=0;
-		echo "<div>查詢功能:".$AM." 開發中</div>";
+		month_of_year();
 		//echo "mc:".$_REQUEST['srch_way_choose']."_</div>";
 	}
 	else if($active_way==2)
@@ -337,6 +328,7 @@ function main_search_way($main_choose,$clear_way){
 	}
 }
 
+/*取得該國所有有報價單的客戶的所在位置*/
 function cities_of_country($tgt_cntry){ //target country
 
 	//取得並記錄當前位置
@@ -386,6 +378,76 @@ function cities_of_country($tgt_cntry){ //target country
 						name=btn_city_to_customer value=".$location_city_arr[$i][0]." >"
 						.$location_city_arr[$i][1].
 					"</button></div>" ;
+		}
+	}
+	else{
+		echo "<div class='art_top'> 對不起，查無資料。</div>";
+	}
+}
+
+/*取得所有存在報價單的月份*/
+function month_of_year(){
+	
+	//取得並記錄當前位置
+	echo "<input type='hidden' name='Which_Main_choose' value='".$_REQUEST['Which_Main_choose']."' >";
+	echo "<input type='hidden' name='Which_Sub_choose' value='".$_REQUEST['srch_way_choose']."' >";
+	
+	connect2db() ;
+	global $conn ;			
+	
+	//是否篩選掉不是訂單的報價單
+	if( $_REQUEST['Which_Main_choose']==2 )
+	{
+		$content_qorp ="報價單";
+		$check_order = 0;
+	}
+	else
+	{	
+		$content_qorp ="訂單";
+		$check_order = 1;
+	}
+	
+	//抓出所有有報價單的客戶的所在位置
+	$sql_cmd = "SELECT DISTINCT QS.date_y,QS.date_m
+                	FROM client_info.quotation_simple_db AS QS
+				WHERE QS.invalid = 0 AND QS.is_order >= ".$check_order."
+				ORDER BY QS.date DESC;" ;
+	
+	$result = mysql_query( $sql_cmd, $conn ) ;
+	
+	//echo $sql_cmd;
+	//echo "swc:".$_REQUEST['srch_way_choose']."_</div>";
+	
+	if(mysql_num_rows($result)>0){
+		$date_arr=array();
+		
+		for( $i=0 ; $row = mysql_fetch_array($result) ; $i++){
+				$date_arr[$i][0]=$row['date_y'];		
+				$date_arr[$i][1]=$row['date_m'];		
+		}
+		/*//test output
+		for( $i=0 ; $i<$location_city_amount ; $i++){
+				echo "編號 ".$date_arr[$i][0]." ";
+				echo "地名 ".$date_arr[$i][1]." <br>";
+		}*/
+		
+		echo "<div class='art_top '> 請選擇想要瀏覽".$content_qorp."的月份：<div ='separation'><hr class='set_List_border_color'></div></div>";
+		//echo "<div class='separation set_clear_right'><hr></div>";
+		for ( $i=0 ; $i<sizeof($date_arr) ; $i++ ) {
+					
+			if($date_arr[$i][1]<10)
+				echo   "<div class = div_btn_cities>
+						<button type=submit class='btn_List'
+							name=btn_date_to_quo value=".$date_arr[$i][0]."0".$date_arr[$i][1]." >"
+							.$date_arr[$i][0]." 年 ".$date_arr[$i][1]." 月
+						</button></div>" ;
+			else
+				echo   "<div class = div_btn_cities>
+						<button type=submit class='btn_List'
+							name=btn_date_to_quo value=".$date_arr[$i][0].$date_arr[$i][1]." >"
+							.$date_arr[$i][0]." 年 ".$date_arr[$i][1]." 月
+						</button></div>" ;
+
 		}
 	}
 	else{
@@ -484,6 +546,100 @@ function echo_city_customer($location){
 	}
 }
 
+//取得該月的所有報價單
+function echo_list_month_all_simple_quo( $dateYYYYMM ) {
+	
+	//取得並記錄當前位置
+	echo "<input type='hidden' name='Which_Main_choose' value='".$_REQUEST['Which_Main_choose']."' >";
+	echo "<input type='hidden' name='Which_Sub_choose' value='".$_REQUEST['Which_Sub_choose']."' >";
+	
+	//連接資料庫
+	connect2db() ;
+	global $conn ;
+	
+	//抓出客戶所有的 0:報價單資料   1:訂單資料
+	if($_REQUEST['Which_Main_choose']==2){
+		$check_qorp=0;
+		$content_qorp="報價單";
+		$sql_qorp="qu_s_id";
+	}
+	else{
+		$check_qorp=1;
+		$content_qorp="訂單";
+		$sql_qorp="po_s_id";
+	}
+	//抓取該月的所有報價單、客戶簡稱、物品名稱
+	$sql_cmd = "SELECT QS.*, C.nickname AS cname, I.name AS iname
+				FROM client_info.quotation_simple_db AS QS
+				LEFT JOIN client_info.customer_db AS C
+				ON QS.customer_id = C.customer_id
+				LEFT JOIN client_info.item_db AS I
+				ON QS.item_id = I.item_id
+				WHERE QS.date_y = ".(int)($dateYYYYMM/100)." AND QS.date_m = ".($dateYYYYMM%100)." AND QS.is_order >= ".$check_qorp." AND QS.invalid = 0 
+				ORDER BY ".$sql_qorp." DESC";
+//				ORDER BY date DESC";
+
+	$result = mysql_query( $sql_cmd, $conn ) ;
+
+	if(mysql_num_rows($result)>0){
+		for( $row_no=1; $row = mysql_fetch_array( $result) ; $row_no++ ) 
+		{
+			if($row_no==1){
+				echo "<div class='art_top'> 以下為 <b>".(int)($dateYYYYMM/100)." 年 ".(int)($dateYYYYMM%100)." 月 </b> 的".$content_qorp."：</div>";
+				echo "<div class='div_List_top_header'>";
+				echo "<table class='table_List_top_header'>";
+					echo "<tr class='tr_List_top_header'>";
+						echo "<th class='th_List_top_header th_List_mth_smpl_quo'>項次";
+						echo "</th>";
+						echo "<th class='th_List_top_header th_List_mth_smpl_quo'>".$content_qorp."<br>流水號";
+						echo "</th>";
+						echo "<th class='th_List_top_header th_List_mth_smpl_quo'>報價單<br>創建日期";
+						echo "</th>";
+						echo "<th class='th_List_top_header th_List_mth_smpl_quo'>客戶<br>簡稱";
+						echo "</th>";
+						echo "<th class='th_List_top_header th_List_mth_smpl_quo'>重點<br>採買項目";
+						echo "</th>";
+						echo "<th class='th_List_top_header th_List_mth_smpl_quo'>總金額<br>";
+						echo "</th>";
+						echo "<th class='th_List_top_header th_List_mth_smpl_quo'>詳細<br>".$content_qorp;
+						echo "</th>";
+					echo "</tr>";
+			}
+			
+			echo "<tr class='tr_List_top_header'>";
+				echo "<td class='td_List_top_header td_List_mth_smpl_quo'>".$row_no;
+				echo "</td>";
+				echo "<td class='td_List_top_header td_List_mth_smpl_quo'>".$row[$sql_qorp];
+				echo "</td>";
+				//截短日期
+				$quo_time = strtotime($row['date']);
+				$quo_time = date("Y-m-d", $quo_time);
+				echo "<td class='td_List_top_header td_List_mth_smpl_quo'>".$quo_time;
+				echo "</td>";
+				if($row['cname']==NULL)
+					echo "<td class='td_List_top_header td_List_mth_smpl_quo'><I><font color=#aaa>尚未設定<br>客戶簡稱</font></I>";
+				else
+					echo "<td class='td_List_top_header td_List_mth_smpl_quo'>".$row['cname'];
+				echo "</td>";
+				echo "<td class='td_List_top_header td_List_mth_smpl_quo'>".$row['iname'];
+				echo "</td>";
+				echo "<td class='td_List_top_header td_List_mth_smpl_quo'>".$row['currency']."$ ".number_format($row['price']);
+				echo "</td>";
+				echo "<td class='td_List_top_header td_List_mth_smpl_quo'>";
+					echo "<button type=submit class='btn_List' name=btn_list_detail_quo value=".$row['quo_id']." >查看".$content_qorp."</button>" ;
+				echo "</td>";
+			echo "</tr>";
+		}
+		echo "</table>";
+		echo "</div>";		
+	}
+	else
+	{
+		echo "<div class='art_top'> 對不起，查無客戶帳務資料。</div>";
+	}
+
+}
+
 //取得國外的所有客戶名單
 function echo_worldwide_customer($tgt_cntry){
 	
@@ -559,7 +715,10 @@ function echo_worldwide_customer($tgt_cntry){
 				echo "</td>";
 				echo "<td class='td_List_top_header td_List_worldwide_customer'>".$row['s_id'];
 				echo "</td>";
-				echo "<td class='td_List_top_header td_List_worldwide_customer'>".$row['nickname']."";
+				if($row['nickname']==NULL)
+					echo "<td class='td_List_top_header td_List_worldwide_customer'><I><font color=#aaa>尚未設定<br>客戶簡稱</font></I>";
+				else
+					echo "<td class='td_List_top_header td_List_worldwide_customer'>".$row['nickname']."";
 				echo "</td>";
 				echo "<td class='td_List_top_header td_List_worldwide_customer'>".$row['country']."";
 				echo "</td>";
@@ -720,6 +879,8 @@ function list_detail_cus_or_sup_info($type,$type_info){
 		echo "<div class='art_top'> 對不起，查無資料。</div>";
 	}
 }
+
+
 
 //顯示出各個國家的 button
 /*
@@ -1203,11 +1364,14 @@ function echo_detail_quotation( $qu_id ) {
 		echo "<div ='separation'><hr class='set_List_border_color'></div>";
 		
 		if($_REQUEST['Which_Main_choose']==2){
+			//待完成後再加入此功能
+			/*
 			echo "	<div class='quo_option set_float_right'>
 					<button type=submit class = 'btn_submit' name=btm_edit_quo value=".$qu_id." >
 						修改".$content_qorp."
 					</button>
 				</div>" ;	
+			*/
 		}
 		
 		if($order_state==1){
@@ -1221,7 +1385,7 @@ function echo_detail_quotation( $qu_id ) {
 		else{
 			echo "	<div class='quo_option set_float_right'>
 						<button type=submit class = 'btn_submit' name=btm_order_change value=".$qu_id." >
-							設定為<br>".$row['is_order']."已成交訂單
+							設定為<br>已成交訂單
 						</button>
 					</div>" ;
 		}
@@ -1240,323 +1404,126 @@ function echo_detail_quotation( $qu_id ) {
 		echo "<div class='art_top'> 對不起，查無客戶帳務資料。</div>";
 	}
 }
-/*old version*//*
-function quotation_detail( $qu_id ) {
-	connect2db() ;
-	global $conn ;
-	
-	
-	
-	$sql_cmd = "select * from client_info.quotation_detail_db Where quo_id = ".$qu_id. " AND invalid = 0";
-	$detail_result = mysql_query( $sql_cmd, $conn ) ;
-	
-	if(mysql_num_rows($detail_result)>0){
-		
-		if($_SESSION["action_choose"]==2)
-			echo "<div class='art_top'> 報價單詳細內容如下：</div>";
-		else
-			echo "<div class='art_top'> 訂單詳細內容如下：</div>";
-		
-		$sql_cmd = "select * from client_info.quotation_simple_db Where quo_id = ".$qu_id ;
-		$simple_result = mysql_query( $sql_cmd, $conn ) ;
-		if(mysql_num_rows($simple_result)<=0)
-			echo "<div class='art_top'> 對不起，查無客戶帳務資料。</div>";
-		
-		$row_no=1;
-		echo "<div>";
-		echo "<table id=table_dquo>";
-		echo "<tr class=table_even>";
-			echo "	<th id=table_dquo_01>流水編號</th>";
-			echo "	<th id=table_dquo_02>客戶名稱</th>";
-			echo "	<th id=table_dquo_03>創建日期</th>";
-			echo "	<th id=table_dquo_04>總金額</th>";
-			echo "	<th id=table_dquo_05>是否含稅</th>";
-		echo "</tr>";
-		while( $row_s = mysql_fetch_array( $simple_result, MYSQL_ASSOC ) ) 
-		{
-			echo "<tr class='table_odd table_content_right'>";
-				echo "<td ><div class=quo_r_marg1>".$_SESSION["quo_info"][$qu_id]."</div></td>" ;
-				echo "<td ><div class=quo_r_marg1>".$_SESSION["Pre_Page_cust_info"][1]."</div></td>" ;
-				echo "<td ><div class=quo_r_marg1>".$row_s['date']."</div></td>";
-				echo "<td ><div class=quo_r_marg1>".$row_s['currency']."$ ".number_format($row_s['price'])."</div></td>";
-				if($row_s['sales_tax']==1)
-					echo "<td ><div class=quo_r_marg1>是</div></td>";
-				else
-					echo "<td ><div class=quo_r_marg1>否</div></td>";
-			echo "</tr>";
-		}
-		echo "</table>";
-		echo "<table id=table_dquo>";
-		echo "<tr class=table_even>";
-			echo "	<th id=table_dquo_11>項次</th>";
-			echo "	<th id=table_dquo_12>物品流水編號</th>";
-			echo "	<th id=table_dquo_13>物品名稱</th>";
-			echo "	<th id=table_dquo_14>購買數量</th>";
-			echo "	<th id=table_dquo_15>實際單價</th>";
-			echo "	<th id=table_dquo_16></th>";
-		echo "</tr>";
-		while( $row = mysql_fetch_array( $detail_result, MYSQL_ASSOC ) ) 
-		{
-			if($row_no%2==1)
-				echo "<tr class='table_odd table_content_right'>";
-			else
-				echo "<tr class='table_even table_content_right'>";
-					echo "<td ><div class=quo_r_marg1>".$row_no."</div></td>" ;
-					echo "<td ><div class=quo_r_marg1>".$_SESSION["item_arr"][$row['item_id']][1]."</div></td>";
-					echo "<td ><div class=quo_r_marg1>".$_SESSION["item_arr"][$row['item_id']][2]."</div></td>";
-					//number_format() :幫數字加上千分位的工具，使用其他參數還可以加入小數點後面兩位
-					echo "<td ><div class=quo_r_marg1>".number_format($row['amount'])."</div></td>";					
-					echo "<td ><div class=quo_r_marg1>".$row['currency']."$ ".number_format($row['price'])."</div></td>";
-					echo "<td ><button type=submit class=btm_detail_info name=btm_detail_supplier value=".$row['item_id']." '>供應商資料</button></td>" ;
-				echo "</tr>";
-			$row_no++;
-		}
-		echo "</table>";
-		echo "</div>";
-		echo "<div class='separation'><hr></div>";	
-		if($_SESSION["action_choose"]==2){
-			echo "<div class='quo_option set_float_right'><button type=submit name=btm_order_change value=".$qu_id." >轉為訂單</button></div>" ;		
-			echo "<div class='quo_option set_float_right'><button type=submit name=btm_edit_quo value=".$qu_id." >修改報價單</button></div>" ;		
-			//echo "<div class='quo_option set_float_right'><button type=submit name=btm_output_pdf value=".$qu_id." >輸出正式報價單</button></div>" ;		
-			echo "<div class='quo_option set_float_right'><button type=button onclick=window.open('outputpdf.php?action_choose=".$_SESSION["action_choose"]."&qu_id=".$qu_id."') name=btm_output_pdf >輸出正式報價單</button></div>" ;		
-		}
-		else{
-			echo "<div class='quo_option set_float_right'><button type=submit name=btm_order_change value=".$qu_id." >轉為報價單</button></div>" ;		
-			echo "<div class='quo_option set_float_right'><button type=submit name=btm_edit_quo value=".$qu_id." >修改訂單</button></div>" ;		
-			//echo "<div class='quo_option set_float_right'><button type=submit name=btm_output_pdf value=".$qu_id." >輸出正式訂單</button></div>" ;	
-			echo "<div class='quo_option set_float_right'><button type=button onclick=window.open('outputpdf.php?action_choose=".$_SESSION["action_choose"]."&qu_id=".$qu_id."') name=btm_output_pdf >輸出正式訂單</button></div>" ;		
-		}
-					
-			
-	}
-	else{
-		echo "<div class='art_top'> 對不起，查無客戶帳務資料。d</div>";
-		//die(' ' . mysql_error()) ;		
-	}
 
-	
-	echo "<div class='separation  set_clear_right'><hr></div>";	
-	
-	for ( $i=0 ; $i<sizeof($_SESSION["location_country_arr"]) ; $i++ ) {
-		if ($i ==0){
-			echo   "<div id = div_country_btm>
-				<button type=submit 
-					name=btm_find_client_quotation_list value=".$_SESSION["Pre_Page_cust_info"][0]." >回上層</button></div>" ;
-					//name=btm_find_client_quotation_list value=".$_SESSION["Pre_Page_cust_info"][0]." >回到帳務清單</button></div>" ;
-		}
-		$name=$_SESSION["location_country_arr"][$i][0] ;
-		$s_id=$_SESSION["location_country_arr"][$i][1] ;
-		echo "<div id = div_country_btm><button type=submit name=btm_co".$s_id." id=btm_co".$s_id.">回到 ".$name."</button></div>" ;
-	}
-	
-}*/
-
-/*顯示特定物品的供應商資料*/
-/*
-function supplier_detail( $item_id ) {
-	connect2db() ;
-	global $conn ;
-	
-	$sql_cmd = "select supplier_id from client_info.item_db Where item_id = ".$item_id ;
-	$supplier = mysql_fetch_array( mysql_query( $sql_cmd, $conn )) ;
-	
-	$sql_cmd = "select * from client_info.supplier_db Where supplier_id = ".$supplier['supplier_id'] ;
-	$detail_result = mysql_query( $sql_cmd, $conn ) ;
-	
-	if(mysql_num_rows($detail_result)>0){
-		echo "<div class='art_top'> 物品 <b>".$_SESSION["item_arr"][$item_id][2]."</b> 的供應商資料如下：</div>";
-		$row = mysql_fetch_array( $detail_result, MYSQL_ASSOC );
-		echo "<table id=table_supp>";
-		echo "<tr class=table_even>";
-			echo "	<th id=table_supplier_11><b>流水號</th>";
-			echo "	<th id=table_supplier_12><b>客戶全名</th>";
-			echo "	<th id=table_supplier_13><b>統一編號</th>";
-		echo "</tr>";
-		echo "<tr class='table_odd table_content_center'>";
-			echo "	<td >".$row['s_id']."</td>";
-			echo "	<td >".$row['name']."</td>";
-			echo "	<td >".$row['ubn']."</td>";
-		echo "</tr>";
-		echo "</table>";
-		
-		echo "<table id=table_supp>";
-		echo "<tr class=table_even>";
-			echo "	<th id=table_supplier_21><b>聯絡人</th>";
-			echo "	<th id=table_supplier_22><b>聯絡人電話</th>";
-			echo "	<th id=table_supplier_23><b>公司電話</th>";
-			echo "	<th id=table_supplier_24><b>公司傳真</th>";
-		echo "</tr>";
-		echo "<tr class='table_odd table_content_center'>";
-			echo "	<td >".$row['contact']."</td>";
-			echo "	<td >".$row['contact_phone']."</td>";
-			echo "	<td >".$row['company_phone']."</td>";
-			echo "	<td >".$row['company_fax']."</td>";
-		echo "</tr>";
-		
-		echo "<table id=table_supp>";
-		echo "<tr class=table_even>";
-			echo "	<th ><b>地址</th>";
-		echo "</tr>";
-		echo "<tr class='table_odd table_content_center'>";
-			echo "	<td >".$row['address']."</td>";
-		echo "</tr>";
-
-		echo "<table id=table_supp>";
-		echo "<tr class=table_even>";
-			echo "	<th ><b>信箱</th>";
-		echo "</tr>";
-		echo "<tr class='table_odd table_content_center'>";
-			echo "	<td >".$row['email']."</td>";
-		echo "</tr>";
-		
-		
-		echo "</table>";
-		echo "</div>";
-		echo "<div class='separation'><hr></div>	";		
-	}
-	else{
-		echo "<div class='art_top'> 對不起，查無客戶帳務資料。</div>";
-		//die(' ' . mysql_error()) ;		
-	}
-
-	for ( $i=0 ; $i<sizeof($_SESSION["location_country_arr"]) ; $i++ ) {
-		if ($i ==0){
-			echo   "<div id = div_country_btm>
-				<button type=submit 
-					name=btm_detail_quotation value=".$_SESSION["Pre_Page_quo_info"]." >回上一層</button></div>" ;
-		}
-		$name=$_SESSION["location_country_arr"][$i][0] ;
-		$s_id=$_SESSION["location_country_arr"][$i][1] ;
-		echo "<div id = div_country_btm><button type=submit name=btm_co".$s_id." id=btm_co".$s_id.">回到 ".$name."</button></div>" ;
-	}
-}*/
-
-
+//報價單切換成訂單，並給予訂單流水號，訂單可恢復成報價單
 function order_change( $qu_id ) {
-	echo "<div>訂單/報價單屬性切換，訂單編號:".$qu_id."</div>";
-	echo   "<div id = div_country_btm>
-				<button type=submit 
-					name=btm_detail_quotation value=".$_SESSION["Pre_Page_quo_info"]." >回上一層</button></div>" ;
+		
+	//取得並記錄當前位置
+	echo "<input type='hidden' name='Which_Main_choose' value='".$_REQUEST['Which_Main_choose']."' >";
+	echo "<input type='hidden' name='Which_Sub_choose' value='".$_REQUEST['Which_Sub_choose']."' >";
+	
+	//echo "<div>訂單/報價單屬性切換，訂單編號:".$qu_id."</div>";
+	
+	connect2db() ;
+	global $conn ;
+	
+	$sql_cmd = "SELECT * FROM client_info.quotation_simple_db WHERE quo_id = ".$qu_id ;
+	$temp = mysql_query( $sql_cmd, $conn ) ;
+	$qs_info = mysql_fetch_array($temp) ;
+	
+	if($qs_info['po_s_id']==NULL){
+		$target_y = $qs_info['date_y'];
+		$target_m = $qs_info['date_m'];
+		$po_s_id = make_qorp_s_id( 1 , $target_y , $target_m );
+		//echo "是報價單，要做一個訂單流水碼出來:".$po_s_id;
+		$date_po_no = make_qorp_s_id( 3 , $target_y , $target_m );
+		//echo "<br>尾數編號:".$date_po_no;
+		$sql_cmd = "UPDATE client_info.quotation_simple_db SET po_s_id='".$po_s_id."',is_order=1,date_po_no=".$date_po_no." WHERE quo_id = ".$qu_id;
+		mysql_query( $sql_cmd, $conn ) ;
+		echo "<script>";
+		echo "    alert('已經成功轉換成[已成交訂單]!');";
+		echo "</script>";
+	}
+	else if($qs_info['is_order']==0){
+		$sql_cmd = "UPDATE client_info.quotation_simple_db SET is_order=1 WHERE quo_id = ".$qu_id;
+		mysql_query( $sql_cmd, $conn ) ;
+		echo "<script>";
+		echo "    alert('已經成功轉換成[已成交訂單]!');";
+		echo "</script>";
+	}
+	else{
+		$sql_cmd = "UPDATE client_info.quotation_simple_db SET is_order=0 WHERE quo_id = ".$qu_id;
+		mysql_query( $sql_cmd, $conn ) ;
+		echo "<script>";
+		echo "    alert('已經成功恢復成[一般報價單]!');";
+		echo "</script>";
+	}
 }
-function create_quotation( $qu_id ) {
+
+/* 
+流水號創建函數
+$Target_Type = 0 意思是目標是生成報價單(qu_s_id)的流水號
+$Target_Type = 1 意思是目標是生成訂單(po_s_id)的流水號
+$Target_Type = 2 意思是目標是生成報價單的尾數編號(date_qu_no)
+$Target_Type = 3 意思是目標是生成訂單的尾數編號(date_po_no)
+*/
+function make_qorp_s_id( $Target_Type , $Year , $Month ){
+	
+	connect2db() ;
+	global $conn ;
+
+	//echo "<br>type:".$Target_Type." ty:".$Year." tm:".$Month."<br>";
+	
+	if($Target_Type==0 || $Target_Type==2 ){
+		$get_max_no="date_qu_no";
+		$s_id_header="QU";
+	}
+	else{
+		$get_max_no="date_po_no";
+		$s_id_header="PO";
+	}
+	
+	
+	$sql_cmd = "SELECT MAX(QS.".$get_max_no.") FROM client_info.quotation_simple_db AS QS WHERE date_y = ".$Year." AND date_m = ".$Month ;
+	
+	$temp = mysql_query( $sql_cmd, $conn ) ;
+	$max = mysql_fetch_array($temp) ;
+	
+	if($Month<10)
+		$Month="0".$Month;
+	
+	if($max[0]>0){
+		//echo "有值<br>";
+	
+		//$max是陣列 $max[0]才是我們在乎的數值
+		$max = $max[0];
+		$output_no = $max+1;
+	}
+	else{
+		//echo "無值<br>";
+		$max = 0;
+		$output_no = $max+1;		
+	}
+	if($Target_Type<2){
+		if($output_no<10)
+			$output_no="0000".$output_no;
+		else if($output_no<100)
+			$output_no="000".$output_no;
+		else if($output_no<1000)
+			$output_no="00".$output_no;
+		else if($output_no<10000)
+			$output_no="0".$output_no;
+		else
+			$output_no=$output_no;
+		
+		return $s_id_header.$Year.$Month."-".$output_no;
+	}
+	else 
+		return $output_no;
+	
+	echo "max:".$max." max0:".$max[0]." output_no :".$output_no."<br>";
+	
+	
+}
+
+function edit_quotation( $qu_id ) {
 	echo "<div>修改訂單，訂單編號:".$qu_id."</div>";
 	echo   "<div id = div_country_btm>
 				<button type=submit 
 					name=btm_detail_quotation value=".$_SESSION["Pre_Page_quo_info"]." >回上一層</button></div>" ;
 }
 
-//將報價單製作成 pdf
-function create_quotation_pdf( $client, $index ) {
-
-	echo $client ;
-	echo $index ;
-
-	require_once('tcpdf/config/tcpdf_config.php') ;
-	require_once('tcpdf/tcpdf.php') ;
-	
-	
-
-
-	// create new PDF document
-	$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-
-	// set document information
-	//$pdf->SetCreator(PDF_CREATOR);
-	$pdf->SetAuthor('Eric Tsai');
-	$pdf->SetTitle('報價單');
-	$pdf->SetSubject('報價單');
-	//$pdf->SetKeywords('TCPDF, PDF, example, test, guide');
-	$pdf->SetPrintHeader(false);
-
-	// 以下開始設定標改體字型
-	$pdf->SetFont('kaiu', '', 12, true);
-
-
-	// add a page
-	$pdf->AddPage();
-	$pdf->Write(0, 'Quotation', '', 0, 'L', true, 0, false, false, 0);
-
-
-	//-----------------------------------------------------------------
-
-
-
-	connect2db() ;
-	global $conn ;
-	$sql_cmd = "select * from client_info.".$client.' order by date DESC' ;
-	$result = mysql_query( $sql_cmd, $conn ) ;
-	if( !$result ) {
-		die('客戶沒有建立任何報價單') ;
-	}
-	$i = 0 ;
-	$table = Array() ;
-	while( $row = mysql_fetch_array( $result, MYSQL_ASSOC ) ) {
-		if($i==$index) {
-			$table = $row ;
-			break ;
-		}
-		$i++ ;
-	}
-
-	$output= "
-	<table border=1 id=quotations_list>
-		<tr>
-			<td>
-				產品
-			</td>
-			<td>
-				數量
-			</td>
-			<td>
-				價格
-			</td>
-		</tr>
-	" ;
-	
-	for( $i=1 ; $i<=10 ; $i++ ) {
-		if($table['product'.$i] != '') {
-			$output= $output."<tr><td>".$table['product'.$i]."</td><td>".$table['count'.$i]."</td><td>".$table['price'.$i]."</td></tr>" ;
-		}
-	}
-	$output= $output."
-	<tr>
-		<td>
-		</td>
-		<td>
-		</td>
-		<td>
-			總價格:".$table['total']."
-		</td>
-		</tr>"  ;
-	$output= $output."</table>" ;
-
-
-
-	//-----------------------------------------------------------------
-
-	
-	$tbl = $output ;
-	
-	$pdf->writeHTML($tbl, true, false, false, false, '');
-	// ---------------------------------------------------------
-	ob_end_clean();	//解決 error: Some data has already been output, can't send PDF file
-	
-	$pdf->Output('report', 'I');
-	//$pdf->Output('report.pdf', 'D');
-
-	
-
-	/*
-	// new font ，第一次加入 ttf 字型到 tcpdf
-	require_once('tcpdf/config/tcpdf_config.php') ;
-	require_once('tcpdf/tcpdf.php') ;
-	$fontname=TCPDF_FONTS::addTTFfont('tcpdf/fonts/big5/kaiu.ttf', 'TrueTypeUnicode');
-	$pdf->SetFont('kaiu', '', 12, true);
-	define ('PDF_FONT_NAME_MAIN', 'kaiu');
-	*/
-
-}
-/*2.0 new_add*/
+/*2.0 創建PDF*/
 function create_quo_pdf( $action_choose , $qu_id ,$view_or_save) {
 		
 	connect2db() ;
@@ -1773,7 +1740,7 @@ function create_quo_pdf( $action_choose , $qu_id ,$view_or_save) {
 	$pdf->SetFont('DroidSansFallback', '', 10, true);
 	//$pdf->SetY(30);
 	//$output= "<hr>";
-	$break_page_amount = 10;
+	$break_page_amount = $_POST['paper_break'];
 	$total_amount=1;
 	for($display_item=1;$display_item<$item_amount;$display_item++)
 	{
@@ -1798,10 +1765,19 @@ function create_quo_pdf( $action_choose , $qu_id ,$view_or_save) {
 		$output= '<table border="0" RULES="ALL"><tr><td>《項目列表結束》</td></tr></table>';
 		$pdf->writeHTML($output, true, false, false, false, '');
 	}
-		if($qus_result['sales_tax']==1)
-			$output= '<table border="2" rules="all" width="100%" cellpadding="5"><tr align="right" ><td width="35%">合　計 : '.$qus_result['currency'].' $'.number_format($sum_price,2).'</td><td width="30%">營業稅 : '.$qus_result['currency'].' $'.number_format($sum_price*0.05,2).'</td><td width="35%">總　計 : '.$qus_result['currency'].' $'.number_format($sum_price*1.05,2).'</td></tr><tr><td colspan="2">備註：<br><br></td><td>訂購確認簽章：<br><br>(確認後回傳傳真：'.$company_result['company_fax'].')</td></tr></table>';
+		if(isset($_POST['sales_tax_number'])){
+			$stn=($_POST['sales_tax_number']/100);
+			$sum_stn=1+($_POST['sales_tax_number']/100);
+		}
+		else{
+			$stn=(5/100);
+			$sum_stn=1+(5/100);
+		}
+		
+		if($qus_result['sales_tax']==0)
+			$output= '<table border="2" rules="all" width="100%" cellpadding="5"><tr align="right" ><td width="35%">合　計 : '.$qus_result['currency'].' $'.number_format($sum_price,2).'</td><td width="30%">營業稅 : '.$qus_result['currency'].' $'.number_format($sum_price*$stn,2).'</td><td width="35%">總　計 : '.$qus_result['currency'].' $'.number_format($sum_price*$sum_stn,2).'</td></tr><tr><td colspan="2">備註：'.$_POST['other_memo'].'</td><td>訂購確認簽章：<br><br>(確認後回傳傳真：'.$company_result['company_fax'].')</td></tr></table>';
 		else
-			$output= '<table border="2" rules="all" width="100%" cellpadding="5"><tr align="right" ><td width="35%">合　計 : '.$qus_result['currency'].' $'.number_format($sum_price,2).'</td><td width="30%">營業稅 : 內　含</td><td width="35%">總　計 : '.$qus_result['currency'].' $'.number_format($sum_price,2).'</td></tr><tr><td colspan="2">備註：<br><br></td><td>訂購確認簽章：<br><br>(確認後回傳傳真：'.$company_result['company_fax'].')</td></tr></table>';
+			$output= '<table border="2" rules="all" width="100%" cellpadding="5"><tr align="right" ><td width="35%">合　計 : '.$qus_result['currency'].' $'.number_format($sum_price,2).'</td><td width="30%">營業稅 : 內　含</td><td width="35%">總　計 : '.$qus_result['currency'].' $'.number_format($sum_price,2).'</td></tr><tr><td colspan="2">備註：'.$_POST['other_memo'].'</td><td>訂購確認簽章：<br><br>(確認後回傳傳真：'.$company_result['company_fax'].')</td></tr></table>';
 		$pdf->writeHTML($output, true, false, false, false, '');
 	
 	

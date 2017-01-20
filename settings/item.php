@@ -403,7 +403,7 @@
 					<li id='list3'>
 						<div id='price'>
 							<label for='price'>建議售價</label>
-							<input type=text id='price' name='item_price' value='$item_price' $readonly>
+							<input type='number' id='price' name='item_price' value='$item_price' $readonly>
 							<span></span>
 						</div>
 						<div id='currency'>
