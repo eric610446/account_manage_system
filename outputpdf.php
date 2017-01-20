@@ -21,10 +21,10 @@
 				</th>
 			</tr>
 			<tr class="tdr_cpdf1">
-				<td class="td_cpdf10">
+				<td class="td_cpdf10">如果金額已經內含營業稅，則不會被此數值影響			
 				</td>
 				<td class="td_cpdf11" >
-					<input type="number" name="sales_tax_number" class="input_cpdf_number" value=5.0 step=0.1>
+					<input type="number" name="sales_tax_number" class="input_cpdf_number" value=5.0 step=0.1 required="required">
 				</td>
 				<td class="td_cpdf12">
 					%
@@ -43,10 +43,10 @@
 				</td>
 			</tr>
 			<tr class="tdr_cpdf1">
-				<td class="td_cpdf10">(輸入過大值易造成排版混亂，建議在排版混亂時再調整縮小)
+				<td class="td_cpdf10">輸入過大值易造成排版混亂，只建議在下列↓狀況時，調整縮小數值<br>因為物品名稱過長，而導致的換頁排版混亂
 				</td>
 				<td class="td_cpdf11" >
-					<input type="number" name="paper_break" class="input_cpdf_number" value=10 step=1>
+					<input type="number" name="paper_break" class="input_cpdf_number" value=10 step=1 required="required">
 				</td>
 				<td class="td_cpdf12"  COLSPAN=2>
 				筆資料自動換頁
@@ -124,6 +124,7 @@
 	border:1px solid #fff;
 }
 .td_cpdf10{
+	padding-right:0.5%;
 	font-size:50%;
 	width:40%;
 	color:#aaa;
