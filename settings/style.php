@@ -235,10 +235,10 @@ td, th {
 	padding: 10px ;
 }
 tr:nth-child(odd) {
-	background-color: <? echo $odd_rows_tb_color; ?> ;
+	background-color: <? echo $odd_rows_color; ?> ;
 }
 tr:nth-child(even) {
-	background-color: <? echo $even_rows_tb_color; ?> ;
+	background-color: <? echo $even_rows_color; ?> ;
 }
 
 .settins-location input[id='location_country_sid'],
@@ -248,8 +248,8 @@ tr:nth-child(even) {
 
 div[id='mode'] ul li {
 	background-color: #666 ;
-	width: <? echo $mode_btn_width; ?> ;
-	height: <? echo $mode_btn_height; ?> ;
+	width: <? echo $Setting_Sub_btn_width; ?> ;
+	height: <? echo $Setting_Sub_btn_height; ?> ;
 	margin: 10% auto ;
 	border-radius: <? echo $button_border_radius."px" ?> ;
 }
@@ -258,20 +258,20 @@ div[id='mode'] ul li button {
 	height: 95% ;
 	margin-left: -1 ;
 	padding: 0 ;
-	color: <? echo $Mode_content_color; ?> ;
+	color: <? echo $Sub_content_color; ?> ;
 }
 div[id='mode'] ul li button:hover {
-	background-color: <? echo $Mode_btn_activate; ?> ;
+	background-color: <? echo $Sub_btn_activate; ?> ;
 }
 div[id='mode'] ul li button[id='<? echo $mode ?>'] {
-	color: <? echo $Mode_content_color; ?> ;
-	background-color: <? echo $Mode_btn_activate; ?> ;
+	color: <? echo $Sub_content_color; ?> ;
+	background-color: <? echo $Sub_btn_activate; ?> ;
 	width: 99% ;
 	height: 97% ;
 	margin: 0 ;	
-	text-shadow: <? echo $Mode_content_shadow; ?> 0.03em 0.03em 0.05em;
+	text-shadow: <? echo $Sub_content_shadow; ?> 0.03em 0.03em 0.05em;
 }
-div[id='mode'] ul li[id='<? echo $mode ?>'] {
+div[id='mode'] ul li[id='sw_li_active'] {
 	width: 76% ;
 }
 div[id='mode'] button {
@@ -279,12 +279,12 @@ div[id='mode'] button {
 	display: block ;
 	width: 80% ;
 	height: 10% ;
-	background-color: <? echo $Mode_btn_disable; ?> ;
+	background-color: <? echo $Sub_btn_disable; ?> ;
 	margin: 10% auto ;
 }
 div[id='mode'] ul {
 	margin: 40% auto ;
-	width: 65% ;
+	width: 80% ;
 }
 
 
@@ -338,24 +338,24 @@ button:active {
 
 
 nav div {
-	background-color: <? echo $Type_btn_disable ?> ;
+	background-color: <? echo $Main_btn_disable ?> ;
 	padding: 15% 12% ;
 	width: 60% ;
 	margin: 20% auto ;
 	margin-left: 0 ;
 }
 nav div:hover {
-	background-color: <? echo $Type_btn_activate; ?> ;
+	background-color: <? echo $Main_btn_activate; ?> ;
 }
 nav div[id='<? echo $where_am_i ?>'] {
 	margin: 20% auto ;
 	margin-right: 0 ;	
-	background-color: <? echo $Type_btn_activate; ?> ;
+	background-color: <? echo $Main_btn_activate; ?> ;
 }
 nav a {
 	display: block ;
 	background-color: transparent ;
-	color: <? echo $Type_btn_color; ?> ;
+	color: <? echo $Main_btn_color; ?> ;
 	font-size: <? echo $default_input_font_size+9 ?> ;
 	text-decoration: none ;
 }

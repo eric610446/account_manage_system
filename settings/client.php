@@ -40,22 +40,22 @@
 			$test=$test.' create mode<br/>' ;
 			$button2='<button type="submit" name="create_button" class="com_info" id="btn_button2">建立</button>';
 			// 建立選取地點的下拉式選單
-			$location = location_select_option($conn) ;		
+			$location = location_select_option($conn) ;
 		}
 		if(isset($_POST['modify_mode']) or ($_GET["mode"]=="modify") ) {
 			$mode = "modify" ;
-			$button1='<button type="submit" name="find_button" class="com_info" id="find_button">找客戶</button>';
+			$button1='<button type="submit" name="find_button" class="com_info" id="find_button">尋找</button>';
 			var_init();
 			$default_div_color = $default_sleep_input ;
 			$readonly = "readonly" ;
 			$disabled="disabled" ;
 			$test=$test.' edit mode<br/>';
 			// 建立選取地點的下拉式選單
-			$location = location_select_option($conn) ;	
+			$location = location_select_option($conn) ;
 		}
 		if(isset($_POST['find_mode']) or ($_GET["mode"]=="find") ) {
 			$mode = "find" ;
-			$button1='<button type="submit" name="find_button" class="com_info" id="find_button">找客戶</button>';
+			$button1='<button type="submit" name="find_button" class="com_info" id="find_button">尋找</button>';
 			var_init();
 			$test=$test.' find mode<br/>';
 			$only_get_info=1;
@@ -67,16 +67,16 @@
 
 			$test=$test.' find button<br/>';
 			client_get_html_input();
-			
+
 			//防止客戶名稱沒輸入
 			if ($client_name == '') {
 				$find_status = "請輸入要查詢的產品名稱";
 				var_init();
 				$default_div_color = $default_sleep_input ;
 				$disabled="disabled" ;
-				echo "			
+				echo "
 				<script>
-					alert('錯誤！　請填寫 [客戶名稱] 後，再按下 [找客戶] 。') ;
+					alert('錯誤！　請填寫 [客戶名稱] 後，再按下 [尋找] 。') ;
 				</script>
 				" ;
 			}
@@ -90,32 +90,34 @@
 					if ( $result->num_rows > 0 ) {
 						// fetch result as an associate array
 						while( $row = $result->fetch_assoc() ) {
-							$client_customer_id   = $row['customer_id'] ;
-							$client_s_id		  = $row['s_id'] ;
-							$client_name		  = $row['name'] ;
-							$client_nickname	  = $row['nickname'] ;
-							$client_ubn		   = $row['ubn'] ;
-							$client_company_phone = $row['company_phone'] ;
-							$client_company_fax   = $row['company_fax'] ;
-							$client_email		 = $row['email'] ;
-							$client_location	  = $row['location'] ;
-							$client_address	   = $row['address'] ;
-							$client_contact	   = $row['contact'] ;
-							$client_contact_phone = $row['contact_phone'] ;
-						}	
+							$client_customer_id     = $row['customer_id'] ;
+							$client_s_id            = $row['s_id'] ;
+							$client_name            = $row['name'] ;
+							$client_name_backup     = $row['name'] ;
+							$client_nickname        = $row['nickname'] ;
+							$client_ubn             = $row['ubn'] ;
+							$client_company_phone   = $row['company_phone'] ;
+							$client_company_fax     = $row['company_fax'] ;
+							$client_email           = $row['email'] ;
+							$client_location        = $row['location'] ;
+							$client_location_backup = $row['location'] ;
+							$client_address         = $row['address'] ;
+							$client_contact         = $row['contact'] ;
+							$client_contact_phone   = $row['contact_phone'] ;
+						}
 						$default_div_color = $default_active_input ;
 						$find_status= "查詢成功!";
 						$button2='<button type="submit" name="modify_button" class="com_info" id="btn_button2">修改</button>';
 						$button3="<button type='submit' name='invalid_button' class='com_info' id='btn_button3'>作廢</button>" ;
 					}
 
-				}				
+				}
 				//查詢的客戶不存在在資料庫中
 				else {
 					$find_status="$client_name 的資料尚未被建立 ...";
 					$default_div_color = $default_sleep_input ;
 					$disabled="disabled" ;
-					echo "			
+					echo "
 					<script>
 						alert('錯誤！　客戶　".$client_name."　的資料尚未建立！') ;
 					</script>
@@ -128,9 +130,9 @@
 			// 建立選取地點的下拉式選單
 			$location = location_select_option($conn, $client_location) ;
 
-			$button1='<button type="submit" name="find_button" class="com_info" id="find_button">找客戶</button>';
-		}			
-		
+			$button1='<button type="submit" name="find_button" class="com_info" id="find_button">尋找</button>';
+		}
+
 
 
 		//修改
@@ -138,45 +140,49 @@
 			$mode = "modify" ;
 			client_get_html_input();
 			$test=$test.' modify button<br/>';
-			
+
 			// 確認至少 name 不可以是空的
 			if( $client_name != "" ) {
+				$go=1 ;
 				//檢查 Database 有沒有重複建立的 client
 				$sql_cmd = "select name from client_info.customer_db where name='".$client_name."' and invalid='0'" ;
 				$result = $conn->query($sql_cmd) ;
-				if ($result->num_rows > 0) {
-
-					$final_status = $final_status.'<br/>建立產品資料失敗！<br/>原因：'.$client_name.' 不可重複建立！<br/>';
-					
-					echo "			
-					<script>
-						alert('錯誤！　".$client_name."不可重複建立！') ;
-					</script>
-					" ;
-					var_init() ;
+				if($client_name != $client_name_backup) {
+					if ($result->num_rows > 0) {
+						$final_status = $final_status.'<br/>建立產品資料失敗！<br/>原因：'.$client_name.' 不可重複建立！<br/>';
+						echo "
+						<script>
+							alert('錯誤！　".$client_name."不可重複建立！') ;
+						</script>
+						" ;
+						$client_name = $client_name_backup ;
+						$go=0 ;
+					}
 				}
-				else {
+				if($go) {
 					// 建立流水號
-					$client_s_id = sid_create($conn, "customer") ;
+					if( $client_location != $client_location_backup ) {
+						$client_s_id = sid_create($conn, "customer") ;
+					}
 
-					$sql_cmd = "update client_info.customer_db set 
-						s_id              ='".$client_s_id."',
-						name              ='".$client_name."',
-						nickname          ='".$client_nickname."',
-						ubn               ='".$client_ubn."',
-						company_phone     ='".$client_company_phone."',
-						company_fax       ='".$client_company_fax."',
-						email             ='".$client_email."',
-						location          ='".$client_location."',
-						address           ='".$client_address."',
-						contact           ='".$client_contact."',
-						contact_phone     ='".$client_contact_phone."' 
+					$sql_cmd = "update client_info.customer_db set
+						s_id                   ='".$client_s_id."',
+						name                   ='".$client_name."',
+						nickname               ='".$client_nickname."',
+						ubn                    ='".$client_ubn."',
+						company_phone          ='".$client_company_phone."',
+						company_fax            ='".$client_company_fax."',
+						email                  ='".$client_email."',
+						location               ='".$client_location."',
+						address                ='".$client_address."',
+						contact                ='".$client_contact."',
+						contact_phone          ='".$client_contact_phone."'
 					where customer_id ='".$client_customer_id."'
 					";
 					$result = $conn->query($sql_cmd) ;
-					if( $result > 0 ) {	
+					if( $result > 0 ) {
 						$final_status = $final_status.' <br/>成功修改客戶資料 ...<br/>';
-						echo "			
+						echo "
 						<script>
 							alert('成功修改客戶　".$client_name."　的資料。') ;
 						</script>
@@ -184,13 +190,13 @@
 
 						var_init() ;
 						$default_div_color = $default_sleep_input ;
-						$disabled="disabled" ;				
+						$disabled="disabled" ;
 						$button2 = "" ;
 						$button3 = "" ;
-					} 
-					else {			
+					}
+					else {
 						$final_status = $final_status.' <br/>修改客戶資料失敗，錯誤訊息:'.$conn->error.'<br/>';
-						echo "			
+						echo "
 						<script>
 							alert('錯誤！　修改客戶".$client_name."　的資料發生錯誤！ 錯誤訊息：".$conn->error."') ;
 						</script>
@@ -201,7 +207,7 @@
 				}
 			}
 			else {
-				echo "			
+				echo "
 				<script>
 					alert('錯誤！　修改客戶".$client_name."　的資料發生錯誤！ 錯誤訊息：名稱不可是空值') ;
 				</script>
@@ -213,7 +219,7 @@
 			// 建立選取地點的下拉式選單
 			$location = location_select_option($conn, $client_location) ;
 
-			$button1='<button type="submit" name="find_button" class="com_info" id="find_button">找商品</button>';
+			$button1='<button type="submit" name="find_button" class="com_info" id="find_button">尋找</button>';
 		}
 
 
@@ -221,19 +227,19 @@
 		if(isset($_POST['create_button'])) {
 			$mode = "create" ;
 			$test=$test.' create button<br/>';
-			client_get_html_input();	
-			
-			
-			if ($client_name != "") {	
-				
+			client_get_html_input();
+
+
+			if ($client_name != "") {
+
 				//檢查 Database 有沒有重複建立的 client
 				$sql_cmd = "select name from client_info.customer_db where name='".$client_name."' and invalid='0'" ;
 				$result = $conn->query($sql_cmd) ;
 				if ($result->num_rows > 0) {
 
 					$final_status = $final_status.'<br/>建立產品資料失敗！<br/>原因：'.$client_name.' 不可重複建立！<br/>';
-					
-					echo "			
+
+					echo "
 					<script>
 						alert('錯誤！　".$client_name."不可重複建立！') ;
 					</script>
@@ -243,7 +249,7 @@
 					// 建立流水號
 					$client_s_id = sid_create($conn, "customer") ;
 
-					// 建立新的 客戶欄位					
+					// 建立新的 客戶欄位
 					$sql_cmd = "insert into client_info.customer_db (
 						s_id,
 						name,
@@ -255,7 +261,7 @@
 						location,
 						address,
 						contact,
-						contact_phone		
+						contact_phone
 					) values (
 						'".$client_s_id."',
 						'".$client_name."',
@@ -273,19 +279,19 @@
 					/*
 					$sql_cmd = "insert into client_info.customer_db ( name ) valuse"
 					*/
-			
+
 					if ($conn->query($sql_cmd) === TRUE) {
 						$final_status = $final_status.' <br/>成功新增客戶 ...<br/>';
-						var_init();	
-						echo "			
+						var_init();
+						echo "
 						<script>
 							alert('成功新增客戶　".$client_name."。') ;
 						</script>
 						" ;
-					} 
+					}
 					else {
 						$final_status = $final_status.' <br/>新增客戶失敗，錯誤訊息:'.$conn->error.'<br/>';
-						echo "			
+						echo "
 						<script>
 							alert('錯誤！　新增客戶　".$client_name." 失敗！ 錯誤訊息：".$conn->error."') ;
 						</script>
@@ -293,29 +299,29 @@
 					}
 				}
 
-				var_init() ;				
-			} 
+				var_init() ;
+			}
 			else {
-				echo "			
+				echo "
 				<script>
 					alert('錯誤！　請填寫完\"客戶名稱\"後再建立！') ;
 				</script>
-				" ;				
+				" ;
 			}
 			$button2='<button type="submit" name="create_button" class="com_info" id="btn_button2">建立</button>';
-			
+
 			// 建立選取地點的下拉式選單
 			$location = location_select_option($conn, $client_location) ;
-		}	
+		}
 
 		// 按下作廢按鈕
 		if( isset($_POST["invalid_button"]) ) {
 			client_get_html_input();
 			$test=$test.' invalid_button<br/>';
 			$h1_mod_color="color:#5b88f6;";
-			
 
-			$sql_cmd = "update client_info.customer_db set 
+
+			$sql_cmd = "update client_info.customer_db set
 				invalid = '1'
 			where customer_id ='".$client_customer_id."'
 			";
@@ -323,7 +329,7 @@
 			$result = $conn->query($sql_cmd) ;
 			if( $result > 0 ) {
 				$final_status = $final_status.' <br/>成功 作廢 客戶資料 ...<br/>';
-				echo "			
+				echo "
 				<script>
 					alert('成功 作廢 客戶　".$client_name."　的資料。') ;
 				</script>
@@ -331,13 +337,13 @@
 
 				var_init() ;
 				$default_div_color = $default_sleep_input ;
-				$disabled="disabled" ;				
+				$disabled="disabled" ;
 				$button2 = "" ;
 				$button3 = "" ;
-			} 
-			else {			
+			}
+			else {
 				$final_status = $final_status.' <br/>失敗！ 作廢客戶資料失敗，錯誤訊息:'.$conn->error.'<br/>';
-				echo "			
+				echo "
 				<script>
 					alert('錯誤！　作廢客戶 ".$client_name."　的資料發生錯誤！ 錯誤訊息：".$conn->error."') ;
 				</script>
@@ -349,7 +355,7 @@
 			// 建立選取地點的下拉式選單
 			$location = location_select_option($conn, $client_location) ;
 
-			$button1='<button type="submit" name="find_button" class="com_info" id="find_button">找商品</button>';
+			$button1='<button type="submit" name="find_button" class="com_info" id="find_button">尋找</button>';
 
 		}
 
@@ -365,7 +371,7 @@
 			<!--<h1>SIX MONSTER ACCOUNT MANAGEMENT SYSTEM</h1>
 			<h2><font face="Droid Serif"><<客戶>></font></h2>-->
 		</header>
-		
+
 		<nav>
 			<ul>
 				<div id='client'><a href='client.php?mode=modify' id='client'>客戶資料</a></div>
@@ -375,7 +381,7 @@
 			</ul>
 		</nav>
 
-		<div id='mode'>	
+		<div id='mode'>
 			<ul>
 				<li id='create'><button type=submit name='create_mode' id='create'>建立</button></li>
 				<li id='modify'><button type=submit name='modify_mode' id='modify'>修改</button></li>
@@ -390,14 +396,16 @@
 			<?php
 
 				if( $only_get_info != 1 ) {
-					echo "	
-					<input type='hidden' name='client_customer_id' value='$client_customer_id'>	
+					echo "
+					<input type='hidden' name='client_customer_id' value='$client_customer_id'>
+					<input type='hidden' name='client_name_backup' value='$client_name_backup'>
+					<input type='hidden' name='client_location_backup' value='$client_location_backup'>
 					<li id='list1'>
 						<div id='sid'>
 							<label for='sid'>流水號</label>
 							<input type=text id='sid' name='s_id' value='$client_s_id' readonly>
 							<span>流水號為系統自動產生</span>
-						</div>	
+						</div>
 						<div id='name'>
 							<label for='name'>客戶名稱</label>
 							<input type=text id='name' name=name value='$client_name'>
@@ -409,52 +417,52 @@
 							<label for='nickname'>簡稱</label>
 							<input type=text id='nickname' name=nickname value='$client_nickname' $readonly>
 							<span></span>
-						</div>						
+						</div>
 						<div id='ubn'>
 							<label for='ubn'>統編</label>
 							<input type=text id='ubn' name=ubn value='$client_ubn' $readonly>
 							<span></span>
-						</div>						
+						</div>
 						<div id='company_phone'>
 							<label for='company_phone'>公司電話</label>
 							<input type=text id='company_phone' name=company_phone value='$client_company_phone' $readonly>
 							<span>格式範例： 02-7736-0456 </span>
-						</div>						
+						</div>
 						<div id='company_fax'>
 							<label for='company_fax'>傳真</label>
 							<input type=text id='company_fax' name=company_fax value='$client_company_fax' $readonly>
 							<span>格式建議同公司電話 </span>
 						</div>
 					</li>
-					<li id='list3'>						
+					<li id='list3'>
 						<div id='location'>
 							<label for='location'>地點</label>
 							".$location."
 							<span>選擇所屬主要縣市</span>
-						</div>						
+						</div>
 						<div id='address'>
 							<label for='address'>完整地址</label>
 							<input type=text id='address' name=address value='$client_address' $readonly>
 							<span>輸入完整地址 Ex： 台北市南港區三重路777號</span>
 						</div>
 					</li>
-					<li id='list4'>					
+					<li id='list4'>
 						<div id='contact'>
-							<label for='contact'>聯絡人</label>	
-							<input type=text id='contact' name=contact value='$client_contact' $readonly>	
+							<label for='contact'>聯絡人</label>
+							<input type=text id='contact' name=contact value='$client_contact' $readonly>
 							<span> 主要聯繫的聯絡人 </span>
-						</div>						
+						</div>
 						<div id='contact_phone'>
 							<label for='contact_phone'>聯絡人電話</label>
 							<input type=text id='contact_phone' name=contact_phone value='$client_contact_phone' $readonly>
 							<span> 聯絡人的聯絡方式： 分機 或 手機</span>
-						</div>		
+						</div>
 						<div id='email'>
 							<label for='email'>Email</label>
 							<input type=text id='email' name=email value='$client_email' $readonly  class='default'>
 							<span>聯絡人 或是 公司電子信箱</span>
-						</div>		
-					</li>		
+						</div>
+					</li>
 					<li id='list5'>
 						<div id='modify'>".$button1."</div>
 						<div id='create'>".$button2."</div>
@@ -472,11 +480,11 @@
 		</content>
 
 		<footer><?php echo $footer_context; ?></footer>
-		
-		
-	
-			
-			
+
+
+
+
+
 	</form>
 
 
@@ -485,11 +493,11 @@
 		alert("建立失敗") ;
 	}
 	</script>
-	
+
 
 </body>
 </html>
-  
+
 
 
 <?php
