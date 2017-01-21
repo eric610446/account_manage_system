@@ -1153,7 +1153,7 @@ function echo_detail_quotation( $qu_id ) {
 		if($_REQUEST['Which_Main_choose']==2){
 			//待完成後再加入此功能
 			/*
-			echo "	<div class='quo_option set_float_right'>
+			echo "	<div class='quo_option set_float_left'>
 					<button type=submit class = 'btn_submit' name=btm_edit_quo value=".$qu_id." >
 						修改".$content_qorp."
 					</button>
@@ -1162,7 +1162,7 @@ function echo_detail_quotation( $qu_id ) {
 		}
 		
 		if($order_state==1){
-			echo "	<div class='quo_option set_float_right'>
+			echo "	<div class='quo_option set_float_left'>
 						<button type=submit class = 'btn_submit' name=btm_order_change value=".$qu_id." >
 							恢復為<br>一般報價單
 						</button>
@@ -1170,14 +1170,14 @@ function echo_detail_quotation( $qu_id ) {
 
 		}
 		else{
-			echo "	<div class='quo_option set_float_right'>
+			echo "	<div class='quo_option set_float_left'>
 						<button type=submit class = 'btn_submit' name=btm_order_change value=".$qu_id." >
 							設定為<br>已成交訂單
 						</button>
 					</div>" ;
 		}
 			
-		echo "	<div class='quo_option set_float_right'>
+		echo "	<div class='quo_option set_float_left'>
 					<button type=button 
 						class = 'btn_submit'
 						onclick=window.open('outputpdf.php?action_choose=".$_REQUEST['Which_Main_choose']."&qu_id=".$qu_id."') 

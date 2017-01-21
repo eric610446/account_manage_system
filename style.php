@@ -245,6 +245,17 @@ Button:active {
 	top:4px;			/*從上往下移動*/
 	left:4px;			/*從左往右移動*/
 }
+.quo_option{
+	height: 20%;
+	width: 20%;
+	text-align: center ;
+}
+.set_float_left{
+	float:left;
+}
+.set_clear_left{
+	clear:left;
+}
 /*修改報價單 轉換報價單/訂單 輸出PDF */
 
 
