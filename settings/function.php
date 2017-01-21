@@ -182,8 +182,8 @@ function item_type_select_option($selected='') {
 		$m_s = "selected='selected'" ;
 		$html_code.=">" ;
 	}
-	elseif( preg_match("/O/", $selected) ) {
-		$item_type_id_backup = "O" ;
+	elseif( preg_match("/N/", $selected) ) {
+		$item_type_id_backup = "N" ;
 		$o_s = "selected='selected'" ;
 		$html_code=$html_code.">" ;
 	}
@@ -192,7 +192,7 @@ function item_type_select_option($selected='') {
 	}
 	$html_code = $html_code."<option value='P' ".$p_s.">產品</option>
 		<option value='M' ".$m_s.">材料</option>
-		<option value='O' ".$o_s.">其他</option>
+		<option value='N' ".$o_s.">其他</option>
 	</select>" ;
 	return $html_code ;
 }
@@ -279,7 +279,29 @@ function item_sid_create($conn, $w) {
 function find_all($conn, $w) {
 	require('var.php') ;
 	if( $w == "item" )
-		$sql_cmd = "SELECT I.name AS 'iname',price,currency,S.name AS 'sname' FROM client_info.item_db AS I LEFT JOIN supplier_db AS S ON S.supplier_id=I.supplier_id WHERE I.invalid=0;" ;
+		$sql_cmd = "(	SELECT I.name AS 'iname',I.s_id AS 'is_id',price,currency,S.name AS 'sname' 
+							FROM client_info.item_db AS I 
+						LEFT JOIN supplier_db AS S 
+							ON S.supplier_id=I.supplier_id 
+						WHERE I.s_id LIKE 'P%' AND I.invalid=0	)
+					UNION
+					(	SELECT I.name AS 'iname',I.s_id AS 'is_id',price,currency,S.name AS 'sname' 
+							FROM client_info.item_db AS I 
+						LEFT JOIN supplier_db AS S 
+							ON S.supplier_id=I.supplier_id 
+						WHERE I.s_id LIKE 'M%' AND I.invalid=0	)
+					UNION
+					(	SELECT I.name AS 'iname',I.s_id AS 'is_id',price,currency,S.name AS 'sname' 
+							FROM client_info.item_db AS I 
+						LEFT JOIN supplier_db AS S 
+							ON S.supplier_id=I.supplier_id 
+						WHERE I.s_id LIKE 'N%' AND I.invalid=0	)" ;
+	else if( $w == "location" )
+		$sql_cmd = "SELECT * FROM client_info.location_db AS L WHERE invalid = 0 ORDER BY L.country_sid DESC, L.location_id ASC" ;
+	else if( $w == "supplier" )
+		$sql_cmd = "SELECT * FROM client_info.supplier_db AS S WHERE invalid = 0 ORDER BY S.location ASC, S.s_id ASC" ;
+	else if( $w == "customer" )
+		$sql_cmd = "SELECT * FROM client_info.customer_db AS C WHERE invalid = 0 ORDER BY C.location ASC, C.s_id ASC" ;
 	else
 		$sql_cmd = "select * from client_info.".$w."_db where invalid='0'" ;
 	$result = $conn->query($sql_cmd) ;
@@ -358,19 +380,25 @@ function find_all($conn, $w) {
 			$find_all = "
 			<table>
 				<tr>
+					<th>物品種類</th>
 					<th>物品名稱</th>
 					<th>供應商</th>
 					<th>建議售價</th>
-					<th>幣值</th>
 				</tr>
 			" ;
 			while( $row = $result->fetch_assoc() ) {
+				if($row['is_id'][0]=='P')
+					$i_type='產品';
+				else if($row['is_id'][0]=='M')
+					$i_type='材料';
+				else
+					$i_type='其他';
 				$find_all .= "
 				<tr>
+					<td>".$i_type."</td>
 					<td>".$row['iname']."</td>
 					<td>".$row['sname']."</td>
-					<td>".number_format($row['price'])."</td>
-					<td>".$row['currency']."</td>
+					<td>".$row['currency']."$ ".number_format($row['price'])."</td>
 				</tr>
 				" ;
 			}
