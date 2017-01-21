@@ -283,7 +283,7 @@ function main_search_way($main_choose,$clear_way){
 				echo "</tr>";
 				
 				echo "<tr class='tr_srch_docun'>";
-				echo "<td class='td_srch_docun'>本國客戶";
+				echo "<td class='td_srch_docun'>外國客戶";
 				echo "</td>";
 				echo "<td class='td_srch_docun'>
 						列出所有的外國客戶，<br>
@@ -307,15 +307,6 @@ function main_search_way($main_choose,$clear_way){
 				echo "</tr>";
 				
 				echo "<tr class='tr_srch_docun'>";
-				echo "<td class='td_srch_docun'>流水編號";
-				echo "</td>";
-				echo "<td class='td_srch_docun'>
-						列出有<b>".$content_qorp."</b>紀錄的月份，<br>
-						選擇月份後，列出該月所有<b>".$content_qorp."</b>。";
-				echo "</td>";
-				echo "</tr>";
-				
-				echo "<tr class='tr_srch_docun'>";
 				echo "<td class='td_srch_docun'>本國客戶";
 				echo "</td>";
 				echo "<td class='td_srch_docun'>
@@ -331,6 +322,15 @@ function main_search_way($main_choose,$clear_way){
 				echo "<td class='td_srch_docun'>
 						列出所有擁有<b>".$content_qorp."</b>的外國客戶，<br>
 						選擇客戶後，列出屬於該客戶的所有<b>".$content_qorp."</b>。";
+				echo "</td>";
+				echo "</tr>";
+				
+				echo "<tr class='tr_srch_docun'>";
+				echo "<td class='td_srch_docun'>流水編號";
+				echo "</td>";
+				echo "<td class='td_srch_docun'>
+						列出有<b>".$content_qorp."</b>紀錄的月份，<br>
+						選擇月份後，列出該月所有<b>".$content_qorp."</b>。";
 				echo "</td>";
 				echo "</tr>";
 				
