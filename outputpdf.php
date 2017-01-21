@@ -7,7 +7,7 @@
 <html>
 <head><title>PDF</title></head>
 
-<body>
+<body bgcolor="#EEF">
 	<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<section>
 		<div style="text-align: center ;">
@@ -39,7 +39,7 @@
 			</tr>
 			<tr class="tdr_cpdf2">
 				<td class="td_cpdf2" COLSPAN=4>
-					<textarea name="other_memo" placeholder="備註請撰寫在此處 (建議文字、特殊符號、標點符號合計不要超過九十三字，超過可能會造成排版混亂)" class="ta_cpdf"></textarea>
+					<textarea name="other_memo" placeholder="備註請撰寫在此空白處〈建議文字、特殊符號、標點符號合計不要超過九十三字，超過可能會造成排版混亂〉" class="ta_cpdf"></textarea>
 				</td>
 			</tr>
 			<tr class="tdr_cpdf1">
@@ -100,7 +100,7 @@
 	font-size:100%;
 	width:100%;
 	height:50%;
-	border:1px solid #fff;
+
 }
 .thr_cpdf{
 	font-size:60%;
@@ -121,23 +121,23 @@
 	font-size:100%;
 	padding-left:1%;
 	padding-right:1%;
-	border:1px solid #fff;
+
 }
 .td_cpdf10{
 	padding-right:0.5%;
-	font-size:50%;
+	font-size:46%;
 	width:40%;
 	color:#aaa;
 	text-align:right ;
 }
 .td_cpdf11{
 	font-size:100%;
-	width:10%;
+	width:9%;
 	border:1px solid #000;
 }
 .td_cpdf12{
 	font-size:100%;
-	width:10%;
+	width:9%;
 	text-align:left ;
 }
 .td_cpdf2{
