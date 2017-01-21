@@ -80,5 +80,5 @@
 							"最佳瀏覽解析度：1920*1080 
 							《 Developed by Six Monster Information Inc. 》
 							業務聯絡人：陳敬宗   
-							<a href='mailto:kentchen@mail2000.com.tw'>kentchen@mail2000.com.tw</a> <a href='/account_manage_system/aboutme.php'>關於本產品</a>"; 
+							<a href='mailto:kentchen@mail2000.com.tw'>kentchen@mail2000.com.tw</a> <a href='/account_manage_system/aboutus.php'>關於本產品</a>"; 
 ?>
