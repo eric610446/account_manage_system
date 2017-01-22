@@ -65,11 +65,11 @@ function quotation_products_list($customer){
 	
 	echo "hi".$row['customer_id']."<br>";
 }
-//$NewOrADD=1 新增
-//$NewOrADD=2 修改
-function modify_quo( $NewOrADD , $info ){
-	echo "NewOrADD:".$NewOrADD." info:".$info."<br>";
-	echo "<input type='hidden' name='NewOrADD' value='".$NewOrADD."' >";
+//$NewOrEdit=1 新增
+//$NewOrEdit=2 修改
+function modify_quo( $NewOrEdit , $info ){
+	echo "NewOrEdit:".$NewOrEdit." info:".$info."<br>";
+	echo "<input type='hidden' name='NewOrEdit' value='".$NewOrEdit."' >";
 	
 	connect2db() ;
 	global $conn ;
@@ -99,7 +99,7 @@ function modify_quo( $NewOrADD , $info ){
 				$item_arr[$i][4]=$row['price'];
 	}
 	
-	if($NewOrADD == 2){
+	if($NewOrEdit == 2){
 		$target_quo = $info ;	
 		echo "<input type='hidden' name='quo_id' value='".$target_quo."' >";
 	}
@@ -165,12 +165,12 @@ function modify_quo( $NewOrADD , $info ){
 				echo "</td>";
 				
 				//每次增加量為 建議售價/500
-				$step=($row['origin_price'])/500;
+				/*$step=($row['origin_price'])/500;
 				$step=(int)$step;
 				if($step==0)
-					$step+=1;
+					$step+=1;*/
 				echo "<td>";
-				echo "<input type=number name='price[]' value=".$row['price']." required=1 step = ".$step.">";
+				echo "<input type=number name='price[]' value=".$row['price']." required=1 step = 1>";
 				echo "</td>";
 				
 			echo "</tr>";
@@ -202,7 +202,7 @@ function modify_quo( $NewOrADD , $info ){
 				echo "</td>";
 				
 				echo "<td>";
-				echo "<input type=number name='price[]' value=0 required=1 step = 10>";
+				echo "<input type=number name='price[]' value=0 required=1 step = 1>";
 				echo "</td>";
 				
 			echo "</tr>";
@@ -241,10 +241,11 @@ function showresult(){
 	//已存在的資料數量
 	$ardy_amt=$_POST['already_amount'];
 	//要寫入的報價單
-	$nora=$_POST['NewOrADD'];
+	$nora=$_POST['NewOrEdit'];
 	if($nora==2)
 		$quo_id=$_POST['quo_id'];
 	else
+		//如果是新增的話，要設定目標quo_id=Max(quo_id in quo_simple)+1
 		$quo_id=( get_biggest_quo_id()+1 );
 	
 	echo "Target quo_id: ".$quo_id."<br>";
@@ -283,7 +284,17 @@ function showresult(){
 	}
 	//新增不存在的物品資料進quo_detail
 	if((20-$ardy_amt)!=0){
-		//如果是新增的話，要設定目標quo_id=Max(quo_id)
+		//需要做amount確認
+		//需要做price確認
+		$sql_cmd_arr[$sql_cmd_amt]="INSERT INTO quotation_detail_db (quo_id, item_id, amount, price ,currency ) VALUES (".$quo_id.",".$_POST['selector_item'][$i].",".$_POST['amount'][$i].",".$_POST['price'][$i].",'TWD')";
+			echo ">>Sql Cmd[".$sql_cmd_amt."]: ".$sql_cmd_arr[$sql_cmd_amt]."<br>";
+			$sql_cmd_amt++;
+			if( ($_POST['price'][$i]*$_POST['amount'][$i])> $most_buy_price){
+				$most_buy_price=($_POST['price'][$i]*$_POST['amount'][$i]);
+				echo "most_buy_price:".$most_buy_price;
+				$most_buy_item=$_POST['selector_item'][$i];
+				echo " most_buy_item:".$most_buy_item."<br>";
+			}
 	}
 }
 
