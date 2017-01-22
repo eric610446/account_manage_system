@@ -27,10 +27,10 @@
 		</div>
 		<div>
 		<?php
+			/*
 			if(isset($_POST['btm_confirm_client'])) {
 				quotation_products_list( $_POST['btm_confirm_client'] ) ;
-			}
-			
+			}*/
 			if(isset($_POST['btn_edit_quo'])) {
 				modify_quo( $_POST['type_value'] , $_POST['info_value'] ) ;
 			}
@@ -51,6 +51,7 @@
 </html>
 
 <?php 
+/*
 function quotation_products_list($customer){
 	
 	
@@ -65,6 +66,7 @@ function quotation_products_list($customer){
 	
 	echo "hi".$row['customer_id']."<br>";
 }
+*/
 //$NewOrEdit=1 新增
 //$NewOrEdit=2 修改
 function modify_quo( $NewOrEdit , $info ){
@@ -286,15 +288,19 @@ function showresult(){
 	if((20-$ardy_amt)!=0){
 		//需要做amount確認
 		//需要做price確認
-		$sql_cmd_arr[$sql_cmd_amt]="INSERT INTO quotation_detail_db (quo_id, item_id, amount, price ,currency ) VALUES (".$quo_id.",".$_POST['selector_item'][$i].",".$_POST['amount'][$i].",".$_POST['price'][$i].",'TWD')";
-			echo ">>Sql Cmd[".$sql_cmd_amt."]: ".$sql_cmd_arr[$sql_cmd_amt]."<br>";
-			$sql_cmd_amt++;
-			if( ($_POST['price'][$i]*$_POST['amount'][$i])> $most_buy_price){
-				$most_buy_price=($_POST['price'][$i]*$_POST['amount'][$i]);
-				echo "most_buy_price:".$most_buy_price;
-				$most_buy_item=$_POST['selector_item'][$i];
-				echo " most_buy_item:".$most_buy_item."<br>";
-			}
+		//從第$ardy_amt開始跑
+		for($i=$ardy_amt;$i<20;$i++){
+			if($_POST['selector_item'][$i]!='NULL')
+			$sql_cmd_arr[$sql_cmd_amt]="INSERT INTO quotation_detail_db (quo_id, item_id, amount, price ,currency ) VALUES (".$quo_id.",".$_POST['selector_item'][$i].",".$_POST['amount'][$i].",".$_POST['price'][$i].",'TWD')";
+				echo ">>Sql Cmd[".$sql_cmd_amt."]: ".$sql_cmd_arr[$sql_cmd_amt]."<br>";
+				$sql_cmd_amt++;
+				if( ($_POST['price'][$i]*$_POST['amount'][$i])> $most_buy_price){
+					$most_buy_price=($_POST['price'][$i]*$_POST['amount'][$i]);
+					echo "most_buy_price:".$most_buy_price;
+					$most_buy_item=$_POST['selector_item'][$i];
+					echo " most_buy_item:".$most_buy_item."<br>";
+				}
+		}
 	}
 }
 
