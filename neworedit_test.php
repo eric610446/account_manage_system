@@ -290,8 +290,8 @@ function showresult(){
 		//需要做price確認
 		//從第$ardy_amt開始跑
 		for($i=$ardy_amt;$i<20;$i++){
-			if($_POST['selector_item'][$i]!='NULL')
-			$sql_cmd_arr[$sql_cmd_amt]="INSERT INTO quotation_detail_db (quo_id, item_id, amount, price ,currency ) VALUES (".$quo_id.",".$_POST['selector_item'][$i].",".$_POST['amount'][$i].",".$_POST['price'][$i].",'TWD')";
+			if($_POST['selector_item'][$i]!='NULL'){
+				$sql_cmd_arr[$sql_cmd_amt]="INSERT INTO quotation_detail_db (quo_id, item_id, amount, price ,currency ) VALUES (".$quo_id.",".$_POST['selector_item'][$i].",".$_POST['amount'][$i].",".$_POST['price'][$i].",'".get_currency($_POST['selector_item'][$i])."')";
 				echo ">>Sql Cmd[".$sql_cmd_amt."]: ".$sql_cmd_arr[$sql_cmd_amt]."<br>";
 				$sql_cmd_amt++;
 				if( ($_POST['price'][$i]*$_POST['amount'][$i])> $most_buy_price){
@@ -300,11 +300,28 @@ function showresult(){
 					$most_buy_item=$_POST['selector_item'][$i];
 					echo " most_buy_item:".$most_buy_item."<br>";
 				}
+			}
 		}
 	}
+	//if mode = add create quo_simple
+	// call make_qorp_s_id( $Target_Type , $Year , $Month )
+	/* sql cmd >>>> $sql_cmd_arr[$sql_cmd_amt]  >>> $sql_cmd_amt ++
+	流水號創建函數
+	$Target_Type = 0 意思是目標是生成報價單(qu_s_id)的流水號
+	$Target_Type = 1 意思是目標是生成訂單(po_s_id)的流水號
+	$Target_Type = 2 意思是目標是生成報價單的尾數編號(date_qu_no)
+	$Target_Type = 3 意思是目標是生成訂單的尾數編號(date_po_no)
+	*/
 }
 
 function get_biggest_quo_id(){
+	connect2db() ;
+	global $conn ;
+	
+	return 10;
+}
+
+function get_currency($item_id){
 	connect2db() ;
 	global $conn ;
 	
