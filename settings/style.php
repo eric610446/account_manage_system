@@ -6,7 +6,7 @@ include '../config.php' ;
 ?>
 
 body {
-	font-family: <?php echo $body_font_family; ?> ;	
+	font-family: <?php echo $body_font_family; ?> ;
 	background-color: <? echo $default_background_color; ?> ;
 	margin: 0 0 0 0 ;
 	padding: 0 0 0 0 ;
@@ -25,7 +25,7 @@ header {
 	line-height:<?php echo $header_line_height; ?>;
 	valign: center;
 	height: <? echo $header_height; ?> ;
-    text-align: center ;  
+    text-align: center ;
     color: <? echo $header_font_color; ?> ;
 	font-size: <? echo $header_font_size; ?>;
 	text-shadow: <?php echo $header_shadow_color; ?> <?php echo $header_shadow_style; ?>;
@@ -33,11 +33,11 @@ header {
 
 header h1,
 header h2 {
-	
-	margin: 0px ;	
+
+	margin: 0px ;
 	text-shadow: <?php echo $header_shadow_color; ?> <?php echo $header_shadow_style; ?>;
 	padding: 0.5em ;
-	
+
 }
 
 nav, div[id='mode'] , content, div[id='right'] {
@@ -107,16 +107,16 @@ content div[id='name'],
 content div[id='address'] {
 	width: 71.5% ;
 }
-content div[id='sid'], 
-content div[id='nickname'], 
-content div[id='ubn'], 
-content div[id='company_phone'], 
-content div[id='company_fax'], 
-content div[id='location'], 
-content div[id='contact'], 
-content div[id='contact_phone'], 
-content div[id='modify'], 
-content div[id='create'], 
+content div[id='sid'],
+content div[id='nickname'],
+content div[id='ubn'],
+content div[id='company_phone'],
+content div[id='company_fax'],
+content div[id='location'],
+content div[id='contact'],
+content div[id='contact_phone'],
+content div[id='modify'],
+content div[id='create'],
 content div[id='invalid'] {
 	width: 23% ;
 }
@@ -124,7 +124,7 @@ content div[id='email'] {
 	width: 47.5% ;
 }
 
-content ul li select {	
+content ul li select {
 	font-family: <?php echo $body_font_family; ?> ;
 	width: 100% ;
 	border: 0 ;
@@ -157,9 +157,9 @@ content ul li label {
 	color: <? echo $default_div_color ?> ;
 	float: left ;
 	padding: 5px 10px ;
-	margin: -20px 10px 0px 10px ;	
+	margin: -20px 10px 0px 10px ;
 	font-size: <? echo $default_input_font_size+4 ?> ;
-	
+
 }
 
 content ul li span {
@@ -178,8 +178,8 @@ content list[id='list5'] > div {
 	border: 0 ;
 }
 
-content div[id='modify'], 
-content div[id='create'], 
+content div[id='modify'],
+content div[id='create'],
 content div[id='invalid'] {
 	border: 0 ;
 }
@@ -207,7 +207,7 @@ content div[id='invalid'] {
 }
 
 .settings-location div[id='location_country_sid'],
-.settings-location div[id='location_city_sid'] {	
+.settings-location div[id='location_city_sid'] {
 	border: 1px solid <? echo $default_active_input ?> ;
 }
 
@@ -222,7 +222,7 @@ table {
 	width: 90% ;
 }
 td {
-	border: 1px solid <? echo $table_border_color; ?> ;	
+	border: 1px solid <? echo $table_border_color; ?> ;
 	min-width: 10em ;
 	max-width: 20em ;
 	border-radius: <? echo $input_border_radius ?> ;
@@ -231,7 +231,7 @@ th {
 	background-color: <? echo $table_header_color; ?> ;
 	font-size: <? echo $default_input_font_size+4 ?> ;
 }
-td, th {	
+td, th {
 	padding: 10px ;
 }
 tr:nth-child(odd) {
@@ -268,7 +268,7 @@ div[id='mode'] ul li button[id='<? echo $mode ?>'] {
 	background-color: <? echo $Sub_btn_activate; ?> ;
 	width: 99% ;
 	height: 97% ;
-	margin: 0 ;	
+	margin: 0 ;
 	text-shadow: <? echo $Sub_content_shadow; ?> 0.03em 0.03em 0.05em;
 }
 div[id='mode'] ul li[id='sw_li_active'] {
@@ -328,7 +328,7 @@ button {
 
 }
 
-button:hover {	
+button:hover {
 	cursor: pointer ;
 	text-shadow: <? echo $submit_content_shadow; ?> 0.03em 0.03em 0.05em;
 }
@@ -341,22 +341,23 @@ nav div {
 	background-color: <? echo $Main_btn_disable ?> ;
 	padding: 15% 12% ;
 	width: 60% ;
-	margin: 20% auto ;
+	height: 80px ;
+	margin: 10% auto ;
 	margin-left: 0 ;
 }
 nav div:hover {
 	background-color: <? echo $Main_btn_activate; ?> ;
 }
 nav div[id='<? echo $where_am_i ?>'] {
-	margin: 20% auto ;
-	margin-right: 0 ;	
+	margin: 10% auto ;
+	margin-right: 0 ;
 	background-color: <? echo $Main_btn_activate; ?> ;
 }
 nav a {
 	display: block ;
 	background-color: transparent ;
 	color: <? echo $Main_btn_color; ?> ;
-	font-size: <? echo $default_input_font_size+9 ?> ;
+	font-size: <? echo $default_input_font_size+15 ?> ;
 	text-decoration: none ;
 }
 nav ul {
@@ -369,7 +370,7 @@ header {
 	background-color: <? echo $header_bg_color; ?> ;
 }
 
-nav {	
+nav {
 	width: 10% ;
 	background-color: <?php echo $asideL_bg_color; ?> ;
 	height: <? echo $default_main_height ?> ;
@@ -404,15 +405,15 @@ footer a:visited {color:<?php echo $header_font_color; ?>;} /* 設定過去曾�
 
 
 /*動態改變文字大小*/
-<?php 
+<?php
 	for ($rate=0 ; $rate<101 ; $rate++ )
 	{
 		$mw=$rate*((1536)/100);
 		$mh=$rate*((854)/100);
 		$fz=$rate*(($root_font_size)/100);
-		$s = "@media screen and (min-width:".$mw."px) and (min-height:".$mh."px){html {font-size: ".$fz."em;}}  "; 
+		$s = "@media screen and (min-width:".$mw."px) and (min-height:".$mh."px){html {font-size: ".$fz."em;}}  ";
 		echo substr($s,0,-1) ;
-	}	
+	}
 ?>
 
 /*
