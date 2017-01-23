@@ -3,10 +3,11 @@
 	include 'config.php' ;
 	include 'functions.php' ;
 	include 'style.php' ;	
+	//include 'neworedit_test.php' ;	
 ?>
 
 <html>
-<head><title>六妖資訊帳務管理系統</title></head>
+<head><title><?php echo $header_context; ?></title></head>
 
 <body>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -119,8 +120,9 @@
 		}				
 //////////////----↓ 偉安工作區域 ↓----------------------------------------------------------------------------------------------------
 		//在建立報價單，選擇了一個要建立報價單的客戶，引導到輸入產品數量單價的介面
-		if(isset($_POST['btm_confirm_client'])) {
-			quotation_products_list( $_POST['btm_confirm_client'] ) ;
+		if(isset($_POST['btn_choose_client'])) {
+			//quotation_products_list( $_POST['btm_confirm_client'] ) ;
+			modify_quo(1,$_POST['btn_choose_client']);
 		}
 
 		//接收 報價單要報價的產品及數量與單價，存到每個客戶的 table
@@ -146,10 +148,19 @@
 		
 		// 家睿：下面這個交給偉安寫，現在是空function					
 		/*<<<按鈕在查詢報價單中>>>，輸入值為某個訂單/報價單，可修改這個訂單的客戶、增減物品種類(ps.刪物品種類，直接把該項的invaild標記為1比較快)、更改數量*/
-		if(isset($_POST['btm_edit_quo'])) {	
-			$qu_id = $_POST['btm_edit_quo'] ;
-			edit_quotation($qu_id) ;
+		/*if(isset($_POST['btn_edit_quo'])) {	
+			$qu_id = $_POST['btn_edit_quo'] ;
+			modify_quo(2,$qu_id) ;
+			//edit_quotation($qu_id) ;
+		}*/
+		if(isset($_POST['btn_edit_quo'])) {
+				modify_quo( 2 , $_POST['btn_edit_quo'] ) ;
 		}
+		
+		if(isset($_POST['submit_new_quo'])) {
+			calculate_result() ;
+		}
+	
 		
 //////////////----↑ 偉安工作區域 ↑----------------------------------------------------------------------------------------------------
 		
