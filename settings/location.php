@@ -56,6 +56,9 @@
 			$test=$test.' find mode<br/>';
 			$only_get_info=1;
 		}
+		if( isset($_POST['invalid_mode']) or ($_GET["mode"]=="invalid") ) {
+			$invalid_mode = 1 ;
+		}
 
 
 		if(isset($_POST['find_button'])) {
@@ -309,6 +312,45 @@
 			$button1='<button type="submit" name="find_button" class="com_info">尋找</button>';
 
 		}
+
+		// 在垃圾桶中，還原項目
+		if($_POST["invalid_btn"]) {
+			// 取得 id
+			$id = $_POST["invalid_btn"] ;
+			// 繼續庭僚在垃圾桶畫面
+			$invalid_mode = 1 ;
+			// 取得 id 與 name
+			$id_arr = explode("-", $id[0]) ;
+			// 檢查是不是已經有重複的 name
+			$sql_cmd = "select * from client_info.location_db where country_sid='".$id_arr[1]."' and city_sid='".$id_arr[2]."' and invalid='0'" ;
+			$result = $conn->query($sql_cmd) ;
+			if ($result->num_rows > 0) {
+				echo "
+				<script>
+					alert('錯誤！　".$id_arr[1].$id_arr[2]."有重複的資料存在，不可還原。') ;
+				</script>
+				" ;
+			}
+			else {
+				// 設定該項目的 invalid 為 0
+				$sql_cmd = "update client_info.location_db set invalid = 0 where location_id ='".$id_arr[0]."'";
+				$result = $conn->query($sql_cmd) ;
+			}
+		}
+
+		// 在垃圾桶中，刪除項目
+		if($_POST["del_btn"]) {
+			// 取得 id
+			$id = $_POST["del_btn"] ;
+			// 繼續庭僚在垃圾桶畫面
+			$invalid_mode = 1 ;
+			// 取得 id 與 name
+			$id_arr = explode("-", $id[0]) ;
+
+			// 設定該項目的 invalid 為 0
+			$sql_cmd = "update client_info.location_db set invalid = 2 where location_id ='".$id_arr[0]."'";
+			$result = $conn->query($sql_cmd) ;
+		}
 ?>
 <?
 //----------------------------------------------------------------------------------------------
@@ -336,14 +378,18 @@
 				<li id='create'><button type=submit name='create_mode' id='create'>建立</button></li>
 				<li id='modify'><button type=submit name='modify_mode' id='modify'>修改</button></li>
 				<li id='find'><button type=submit name='find_mode' id='find'>查詢</button></li>
+				<br/><br/>
+				<li id='invalid'><button type=submit name='invalid_mode' id='invalid'><img src="trash can.png" style="width:80%;"></button></li>
 			</ul>
 		</div>
 		<div id="right"></div>
 		<content>
 			<ul>
 			<?php
-
-				if( $only_get_info != 1 ) {
+				if( $invalid_mode == 1 ) {
+					echo invalid_display( $conn, "location" ) ;
+				}
+				elseif( $only_get_info != 1 ) {
 					echo "
 					<input type='hidden' name='location_id' value='$location_id'>
 					<input type='hidden' name='location_country_sid_backup' value='$location_country_sid_backup'>
@@ -375,7 +421,7 @@
 					<li id='list3'>
 						<div id='modify'>".$button1."</div>
 						<div id='create'>".$button2."</div>
-						<!--<div id='invalid'>".$button3."</div>-->
+						<div id='invalid'>".$button3."</div>
 						<div id='others'></div>
 					</li>
 					" ;

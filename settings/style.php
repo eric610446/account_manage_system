@@ -355,6 +355,17 @@ button:active {
 	background-color: #4282f2 ;
 }
 
+.invalid_btn {
+	font-size: 20px ;
+	width: 100px ;
+	height: 25px ;
+}
+.del_btn {
+	font-size: 20px ;
+	width: 100px ;
+	height: 25px ;
+	background-color: #f56 ;
+}
 
 nav div {
 	background-color: <? echo $Main_btn_disable ?> ;
