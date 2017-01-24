@@ -88,6 +88,7 @@
 					//查詢的客戶有存在在資料庫中
 					$result = $conn->query($sql_cmd) ;
 					if ( $result->num_rows > 0 ) {
+						$name_readonly = "readonly" ;
 						// fetch result as an associate array
 						while( $row = $result->fetch_assoc() ) {
 							$client_customer_id     = $row['customer_id'] ;
@@ -408,7 +409,7 @@
 						</div>
 						<div id='name'>
 							<label for='name'>客戶名稱</label>
-							<input type=text id='name' name=name value='$client_name'>
+							<input type=text id='name' name=name value='$client_name' $name_readonly>
 							<span>請輸入完整名稱</span>
 						</div>
 					</li>
