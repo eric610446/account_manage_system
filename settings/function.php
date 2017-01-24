@@ -451,7 +451,7 @@ function invalid_display( $conn, $db ) {
 		<table>
 			<tr>
 				<th>名稱</th>
-				<th></th>
+				<th>動作</th>
 			</tr>
 		" ;
 	$sql_cmd = "select * from client_info.".$db."_db where `invalid` = 1" ;
@@ -459,12 +459,36 @@ function invalid_display( $conn, $db ) {
 	if ( $result->num_rows > 0 ) {
 		while( $row = $result->fetch_assoc() ) {
 			$html_code .= "<tr><td>" ;
-			$html_code .= $row['name'] ;
-			$html_code .= "</td><td><button type='submit' name='invalid_btn[]' value='".$row[$db.'_id']."' class='invalid_btn' id='".$row[$db.'_id']."' >還原</button></td></tr>" ;
+			if( $db == "location" ) {
+				$html_code .= $row['country_sid'].$row['city_sid'] ;
+			}
+			else {
+				$html_code .= $row['name'] ;
+			}
+			$html_code .= "</td>
+				<td>
+					<button type='submit' name='invalid_btn[]' value='".$row[$db.'_id']."-" ;
+			if( $db == 'location' ) {
+				$html_code .= $row['country_sid']."-".$row['city_sid'] ;
+			}
+			else {
+				$html_code .= $row['name'] ;
+			}
+			$html_code .= "' class='invalid_btn' id='".$row[$db.'_id']."' >還原</button>
+					<button type='submit' name='del_btn[]' value='".$row[$db.'_id']."-" ;
+			if( $db == 'item' ) {
+				$html_code .= $row['country_sid']."-".$row['city_sid'] ;
+			}
+			else {
+				$html_code .= $row['name'] ;
+			}
+			$html_code .= "' class='del_btn' id='".$row[$db.'_id']."' >刪除</button>
+				</td>
+				</tr>" ;
 		}
 	}
 	else {
-		$html_code .= "<tr><td>垃圾桶是空的</td></tr>" ;
+		$html_code .= "<tr><td colspan='2'>垃圾桶是空的</td></tr>" ;
 	}
 	$html_code .= "</table>" ;
 	return $html_code ;

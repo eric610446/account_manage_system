@@ -3,7 +3,7 @@
 <head>
 	<title>產品資料建立/修改/查詢</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-	<script>
+	<script language="JavaScript" type="text/javascript">
 	$(document).keypress(function(e) {
 		if(e.which == 13) {
 			return false ;
@@ -369,10 +369,36 @@
 			$id = $_POST["invalid_btn"] ;
 			// 繼續庭僚在垃圾桶畫面
 			$invalid_mode = 1 ;
-			// 設定該項目的 invalid 為 0
-			$sql_cmd = "" ;
+			// 取得 id 與 name
+			$id_arr = explode("-", $id[0]) ;
+			// 檢查是不是已經有重複的 name
+			$sql_cmd = "select name from client_info.customer_db where name='".$id_arr[1]."' and invalid='0'" ;
+			$result = $conn->query($sql_cmd) ;
+			if ($result->num_rows > 0) {
+				echo "
+				<script>
+					alert('錯誤！　".$id_arr[1]."有重複的資料存在，不可還原。') ;
+				</script>
+				" ;
+			}
+			else {
+				// 設定該項目的 invalid 為 0
+				$sql_cmd = "update client_info.customer_db set invalid = 0 where customer_id ='".$id_arr[0]."'";
+				$result = $conn->query($sql_cmd) ;
+			}
+		}
 
-			$sql_cmd = "update client_info.customer_db set invalid = 0 where customer_id ='".$id[0]."'";
+		// 在垃圾桶中，刪除項目
+		if($_POST["del_btn"]) {
+			// 取得 id
+			$id = $_POST["del_btn"] ;
+			// 繼續庭僚在垃圾桶畫面
+			$invalid_mode = 1 ;
+			// 取得 id 與 name
+			$id_arr = explode("-", $id[0]) ;
+
+			// 設定該項目的 invalid 為 0
+			$sql_cmd = "update client_info.customer_db set invalid = 2 where customer_id ='".$id_arr[0]."'";
 			$result = $conn->query($sql_cmd) ;
 		}
 
@@ -415,7 +441,6 @@
 			<?php
 				if( $invalid_mode == 1 ) {
 					echo invalid_display( $conn, "customer" ) ;
-					//echo "test" ;
 				}
 				elseif( $only_get_info != 1 ) {
 					echo "
@@ -488,7 +513,7 @@
 					<li id='list5'>
 						<div id='modify'>".$button1."</div>
 						<div id='create'>".$button2."</div>
-						<!--<div id='invalid'>".$button3."</div> -->
+						<div id='invalid'>".$button3."</div>
 					</li>
 					" ;
 				}
