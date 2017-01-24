@@ -459,29 +459,35 @@ function invalid_display( $conn, $db ) {
 	if ( $result->num_rows > 0 ) {
 		while( $row = $result->fetch_assoc() ) {
 			$html_code .= "<tr><td>" ;
+
 			if( $db == "location" ) {
 				$html_code .= $row['country_sid'].$row['city_sid'] ;
 			}
 			else {
 				$html_code .= $row['name'] ;
 			}
+
 			$html_code .= "</td>
 				<td>
 					<button type='submit' name='invalid_btn[]' value='".$row[$db.'_id']."-" ;
+
 			if( $db == 'location' ) {
 				$html_code .= $row['country_sid']."-".$row['city_sid'] ;
 			}
 			else {
 				$html_code .= $row['name'] ;
 			}
+
 			$html_code .= "' class='invalid_btn' id='".$row[$db.'_id']."' >還原</button>
 					<button type='submit' name='del_btn[]' value='".$row[$db.'_id']."-" ;
-			if( $db == 'item' ) {
+
+			if( $db == 'location' ) {
 				$html_code .= $row['country_sid']."-".$row['city_sid'] ;
 			}
 			else {
 				$html_code .= $row['name'] ;
 			}
+
 			$html_code .= "' class='del_btn' id='".$row[$db.'_id']."' >刪除</button>
 				</td>
 				</tr>" ;

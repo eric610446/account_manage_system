@@ -317,12 +317,10 @@
 		if($_POST["invalid_btn"]) {
 			// 取得 id
 			$id = $_POST["invalid_btn"] ;
-			print_r($id) ;
 			// 繼續庭僚在垃圾桶畫面
 			$invalid_mode = 1 ;
 			// 取得 id 與 name
 			$id_arr = explode("-", $id[0]) ;
-			print_r($id_arr) ;
 			// 檢查是不是已經有重複的 name
 			$sql_cmd = "select * from client_info.location_db where country_sid='".$id_arr[1]."' and city_sid='".$id_arr[2]."' and invalid='0'" ;
 			$result = $conn->query($sql_cmd) ;
