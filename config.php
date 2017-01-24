@@ -10,7 +10,7 @@
 	$header_font_size 		= "100%";					/*以主頁面的字體大小為基準，100% = 3em = 48px */
 	$header_line_height		= "170%";					/*標題列單行行高 (這邊用來調整標提列位置)*/
 														/*標題列內容*/
-	$header_context 		= "六妖 帳務管理系統";
+	$header_context 		= "資銳科技 帳務管理系統";
 	
 	/*共通配置*/
 	$default_main_height 	= "87%" ;					/*主要區塊高度*/
@@ -74,7 +74,7 @@
 	$footer_height 			= "3%";						/*底層高度*/
 	$footer_context 		=							/*底層內容*/
 							"最佳瀏覽解析度：1920*1080 
-							《 Developed by Six monster Info. Inc. 》
+							《 Developed by ZIRUEI Prominent Tech. Inc. 》
 							業務聯絡人：陳敬宗   
 							<a href='mailto:kentchen@mail2000.com.tw'>kentchen@mail2000.com.tw</a> <a href='/account_manage_system/aboutus.php'>關於本產品</a>"; 
 ?>
