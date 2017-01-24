@@ -559,5 +559,9 @@ footer a:visited {color:<?php echo $header_font_color; ?>;} /* 設定過去曾�
 	}	
 ?>
 
+.test_nore{
+	font-size:12px;
+}
+
 
 </style>

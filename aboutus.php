@@ -1,13 +1,13 @@
 <html>
 <head>
-<title>科技公司 商業軟體</title>
+<title>資銳科技公司 ZIRUEI Prominent Tech.Inc. 製作 帳務管理軟體</title>
 <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">
 <style>
 </style>
 </head>
 <body bgcolor="#FFFFFF">
 	<div align="center"> 
-		科技公司 商業軟體<br><br>
+		資銳科技公司 ZIRUEI Prominent Tech.Inc. 製作<br> 帳務管理軟體<br><br>
 	</div>
 	<div align="center">
 		<h1>

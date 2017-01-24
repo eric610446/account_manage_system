@@ -24,6 +24,455 @@ function connect2db() {
 
 // ---------- ↓創建報價單區↓ ----------
 //左側欄選擇建立報價單會執行的 function
+function modify_quo( $NewOrEdit , $info ){
+	
+	//取得並記錄當前位置
+	echo "<input type='hidden' name='Which_Main_choose' value='".$_POST['Which_Main_choose']."' >";
+	echo "<input type='hidden' name='Which_Sub_choose' value='".$_REQUEST['Which_Sub_choose']."' >";
+
+	echo "新增(1) 或 修改(2) : ".$NewOrEdit." <br>傳入資料 (功能以上方↑的為準 1:客戶id 2:報價單id) : ".$info."<br>";
+	echo "<input type='hidden' name='NewOrEdit' value='".$NewOrEdit."' >";
+	echo "<input type='hidden' name='NOE_info' value='".$info."' >";
+	
+	connect2db() ;
+	global $conn ;
+	global $item_arr ;
+	
+	$item_arr=array() ;
+	
+	$sql_cmd = "	(SELECT item_id,name ,s_id ,price,currency
+							FROM client_info.item_db AS I 
+						WHERE I.s_id LIKE 'P%' AND I.invalid=0	)
+					UNION
+					(SELECT item_id,name ,s_id ,price,currency
+							FROM client_info.item_db AS I 
+						WHERE I.s_id LIKE 'M%' AND I.invalid=0	)
+					UNION
+					(SELECT item_id,name ,s_id ,price,currency
+							FROM client_info.item_db AS I 
+						WHERE I.s_id LIKE 'N%' AND I.invalid=0	)" ;	
+						
+	$result = mysql_query( $sql_cmd, $conn ) ;
+	
+	for( $i=0 ; $row = mysql_fetch_array($result) ; $i++){
+				$item_arr[$i][0]=$row['item_id'];
+				$item_arr[$i][1]=$row['s_id'];	
+				$item_arr[$i][2]=$row['name'];	
+				$item_arr[$i][3]=$row['currency'];
+				$item_arr[$i][4]=$row['price'];
+	}
+	
+	if($NewOrEdit == 2){
+		$target_quo = $info ;	
+		echo "<input type='hidden' name='quo_id' value='".$target_quo."' >";
+	}
+	else
+		$target_quo = 0 ;
+	
+	
+	$sql_cmd = "SELECT	QD.* ,
+						I.name,I.price AS origin_price,
+						I.s_id AS is_id
+				FROM client_info.quotation_detail_db AS QD 
+				LEFT JOIN client_info.item_db AS I
+					ON QD.item_id = I.item_id
+				WHERE QD.invalid = 0 AND QD.quo_id=".$target_quo ;
+					
+	$result = mysql_query( $sql_cmd, $conn ) ;
+	//$row = mysql_fetch_array( $result);
+	
+	
+	if(mysql_num_rows($result)>0){
+		$already_amount=mysql_num_rows($result);
+	}
+	else
+		$already_amount=0;
+	
+	echo "<input type='hidden' name='already_amount' value='".$already_amount."' >";
+	
+	
+	echo "<table border=1>";
+	echo "<tr>";
+		echo "<th>刪除";
+		echo "</th>";
+		echo "<th>項次";
+		echo "</th>";
+		echo "<th>物品選擇";
+		echo "</th>";
+		echo "<th>數量<br>(only in test)已有資料數：".$already_amount;
+		echo "</th>";
+		echo "<th>報價金額";
+		echo "</th>";
+		echo "<th>折扣";
+		echo "</th>";
+	echo "</tr>";
+	
+	for( $i=0 ; $i<20 ; $i++){
+		
+		if($i<$already_amount){
+			$row = mysql_fetch_array( $result );
+			echo "<tr>";
+				echo "<td>";
+				echo "<input type='checkbox' name='delete[]' value=".$i."><BR/>";
+				echo "</td>";
+				echo "<input type='hidden' name='quo_item_id[]' value='".$row['quo_item_id']."' >";
+				
+				
+				echo "<td>";	
+				echo ($i+1);
+				echo "</td>";
+				
+				
+				echo "<td>";	
+				if($row['currency']!='TWD'){
+							$NotTWD=1;
+				}
+				echo "《(id:".$row['item_id']." only in test)".$row['is_id']."-".$row['currency']."$ ".number_format($row['origin_price'])."》".$row['name'];
+				echo "<input type=hidden name='selector_item[]' value=".$row['item_id'].">";
+				echo "</td>";
+				
+				
+				echo "<td>";	
+				echo "<input type=number name='amount[]' value=".$row['amount']." required=1>";
+				echo "</td>";
+				
+				echo "<td>";
+				
+				if ($NotTWD != 1){
+					echo "<input type=number name='price[]' value=".$row['price']." required=1 step = 1>";
+				}
+				else{
+					echo "<input type=number name='price[]' value=".$row['price']." required=1 step = 0.01>";
+				}
+				echo "</td>";
+				
+				echo "<td>";
+				//避免建議售價為0的狀況
+				//echo $row['price'];
+				if($row['origin_price']!=0){
+					$discount_temp=number_format(  (($row['price']/$row['origin_price'])-1)*100 , 2  );
+					if($discount_temp=='0.00'){
+							$discount = "無折扣";
+					}						
+					else if(($row['origin_price']<$row['price']))
+						$discount = "+".$discount_temp."%";
+					else
+						$discount = $discount_temp."%";					
+					
+				}
+				else{
+					$discount="原價為零";
+				}
+				echo "<input type=hidden name='discount[]' value=".$discount.">";
+				echo $discount;
+				echo "</td>";
+			echo "</tr>";
+		}
+		else{
+			echo "<tr>";
+				echo "<td>";
+				echo "</td>";
+				
+				
+				echo "<td>";	
+				echo ($i+1);
+				echo "</td>";
+				
+				
+				echo "<td>";	
+				//echo "<input type=text name='selector_item[]' ><BR/>";
+					echo "<select name='selector_item[]' class='select_item'>";
+						echo "<option value=NULL> -- 請選擇物品 -- </option>";
+					for( $j=0 ; $j<sizeof($item_arr) ; $j++){
+						//如果存在不為台幣的物品
+						if($item_arr[$j][3]!='TWD'){
+							$NotTWD=1;
+						}
+						echo "	<option value=".$item_arr[$j][0]." >
+									《(id:".$item_arr[$j][0]." only in test)".$item_arr[$j][1]."-".$item_arr[$j][3]."$ ".number_format($item_arr[$j][4])." 》 ".$item_arr[$j][2]."
+								</option>";
+					}
+				echo "</select>";
+				echo "</td>";
+				
+				
+				echo "<td>";	
+				echo "<input type=number name='amount[]' value=0 required=1>";
+				echo "</td>";
+				
+				echo "<td>";
+				if ($NotTWD != 1){
+					echo "<input type=number name='price[]' value=0 required=1 step = 1>";
+				}
+				else{
+					echo "<input type=number name='price[]' value=0 required=1 step = 0.01>";
+				}
+				echo "</td>";
+				
+				echo "<td>";
+				echo "</td>";
+				
+			echo "</tr>";
+		}		
+	}
+	echo "</table>";
+	echo "<table border=1>";
+	echo "<tr>";
+	
+	if($NewOrEdit==1){
+		$sales_tax = 0;
+	}
+	else{
+		$sales_tax = get_quo_simple_info($target_quo,'sales_tax');
+	}
+	echo "<td>";
+	echo "本報價單內的金額是否已經含營業稅：";
+	echo "</td>";
+	echo "<td>";
+	echo "否";
+	echo "<input type=range name='sales_tax' Value=".$sales_tax." max=1 min=0 step = 1>";
+	echo "是";
+	echo "</td>";
+	
+	echo "</tr>";
+	echo "</table>";
+	echo "<div>";	
+			if($NewOrEdit==1){
+				echo "<div class='quo_option set_float_left'>";
+					echo "<button type=submit class = 'btn_submit' name='submit_new_quo' value='submit'>創建報價單</button>";
+				echo "</div>";
+			}
+			else{
+				echo "<div class='quo_option set_float_left'>";
+					echo "<button type=submit class = 'btn_submit' name='submit_new_quo' value='submit'>修改報價單</button>";
+				echo "</div>";
+			}
+	echo "</div>";
+	
+}
+
+function calculate_result(){
+	
+	//取得並記錄當前位置
+	echo "<input type='hidden' name='Which_Main_choose' value='".$_POST['Which_Main_choose']."' >";
+	echo "<input type='hidden' name='Which_Sub_choose' value='".$_REQUEST['Which_Sub_choose']."' >";
+	
+	echo "<div class='test_nore'>";
+	echo " --- Debug 區 Start (only in test) ---<br>";
+	for($i=0 ; $i<20 ; $i++){
+	echo $i.".&emsp;delete: ".$_POST['delete'][$i]."&emsp;"; 
+	//echo "number: ".$_POST['number'][$i]."&emsp;"; 
+	echo "selector_item: ".$_POST['selector_item'][$i]."&emsp;"; 
+	echo "amount: ".$_POST['amount'][$i]."&emsp;"; 
+	echo "price: ".$_POST['price'][$i]."&emsp;"; 
+	//echo "price: ".$_POST['price'][$i]."<br>"; 
+	echo "discount(原始折扣，更動後的尚未計算): ".$_POST['discount'][$i]."<br>"; 
+	}
+	
+	$sql_cmd_arr=array();
+	
+	$sql_cmd_amt=1;
+	
+	//已存在的資料數量
+	$ardy_amt=$_POST['already_amount'];
+	//要執行的功能
+	$nore=$_POST['NewOrEdit'];
+	//執行的功能所需要的參數
+	$nore_info=$_POST['NOE_info'];
+	//要寫入的報價單	
+	if($nore==2)
+		$quo_id=$_POST['quo_id'];
+	else
+		//如果是新增的話，要設定目標quo_id=Max(quo_id in quo_simple)+1
+		$quo_id=( get_biggest_quo_id()+1 );
+	
+	echo "Target quo_id: ".$quo_id."<br>";
+	
+	//買最貴的物品
+	$most_buy_item = 0;
+	//買最貴的物品總金額
+	$most_buy_price = 0;
+	//報價單總金額
+	$quo_price = 0;
+	//價格警告預設為0
+	$alert_price_0orless=0;
+	//數輛警告預設為1
+	$alert_amount_0orless=0;
+	
+	
+	$array_size=20;
+	//修改已存在的物品資料
+	
+	for($i=0 ; $i<$array_size ; $i++){
+		$cancel=0;
+		
+		//判斷東西是否有被刪除
+		if($i<$ardy_amt){
+			for($j=0 ; $j<$ardy_amt ; $j++){
+				if(isset($_POST['delete'][$j]))
+					if($i==$_POST['delete'][$j]){
+						$sql_cmd_arr[$sql_cmd_amt]="UPDATE client_info.quotation_detail_db SET invalid=1 WHERE quo_item_id=".$_POST['quo_item_id'][$i];
+						echo " 》》》 Sql Cmd[".$sql_cmd_amt."]: ".$sql_cmd_arr[$sql_cmd_amt]."<br>";
+						$sql_cmd_amt++;
+						$cancel=1;
+						//echo "<br>抓到".$i."已被".$j."刪除";
+					}
+					
+			}
+		}
+		else{
+			if($_POST['selector_item'][$i]=='NULL')
+				$cancel=1;
+		}
+		if($cancel==0){
+			//amount為0的時候不寫入資料，但警告
+			if($_POST['amount'][$i]>0){
+				//price為0時寫入資料，但警告
+				if($_POST['price'][$i]>=0){
+					if($_POST['price'][$i]==0){
+						echo "第".$i."筆資料為0元以下<br>";
+						$alert_price_0orless=1;
+					}
+					//計算折扣
+					$ori_price=get_item_info($_POST['selector_item'][$i],'price');
+					if($ori_price!=0){
+						$discount_temp=number_format(  (($_POST['price'][$i]/$ori_price)-1)*100 , 2  );
+						if($discount_temp=='0.00'){
+								$discount = "無折扣";
+						}						
+						else if(($ori_price<$_POST['price'][$i]))
+							$discount = "+".$discount_temp."%";
+						else
+							$discount = $discount_temp."%";					
+						
+					}
+					else{
+						$discount="原價為零";
+					}
+					//更新物品
+					if($i<$ardy_amt)
+						$sql_cmd_arr[$sql_cmd_amt]="UPDATE client_info.quotation_detail_db SET amount=".$_POST['amount'][$i].", price=".$_POST['price'][$i].",discount='".$discount."' WHERE quo_item_id=".$_POST['quo_item_id'][$i];
+					//新增物品
+					else
+						$sql_cmd_arr[$sql_cmd_amt]="INSERT INTO client_info.quotation_detail_db (quo_id, item_id, amount, price ,currency,discount ) VALUES ( ".$quo_id.",".$_POST['selector_item'][$i].",".$_POST['amount'][$i].",".$_POST['price'][$i].",'".get_item_info(  $_POST['selector_item'][$i], 'currency' )."','".$discount."' )";
+					
+					echo " 》》》 Sql Cmd[".$sql_cmd_amt."]: ".$sql_cmd_arr[$sql_cmd_amt]."<br>";
+					$sql_cmd_amt++;
+					//紀錄訂單中最大宗的訂購項目跟金額
+					if( ($_POST['price'][$i]*$_POST['amount'][$i])> $most_buy_price){
+						$most_buy_price=($_POST['price'][$i]*$_POST['amount'][$i]);
+						echo " most_buy_price:".$most_buy_price;
+						$most_buy_item=$_POST['selector_item'][$i];
+						echo " most_buy_item:".$most_buy_item."<br>";
+					}
+					$quo_price+=($_POST['price'][$i]*$_POST['amount'][$i]);
+					echo " 目前總金額為:".$quo_price."<br>";
+				}
+				else{
+					echo "第".$i."筆資料為0元以下".$i."<br>";
+						$alert_price_0orless=1;
+				}
+			}
+			else{
+				echo "第".$i."筆資料為0個".$i."<br>";
+				$alert_amount_0orless=1;
+			}
+		}
+	}
+	
+	if($alert_price_0orless==1){
+		echo "警告：有些物品的報價被設定成零元以下，請再次確認該物品的價格是否無誤。<br>";
+	}
+	if($alert_amount_0orless==1){
+		echo "警告：有個新增或修改的項目，物品數量被設定成零個以下，該項目將不會被新增或被做任何修改。<br>";
+	}
+	//if mode = add create quo_simple
+	// call make_qorp_s_id( $Target_Type , $Year , $Month )
+	/* sql cmd >>>> $sql_cmd_arr[$sql_cmd_amt]  >>> $sql_cmd_amt ++
+	流水號創建函數
+	$Target_Type = 0 意思是目標是生成報價單(qu_s_id)的流水號
+	$Target_Type = 2 意思是目標是生成報價單的尾數編號(date_qu_no)
+	*/
+	if($nore==1){
+		$now		=	time();
+		$now_y		=	date("Y",$now);
+		$now_m		=	date("m",$now); // 因為設計關係，所以月份1~9前面不要有0
+		$now_all	=	date("Y-m-d G:i:s",$now);
+		echo "現在時間 : ".$now_y." 年 ".$now_m." 月 (".$now_all.")<br>";
+		
+		$sales_tax=$_POST['sales_tax'];
+		echo "是否含稅(0:無 1:有) : ".$sales_tax."<br>";
+		
+		$date_qu_no	= make_qorp_s_id( 2 , $now_y , $now_m );
+		echo " 是該月第幾個報價單 : ".$date_qu_no;
+		
+		$qu_s_id	= make_qorp_s_id( 0 , $now_y , $now_m );
+		echo " 報價單流水號 : ".$qu_s_id." <br>";
+		
+		$currency="TWD";
+		
+		$sql_cmd_arr[0]="	INSERT INTO client_info.quotation_simple_db 
+								(quo_id, qu_s_id, customer_id, date, 
+								 item_id, currency, price, sales_tax, 
+								 date_y, date_m, date_qu_no ) 
+							VALUES 
+								(".$quo_id.",'".$qu_s_id."',".$nore_info.",'".$now_all."',"
+								  .$most_buy_item.",'".$currency."', ".$quo_price.",'".$sales_tax."',"
+								  .$now_y.",".$now_m.",".$date_qu_no." )";
+		//"UPDATE client_info.quotation_detail_db 
+		//							SET amount=".$_POST['amount'][$i].", price=".$_POST['price'][$i].",discount='".$discount."' WHERE quo_item_id=".$_POST['quo_item_id'][$i];
+	}
+	else{
+	//含稅 大宗物品 修改
+		$sales_tax=$_POST['sales_tax'];
+		echo "是否含稅(0:無 1:有) : ".$sales_tax."<br>";
+		$currency="TWD";
+		$sql_cmd_arr[0]="	UPDATE client_info.quotation_simple_db 
+							SET	item_id=".$most_buy_item.",price=".$quo_price.",currency='".$currency."',sales_tax=".$sales_tax."
+							WHERE quo_id=".$quo_id;
+		
+	}
+	echo " 》》》 Sql Cmd[0]: ".$sql_cmd_arr[0]."<br>";
+	echo "總共應該要執行 ".$sql_cmd_amt."筆sql指令<br>";
+	
+	for($s=0;$s<$sql_cmd_amt;$s++){
+		connect2db() ;
+		global $conn ;	
+		mysql_query( $sql_cmd_arr[$s], $conn ) ;
+		echo "執行 第".$s."個sql指令 ";
+		if($s%5==0)
+			echo "<br>";
+	}
+	echo "<br> --- Debug 區 End (only in test) ---<br>";
+	echo "<hr>";
+	echo "</div>";
+	echo_detail_quotation( $quo_id );
+}
+
+//取得既存最大的quo_id
+function get_biggest_quo_id(){
+	$sql_cmd = "SELECT MAX(quo_id) FROM client_info.quotation_simple_db" ;
+	return single_return_sql_cmd($sql_cmd);	
+}
+
+//取得該物品的單一資訊
+function get_item_info($item_id,$info){	
+	$sql_cmd = "SELECT ".$info." FROM client_info.item_db WHERE item_id=".$item_id ;	
+	return single_return_sql_cmd($sql_cmd);	
+}
+
+//取得該報價單的單一資訊
+function get_quo_simple_info($quo_id,$info){	
+	$sql_cmd = "SELECT ".$info." FROM client_info.quotation_simple_db WHERE quo_id=".$quo_id ;	
+	return single_return_sql_cmd($sql_cmd);	
+}
+
+function single_return_sql_cmd($sql_cmd){
+	connect2db() ;
+	global $conn ;	
+	$result = mysql_query( $sql_cmd, $conn ) ;	
+	return mysql_result($result, 0);//只回傳遞第一個數值
+}
 function main_create_quotation() {
 	connect2db() ;
 	global $conn ;
@@ -542,7 +991,7 @@ function echo_city_customer($location){
 				echo "</td>";
 				echo "<td class='td_List_top_header td_List_city_customer'>";
 				if($_POST['Which_Main_choose']==1)
-					echo "<button type=submit class='btn_List' name=btm_confirm_client value=".$row['customer_id']." >創建".$content_qorp."</button>" ;
+					echo "<button type=submit class='btn_List' name=btn_choose_client value=".$row['customer_id']." >創建".$content_qorp."</button>" ;
 				else
 					echo "<button type=submit class='btn_List' name=btn_list_simple_quo value=".$row['customer_id']." >查看".$content_qorp."</button>" ;
 				echo "</td>";
@@ -736,6 +1185,9 @@ function echo_worldwide_customer($tgt_cntry){
 					echo "<button type=submit class='btn_List' name=btn_detail_customer value=".$row['customer_id']." '>詳細資料</button>" ;
 				echo "</td>";
 				echo "<td class='td_List_top_header td_List_worldwide_customer'>";
+				if($_POST['Which_Main_choose']==1)
+					echo "<button type=submit class='btn_List' name=btn_choose_client value=".$row['customer_id']." >創建".$content_qorp."</button>" ;
+				else
 					echo "<button type=submit class='btn_List' name=btn_list_simple_quo value=".$row['customer_id']." >查看".$content_qorp."</button>" ;
 				echo "</td>";
 			echo "</tr>";
@@ -984,18 +1436,18 @@ function echo_detail_quotation( $qu_id ) {
 	global $conn ;
 	
 	//抓出客戶所有的 0:報價單資料   1:訂單資料
-	if($_REQUEST['Which_Main_choose']==2){
-		$check_qorp=0;
-		$content_qorp="報價單";
-		$sql_qorp="qu_s_id";
-	}
-	else{
+	if($_REQUEST['Which_Main_choose']==3){
 		$check_qorp=1;
 		$content_qorp="訂單";
 		$sql_qorp="po_s_id";
 	}
+	else{
+		$check_qorp=0;
+		$content_qorp="報價單";
+		$sql_qorp="qu_s_id";
+	}
 	
-	//抓取該客戶的所有報價單、客戶名稱、物品名稱
+	//抓取該客戶的所有報價單、客戶名稱、物品名稱 //如果要加作廢功能的話 QD.invalid = 0 請務必還是等於0
 	$sql_cmd = "SELECT  QS.qu_s_id, QS.po_s_id, QS.date, 
                 		QS.price AS total_price, QS.currency, 
                         QS.sales_tax, QS.is_order, 
@@ -1009,7 +1461,7 @@ function echo_detail_quotation( $qu_id ) {
 					ON QS.customer_id = C.customer_id
 				LEFT JOIN client_info.item_db AS I
 					ON QD.item_id = I.item_id
-				WHERE QD.quo_id = ".$qu_id." AND QS.invalid = 0 
+				WHERE QD.quo_id = ".$qu_id." AND QS.invalid = 0 AND QD.invalid = 0 
 				ORDER BY QD.quo_item_id ASC  ";
 
 	$result = mysql_query( $sql_cmd, $conn ) ;
@@ -1159,6 +1611,11 @@ function echo_detail_quotation( $qu_id ) {
 					</button>
 				</div>" ;	
 			*/
+			echo "	<div class='quo_option set_float_left'>
+					<button type=submit class = 'btn_submit' name=btn_edit_quo value=".$qu_id." >
+						修改".$content_qorp."
+					</button>
+					</div>" ;
 		}
 		
 		if($order_state==1){
@@ -1264,7 +1721,7 @@ function make_qorp_s_id( $Target_Type , $Year , $Month ){
 	$max = mysql_fetch_array($temp) ;
 	
 	if($Month<10)
-		$Month="0".$Month;
+		$Month="0".((int)$Month);
 	
 	if($max[0]>0){
 	
