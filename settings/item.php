@@ -404,12 +404,12 @@
 						<div id='price'>
 							<label for='price'>建議售價</label>
 							<input type='number' id='price' name='item_price' value='$item_price' $readonly>
-							<span></span>
+							<span>請輸入台幣售價</span>
 						</div>
 						<div id='currency'>
 							<label for='currency'>幣值</label>
-							<input type=text id='currency' name='item_currency' value='$item_currency' $readonly>
-							<span>Ex：TWD</span>
+							<input type=text id='currency' name='item_currency' value='TWD' readonly>
+							<span></span>
 						</div>
 
 						<div id='empty'><label></label><input><input><input></div>

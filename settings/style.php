@@ -315,6 +315,25 @@ content div[id='invalid'] {
 	?>
 }
 
+content[id='info'] {
+	padding-top: 50px ;
+}
+content[id='info'] th {
+	font-size: 2em ;
+	padding: 20px ;
+}
+content[id='info'] tr {
+	padding: 40px ;
+}
+content[id='info'] td {
+	padding: 40px ;
+	padding-left: 80px ;
+}
+content[id='info'] ol {
+	padding: 20px ;
+	text-align: left ;
+}
+
 button {
 	margin: 0 ;
 	width: 100% ;
