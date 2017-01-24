@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機: localhost
--- 產生時間： 2017-01-23 20:24:20
+-- 產生時間： 2017-01-24 16:08:15
 -- 伺服器版本: 5.7.15-log
 -- PHP 版本： 5.6.26
 
@@ -201,61 +201,71 @@ CREATE TABLE `quotation_detail_db` (
   `price` int(11) NOT NULL DEFAULT '0' COMMENT '實際售價',
   `currency` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'TWD' COMMENT '幣值',
   `discount` char(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '折扣',
-  `invalid` tinyint(1) NOT NULL DEFAULT '0' COMMENT '作廢物品種類'
+  `invalid` tinyint(1) NOT NULL DEFAULT '0' COMMENT '作廢物品種類',
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '公司名稱',
+  `nickname` varchar(8) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '公司簡稱',
+  `location` int(7) DEFAULT NULL COMMENT '所處地點',
+  `ubn` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '統一編號',
+  `contact` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '聯絡人',
+  `contact_phone` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '聯絡人電話',
+  `company_phone` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '公司電話',
+  `company_fax` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '公司傳真',
+  `address` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '公司地址',
+  `email` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '公司信箱'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- 資料表的匯出資料 `quotation_detail_db`
 --
 
-INSERT INTO `quotation_detail_db` (`quo_item_id`, `quo_id`, `item_id`, `amount`, `price`, `currency`, `discount`, `invalid`) VALUES
-(1, 1, 3, 6, 9999999, 'NTD', '+31,247.96', 0),
-(2, 1, 4, 12, 1690, 'NTD', '-98.57%', 0),
-(3, 1, 5, 6, 12490, 'NTD', '+150.80%', 0),
-(4, 2, 2, 21, 222221, 'NTD', '-75.09%', 0),
-(5, 2, 4, 22, 22222, 'NTD', '-81.14%', 1),
-(6, 2, 6, 23, 222223, 'NTD', '-68.92%', 1),
-(7, 2, 8, 24, 224, 'NTD', '-98.68%', 1),
-(8, 3, 3, 6, 2990, 'NTD', '-90.63%', 0),
-(9, 3, 4, 12, 1690, 'NTD', '-98.57%', 0),
-(10, 3, 5, 7, 12490, 'NTD', '+150.80%', 0),
-(11, 4, 4, 0, 1780, 'NTD', NULL, 0),
-(12, 5, 4, 1, 1750, 'NTD', '-98.51%', 0),
-(13, 6, 4, 100000, 1650, 'NTD', '-98.60%', 0),
-(14, 7, 9, 1, 1500000000, 'NTD', '+21.50%', 0),
-(15, 8, 8, 10, 16500, 'NTD', NULL, 0),
-(16, 9, 9, 1, 1999999998, 'NTD', NULL, 0),
-(17, 10, 10, 1, 5000, 'NTD', NULL, 0),
-(18, 10, 1, 1, 4000, 'NTD', NULL, 0),
-(19, 11, 1, 1, 340000, 'NTD', '-49.93%', 0),
-(20, 11, 13, 22, 1500, 'NTD', NULL, 0),
-(21, 11, 12, 333, 400, 'NTD', NULL, 0),
-(22, 11, 11, 4444, 3700, 'NTD', NULL, 0),
-(23, 11, 10, 55555, 4999, 'NTD', NULL, 0),
-(24, 11, 9, 666666, 1999999999, 'NTD', NULL, 0),
-(25, 11, 8, 7777777, 1600, 'NTD', NULL, 0),
-(26, 11, 7, 88888888, 1979999, 'NTD', NULL, 0),
-(27, 11, 6, 999999999, 9111, 'NTD', NULL, 0),
-(28, 11, 5, 1000000000, 11111, 'NTD', NULL, 0),
-(29, 11, 4, 2147483647, 1600, 'NTD', NULL, 0),
-(30, 11, 3, 190, 2999, 'NTD', NULL, 0),
-(31, 11, 2, 200, 9999, 'NTD', NULL, 0),
-(32, 12, 2, 1, 9980, 'NTD', NULL, 0),
-(33, 13, 2, 1, 9980, 'NTD', NULL, 0),
-(34, 14, 2, 1, 9980, 'NTD', NULL, 0),
-(35, 15, 2, 1, 9980, 'NTD', NULL, 0),
-(36, 16, 2, 1, 9980, 'NTD', NULL, 0),
-(37, 17, 2, 1, 9980, 'NTD', NULL, 0),
-(38, 18, 2, 1, 9980, 'NTD', NULL, 0),
-(39, 19, 2, 1, 9980, 'NTD', NULL, 0),
-(40, 20, 2, 1, 9980, 'NTD', NULL, 0),
-(41, 21, 2, 1, 9980, 'NTD', '-98.88%', 0),
-(42, 22, 2, 1, 9980, 'NTD', NULL, 0),
-(43, 11, 14, 2, 100, 'TWD', NULL, 0),
-(44, 11, 14, 3, 0, 'TWD', NULL, 0),
-(45, 11, 10, 10, 3000, 'TWD', '-8.54%', 0),
-(46, 2, 1, 211, 123456, 'TWD', '-81.82%', 0),
-(61, 7, 5, 1, 3000, 'TWD', '-39.76%', 1);
+INSERT INTO `quotation_detail_db` (`quo_item_id`, `quo_id`, `item_id`, `amount`, `price`, `currency`, `discount`, `invalid`, `name`, `nickname`, `location`, `ubn`, `contact`, `contact_phone`, `company_phone`, `company_fax`, `address`, `email`) VALUES
+(1, 1, 3, 6, 9999999, 'NTD', '+31,247.96', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 1, 4, 12, 1690, 'NTD', '-98.57%', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, 1, 5, 6, 12490, 'NTD', '+150.80%', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, 2, 2, 21, 222221, 'NTD', '-75.09%', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(5, 2, 4, 22, 22222, 'NTD', '-81.14%', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(6, 2, 6, 23, 222223, 'NTD', '-68.92%', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(7, 2, 8, 24, 224, 'NTD', '-98.68%', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(8, 3, 3, 6, 2990, 'NTD', '-90.63%', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(9, 3, 4, 12, 1690, 'NTD', '-98.57%', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(10, 3, 5, 7, 12490, 'NTD', '+150.80%', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(11, 4, 4, 0, 1780, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(12, 5, 4, 1, 1750, 'NTD', '-98.51%', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(13, 6, 4, 100000, 1650, 'NTD', '-98.60%', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(14, 7, 9, 1, 1500000000, 'NTD', '+21.50%', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(15, 8, 8, 10, 16500, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(16, 9, 9, 1, 1999999998, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(17, 10, 10, 1, 5000, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(18, 10, 1, 1, 4000, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(19, 11, 1, 1, 340000, 'NTD', '-49.93%', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(20, 11, 13, 22, 1500, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(21, 11, 12, 333, 400, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(22, 11, 11, 4444, 3700, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(23, 11, 10, 55555, 4999, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(24, 11, 9, 666666, 1999999999, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(25, 11, 8, 7777777, 1600, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(26, 11, 7, 88888888, 1979999, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(27, 11, 6, 999999999, 9111, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(28, 11, 5, 1000000000, 11111, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(29, 11, 4, 2147483647, 1600, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(30, 11, 3, 190, 2999, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(31, 11, 2, 200, 9999, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(32, 12, 2, 1, 9980, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(33, 13, 2, 1, 9980, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(34, 14, 2, 1, 9980, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(35, 15, 2, 1, 9980, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(36, 16, 2, 1, 9980, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(37, 17, 2, 1, 9980, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(38, 18, 2, 1, 9980, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(39, 19, 2, 1, 9980, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(40, 20, 2, 1, 9980, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(41, 21, 2, 1, 9980, 'NTD', '-98.88%', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(42, 22, 2, 1, 9980, 'NTD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(43, 11, 14, 2, 100, 'TWD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(44, 11, 14, 3, 0, 'TWD', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(45, 11, 10, 10, 3000, 'TWD', '-8.54%', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(46, 2, 1, 211, 123456, 'TWD', '-81.82%', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(61, 7, 5, 1, 3000, 'TWD', '-39.76%', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -269,6 +279,7 @@ CREATE TABLE `quotation_simple_db` (
   `po_s_id` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `customer_id` int(11) DEFAULT NULL COMMENT '客戶編號',
   `date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '日期',
+  `po_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '完成日期',
   `item_id` int(11) DEFAULT NULL COMMENT '重點採買的料號',
   `price` bigint(18) NOT NULL DEFAULT '0' COMMENT '訂單總額',
   `currency` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'TWD' COMMENT '幣值',
@@ -278,36 +289,46 @@ CREATE TABLE `quotation_simple_db` (
   `date_m` int(11) DEFAULT NULL COMMENT '月份',
   `date_qu_no` int(11) DEFAULT NULL COMMENT '月編號(報價單)',
   `date_po_no` int(11) DEFAULT NULL COMMENT '月編號(訂單)',
-  `invalid` tinyint(1) NOT NULL DEFAULT '0' COMMENT '作廢項目'
+  `invalid` tinyint(1) NOT NULL DEFAULT '0' COMMENT '作廢項目',
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '公司名稱',
+  `nickname` varchar(8) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '公司簡稱',
+  `location` int(7) DEFAULT NULL COMMENT '所處地點',
+  `ubn` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '統一編號',
+  `contact` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '聯絡人',
+  `contact_phone` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '聯絡人電話',
+  `company_phone` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '公司電話',
+  `company_fax` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '公司傳真',
+  `address` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '公司地址',
+  `email` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '公司信箱'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- 資料表的匯出資料 `quotation_simple_db`
 --
 
-INSERT INTO `quotation_simple_db` (`quo_id`, `qu_s_id`, `po_s_id`, `customer_id`, `date`, `item_id`, `price`, `currency`, `sales_tax`, `is_order`, `date_y`, `date_m`, `date_qu_no`, `date_po_no`, `invalid`) VALUES
-(1, 'QU201610-00001', 'PO201610-00001', 2, '2016-10-07 10:38:20', 3, 60095214, 'TWD', 1, 1, 2016, 10, 1, 1, 0),
-(2, 'QU201610-00002', NULL, 1, '2016-10-11 15:24:39', 1, 30715857, 'TWD', 1, 0, 2016, 10, 2, NULL, 0),
-(3, 'QU201610-00003', NULL, 2, '2016-10-16 09:38:20', 5, 125650, 'TWD', 0, 0, 2016, 10, 3, NULL, 0),
-(4, 'QU201610-00004\r\n', NULL, 5, '2016-10-16 10:18:46', 4, 0, 'TWD', 0, 0, 2016, 10, 4, NULL, 1),
-(5, 'QU201610-00005', 'PO201610-00003', 4, '2016-10-18 10:20:38', 4, 1750, 'TWD', 1, 1, 2016, 10, 5, 3, 0),
-(6, 'QU201610-00006', 'PO201610-00004', 3, '2016-10-20 16:49:38', 4, 165000000, 'TWD', 1, 1, 2016, 10, 6, 4, 0),
-(7, 'QU201610-00007', 'PO201610-00002', 2, '2016-10-21 06:25:31', 9, 1500000000, 'TWD', 1, 0, 2016, 10, 7, 2, 0),
-(8, 'QU201611-00001', 'PO201611-00002', 6, '2016-11-18 09:32:38', 8, 16500, 'TWD', 1, 1, 2016, 11, 1, 2, 0),
-(9, 'QU201611-00002', 'PO201611-00001', 9, '2016-11-19 16:17:05', 9, 1999999998, 'TWD', 1, 1, 2016, 11, 2, 1, 0),
-(10, 'QU201611-00003', NULL, 10, '2016-11-22 00:00:00', 10, 14000, 'TWD', 1, 0, 2016, 11, 3, NULL, 0),
-(11, 'QU201612-00001', NULL, 9, '2016-12-16 08:33:14', 9, 1234567890, 'TWD', 1, 0, 2016, 12, 1, NULL, 0),
-(12, 'QU201701-00001', 'PO201701-00001', 11, '2017-01-02 06:31:40', 2, 9980, 'TWD', 0, 1, 2017, 1, 1, 1, 0),
-(13, 'QU201701-00002', 'PO201701-00002', 12, '2017-01-03 06:06:29', 2, 9980, 'TWD', 0, 1, 2017, 1, 2, 2, 0),
-(14, 'QU201702-00001', NULL, 13, '2017-02-09 06:34:24', 2, 9980, 'TWD', 0, 0, 2017, 2, 1, NULL, 0),
-(15, 'QU201703-00001', NULL, 14, '2017-03-10 14:13:37', 2, 9980, 'TWD', 0, 0, 2017, 3, 1, NULL, 0),
-(16, 'QU201704-00001', 'PO201704-00001', 15, '2017-04-07 05:23:46', 2, 9980, 'TWD', 0, 1, 2017, 4, 1, 1, 0),
-(17, 'QU201705-00001', NULL, 16, '2017-05-19 13:11:22', 2, 9980, 'TWD', 0, 0, 2017, 5, 1, NULL, 0),
-(18, 'QU201706-00001', NULL, 17, '2017-06-16 17:24:31', 2, 9980, 'TWD', 0, 0, 2017, 6, 1, NULL, 0),
-(19, 'QU201707-00001', NULL, 18, '2017-07-21 07:32:25', 2, 9980, 'TWD', 0, 0, 2017, 7, 1, NULL, 0),
-(20, 'QU201709-00001', NULL, 19, '2017-09-28 15:24:16', 2, 9980, 'TWD', 0, 0, 2017, 9, 1, NULL, 0),
-(21, 'QU201712-00001', NULL, 20, '2017-12-28 07:11:21', 2, 9980, 'TWD', 1, 0, 2017, 12, 1, NULL, 0),
-(22, 'QU201903-00001', 'PO201903-00001', 21, '2019-03-02 06:31:40', 2, 9980, 'TWD', 0, 1, 2019, 3, 1, 1, 0);
+INSERT INTO `quotation_simple_db` (`quo_id`, `qu_s_id`, `po_s_id`, `customer_id`, `date`, `po_date`, `item_id`, `price`, `currency`, `sales_tax`, `is_order`, `date_y`, `date_m`, `date_qu_no`, `date_po_no`, `invalid`, `name`, `nickname`, `location`, `ubn`, `contact`, `contact_phone`, `company_phone`, `company_fax`, `address`, `email`) VALUES
+(1, 'QU201610-00001', 'PO201610-00001', 2, '2016-10-07 10:38:20', '2017-01-25 00:05:22', 3, 60095214, 'TWD', 1, 1, 2016, 10, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 'QU201610-00002', NULL, 1, '2016-10-11 15:24:39', '2017-01-25 00:05:22', 1, 30715857, 'TWD', 1, 0, 2016, 10, 2, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, 'QU201610-00003', NULL, 2, '2016-10-16 09:38:20', '2017-01-25 00:05:22', 5, 125650, 'TWD', 0, 0, 2016, 10, 3, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, 'QU201610-00004\r\n', NULL, 5, '2016-10-16 10:18:46', '2017-01-25 00:05:22', 4, 0, 'TWD', 0, 0, 2016, 10, 4, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(5, 'QU201610-00005', 'PO201610-00003', 4, '2016-10-18 10:20:38', '2017-01-25 00:05:22', 4, 1750, 'TWD', 1, 1, 2016, 10, 5, 3, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(6, 'QU201610-00006', 'PO201610-00004', 3, '2016-10-20 16:49:38', '2017-01-25 00:05:22', 4, 165000000, 'TWD', 1, 1, 2016, 10, 6, 4, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(7, 'QU201610-00007', 'PO201610-00002', 2, '2016-10-21 06:25:31', '2017-01-25 00:05:22', 9, 1500000000, 'TWD', 1, 0, 2016, 10, 7, 2, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(8, 'QU201611-00001', 'PO201611-00002', 6, '2016-11-18 09:32:38', '2017-01-25 00:05:22', 8, 16500, 'TWD', 1, 1, 2016, 11, 1, 2, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(9, 'QU201611-00002', 'PO201611-00001', 9, '2016-11-19 16:17:05', '2017-01-25 00:05:22', 9, 1999999998, 'TWD', 1, 1, 2016, 11, 2, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(10, 'QU201611-00003', NULL, 10, '2016-11-22 00:00:00', '2017-01-25 00:05:22', 10, 14000, 'TWD', 1, 0, 2016, 11, 3, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(11, 'QU201612-00001', NULL, 9, '2016-12-16 08:33:14', '2017-01-25 00:05:22', 9, 1234567890, 'TWD', 1, 0, 2016, 12, 1, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(12, 'QU201701-00001', 'PO201701-00001', 11, '2017-01-02 06:31:40', '2017-01-25 00:05:22', 2, 9980, 'TWD', 0, 1, 2017, 1, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(13, 'QU201701-00002', 'PO201701-00002', 12, '2017-01-03 06:06:29', '2017-01-25 00:05:22', 2, 9980, 'TWD', 0, 1, 2017, 1, 2, 2, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(14, 'QU201702-00001', NULL, 13, '2017-02-09 06:34:24', '2017-01-25 00:05:22', 2, 9980, 'TWD', 0, 0, 2017, 2, 1, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(15, 'QU201703-00001', NULL, 14, '2017-03-10 14:13:37', '2017-01-25 00:05:22', 2, 9980, 'TWD', 0, 0, 2017, 3, 1, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(16, 'QU201704-00001', 'PO201704-00001', 15, '2017-04-07 05:23:46', '2017-01-25 00:05:22', 2, 9980, 'TWD', 0, 1, 2017, 4, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(17, 'QU201705-00001', NULL, 16, '2017-05-19 13:11:22', '2017-01-25 00:05:22', 2, 9980, 'TWD', 0, 0, 2017, 5, 1, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(18, 'QU201706-00001', NULL, 17, '2017-06-16 17:24:31', '2017-01-25 00:05:22', 2, 9980, 'TWD', 0, 0, 2017, 6, 1, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(19, 'QU201707-00001', NULL, 18, '2017-07-21 07:32:25', '2017-01-25 00:05:22', 2, 9980, 'TWD', 0, 0, 2017, 7, 1, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(20, 'QU201709-00001', NULL, 19, '2017-09-28 15:24:16', '2017-01-25 00:05:22', 2, 9980, 'TWD', 0, 0, 2017, 9, 1, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(21, 'QU201712-00001', NULL, 20, '2017-12-28 07:11:21', '2017-01-25 00:05:22', 2, 9980, 'TWD', 1, 0, 2017, 12, 1, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(22, 'QU201903-00001', 'PO201903-00001', 21, '2019-03-02 06:31:40', '2017-01-25 00:05:22', 2, 9980, 'TWD', 0, 1, 2019, 3, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
