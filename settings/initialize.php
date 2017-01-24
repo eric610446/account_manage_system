@@ -12,7 +12,8 @@ $servername = "127.0.0.1";
 $username = "root";
 $password = "helloroot";
 $dbname = "client_info";
-$only_get_info=0;
+$only_get_info = 0 ;
+$invalid_mode = 0 ;
 
 $default_active_input = $default_active_color ;
 $default_sleep_input = $default_sleep_color ;

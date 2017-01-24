@@ -3,7 +3,7 @@
 <head>
 	<title>產品資料建立/修改/查詢</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-	<script>
+	<script language="JavaScript" type="text/javascript">
 	$(document).keypress(function(e) {
 		if(e.which == 13) {
 			return false ;
@@ -60,6 +60,9 @@
 			$test=$test.' find mode<br/>';
 			$only_get_info=1;
 		}
+		if( isset($_POST['invalid_mode']) or ($_GET["mode"]=="invalid") ) {
+			$invalid_mode = 1 ;
+		}
 
 		//查詢
 		if(isset($_POST['find_button'])) {
@@ -88,6 +91,7 @@
 					//查詢的客戶有存在在資料庫中
 					$result = $conn->query($sql_cmd) ;
 					if ( $result->num_rows > 0 ) {
+						$name_readonly = "readonly" ;
 						// fetch result as an associate array
 						while( $row = $result->fetch_assoc() ) {
 							$client_customer_id     = $row['customer_id'] ;
@@ -359,6 +363,45 @@
 
 		}
 
+		// 在垃圾桶中，還原項目
+		if($_POST["invalid_btn"]) {
+			// 取得 id
+			$id = $_POST["invalid_btn"] ;
+			// 繼續庭僚在垃圾桶畫面
+			$invalid_mode = 1 ;
+			// 取得 id 與 name
+			$id_arr = explode("-", $id[0]) ;
+			// 檢查是不是已經有重複的 name
+			$sql_cmd = "select name from client_info.customer_db where name='".$id_arr[1]."' and invalid='0'" ;
+			$result = $conn->query($sql_cmd) ;
+			if ($result->num_rows > 0) {
+				echo "
+				<script>
+					alert('錯誤！　".$id_arr[1]."有重複的資料存在，不可還原。') ;
+				</script>
+				" ;
+			}
+			else {
+				// 設定該項目的 invalid 為 0
+				$sql_cmd = "update client_info.customer_db set invalid = 0 where customer_id ='".$id_arr[0]."'";
+				$result = $conn->query($sql_cmd) ;
+			}
+		}
+
+		// 在垃圾桶中，刪除項目
+		if($_POST["del_btn"]) {
+			// 取得 id
+			$id = $_POST["del_btn"] ;
+			// 繼續庭僚在垃圾桶畫面
+			$invalid_mode = 1 ;
+			// 取得 id 與 name
+			$id_arr = explode("-", $id[0]) ;
+
+			// 設定該項目的 invalid 為 0
+			$sql_cmd = "update client_info.customer_db set invalid = 2 where customer_id ='".$id_arr[0]."'";
+			$result = $conn->query($sql_cmd) ;
+		}
+
 ?>
 <?
 //----------------------------------------------------------------------------------------------
@@ -374,10 +417,10 @@
 
 		<nav>
 			<ul>
-				<div id='client'><a href='client.php?mode=modify' id='client'>客戶資料</a></div>
-				<div id='supplier'><a href='supplier.php?mode=modify' id='supplier'>供應商</a></div>
-				<div id='item'><a href='item.php?mode=modify' id='item'>物品清單</a></div>
-				<div id='location'><a href='location.php?mode=modify' id='location'>地點</a></div>
+				<div id='client' onclick="location.href='client.php?mode=modify'"><a href='client.php?mode=modify' id='client'>客戶<br/>資料</a></div>
+				<div id='supplier' onclick="location.href='supplier.php?mode=modify'"><a href='supplier.php?mode=modify' id='supplier'>供應商<br/>資料</a></div>
+				<div id='item' onclick="location.href='item.php?mode=modify'"><a href='item.php?mode=modify' id='item'>物品<br/>清單</a></div>
+				<div id='location' onclick="location.href='location.php?mode=modify'"><a href='location.php?mode=modify' id='location'>地點<br/>資料</a></div>
 			</ul>
 		</nav>
 
@@ -386,6 +429,8 @@
 				<li id='create'><button type=submit name='create_mode' id='create'>建立</button></li>
 				<li id='modify'><button type=submit name='modify_mode' id='modify'>修改</button></li>
 				<li id='find'><button type=submit name='find_mode' id='find'>查詢</button></li>
+				<br/><br/>
+				<li id='invalid'><button type=submit name='invalid_mode' id='invalid'><img src="trash can.png" style="width:80%;"></button></li>
 			</ul>
 		</div>
 		<div id="right">
@@ -394,8 +439,10 @@
 		<content>
 			<ul>
 			<?php
-
-				if( $only_get_info != 1 ) {
+				if( $invalid_mode == 1 ) {
+					echo invalid_display( $conn, "customer" ) ;
+				}
+				elseif( $only_get_info != 1 ) {
 					echo "
 					<input type='hidden' name='client_customer_id' value='$client_customer_id'>
 					<input type='hidden' name='client_name_backup' value='$client_name_backup'>
@@ -408,7 +455,7 @@
 						</div>
 						<div id='name'>
 							<label for='name'>客戶名稱</label>
-							<input type=text id='name' name=name value='$client_name'>
+							<input type=text id='name' name=name value='$client_name' $name_readonly>
 							<span>請輸入完整名稱</span>
 						</div>
 					</li>
@@ -466,7 +513,7 @@
 					<li id='list5'>
 						<div id='modify'>".$button1."</div>
 						<div id='create'>".$button2."</div>
-						<!--<div id='invalid'>".$button3."</div> -->
+						<div id='invalid'>".$button3."</div>
 					</li>
 					" ;
 				}
