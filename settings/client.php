@@ -60,6 +60,9 @@
 			$test=$test.' find mode<br/>';
 			$only_get_info=1;
 		}
+		if( isset($_POST['invalid_mode']) or ($_GET["mode"]=="invalid") ) {
+			$invalid_mode = 1 ;
+		}
 
 		//查詢
 		if(isset($_POST['find_button'])) {
@@ -360,6 +363,19 @@
 
 		}
 
+		// 在垃圾桶中，還原項目
+		if($_POST["invalid_btn"]) {
+			// 取得 id
+			$id = $_POST["invalid_btn"] ;
+			// 繼續庭僚在垃圾桶畫面
+			$invalid_mode = 1 ;
+			// 設定該項目的 invalid 為 0
+			$sql_cmd = "" ;
+
+			$sql_cmd = "update client_info.customer_db set invalid = 0 where customer_id ='".$id[0]."'";
+			$result = $conn->query($sql_cmd) ;
+		}
+
 ?>
 <?
 //----------------------------------------------------------------------------------------------
@@ -387,6 +403,8 @@
 				<li id='create'><button type=submit name='create_mode' id='create'>建立</button></li>
 				<li id='modify'><button type=submit name='modify_mode' id='modify'>修改</button></li>
 				<li id='find'><button type=submit name='find_mode' id='find'>查詢</button></li>
+				<br/><br/>
+				<li id='invalid'><button type=submit name='invalid_mode' id='invalid'><img src="trash can.png" style="width:80%;"></button></li>
 			</ul>
 		</div>
 		<div id="right">
@@ -395,8 +413,11 @@
 		<content>
 			<ul>
 			<?php
-
-				if( $only_get_info != 1 ) {
+				if( $invalid_mode == 1 ) {
+					echo invalid_display( $conn, "customer" ) ;
+					//echo "test" ;
+				}
+				elseif( $only_get_info != 1 ) {
 					echo "
 					<input type='hidden' name='client_customer_id' value='$client_customer_id'>
 					<input type='hidden' name='client_name_backup' value='$client_name_backup'>

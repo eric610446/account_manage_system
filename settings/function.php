@@ -279,22 +279,22 @@ function item_sid_create($conn, $w) {
 function find_all($conn, $w) {
 	require('var.php') ;
 	if( $w == "item" )
-		$sql_cmd = "(	SELECT I.name AS 'iname',I.s_id AS 'is_id',price,currency,S.name AS 'sname' 
-							FROM client_info.item_db AS I 
-						LEFT JOIN supplier_db AS S 
-							ON S.supplier_id=I.supplier_id 
+		$sql_cmd = "(	SELECT I.name AS 'iname',I.s_id AS 'is_id',price,currency,S.name AS 'sname'
+							FROM client_info.item_db AS I
+						LEFT JOIN supplier_db AS S
+							ON S.supplier_id=I.supplier_id
 						WHERE I.s_id LIKE 'P%' AND I.invalid=0	)
 					UNION
-					(	SELECT I.name AS 'iname',I.s_id AS 'is_id',price,currency,S.name AS 'sname' 
-							FROM client_info.item_db AS I 
-						LEFT JOIN supplier_db AS S 
-							ON S.supplier_id=I.supplier_id 
+					(	SELECT I.name AS 'iname',I.s_id AS 'is_id',price,currency,S.name AS 'sname'
+							FROM client_info.item_db AS I
+						LEFT JOIN supplier_db AS S
+							ON S.supplier_id=I.supplier_id
 						WHERE I.s_id LIKE 'M%' AND I.invalid=0	)
 					UNION
-					(	SELECT I.name AS 'iname',I.s_id AS 'is_id',price,currency,S.name AS 'sname' 
-							FROM client_info.item_db AS I 
-						LEFT JOIN supplier_db AS S 
-							ON S.supplier_id=I.supplier_id 
+					(	SELECT I.name AS 'iname',I.s_id AS 'is_id',price,currency,S.name AS 'sname'
+							FROM client_info.item_db AS I
+						LEFT JOIN supplier_db AS S
+							ON S.supplier_id=I.supplier_id
 						WHERE I.s_id LIKE 'N%' AND I.invalid=0	)" ;
 	else if( $w == "location" )
 		$sql_cmd = "SELECT * FROM client_info.location_db AS L WHERE invalid = 0 ORDER BY L.country_sid DESC, L.location_id ASC" ;
@@ -444,6 +444,30 @@ function create_name_option( $where='', $conn, $input  ) {
 		$str = "<table><tr><th>沒有任何類似符合".$input."的項目</th></tr></table>" ;
 	}
 	return $str ;
+}
+
+function invalid_display( $conn, $db ) {
+	$html_code ="
+		<table>
+			<tr>
+				<th>名稱</th>
+				<th></th>
+			</tr>
+		" ;
+	$sql_cmd = "select * from client_info.".$db."_db where `invalid` = 1" ;
+	$result = $conn->query($sql_cmd) ;
+	if ( $result->num_rows > 0 ) {
+		while( $row = $result->fetch_assoc() ) {
+			$html_code .= "<tr><td>" ;
+			$html_code .= $row['name'] ;
+			$html_code .= "</td><td><button type='submit' name='invalid_btn[]' value='".$row[$db.'_id']."' class='invalid_btn' id='".$row[$db.'_id']."' >還原</button></td></tr>" ;
+		}
+	}
+	else {
+		$html_code .= "<tr><td>垃圾桶是空的</td></tr>" ;
+	}
+	$html_code .= "</table>" ;
+	return $html_code ;
 }
 
 ?>
