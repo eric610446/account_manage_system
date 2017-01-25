@@ -30,10 +30,10 @@ function modify_quo( $NewOrEdit , $info ){
 	echo "<input type='hidden' name='Which_Main_choose' value='".$_POST['Which_Main_choose']."' >";
 	echo "<input type='hidden' name='Which_Sub_choose' value='".$_REQUEST['Which_Sub_choose']."' >";
 
-	echo "新增(1) 或 修改(2) : ".$NewOrEdit." <br>傳入資料 (功能以上方↑的為準 1:客戶id 2:報價單id) : ".$info."<br>";
+	//echo "新增(1) 或 修改(2) : ".$NewOrEdit." <br>傳入資料 (功能以上方↑的為準 1:客戶id 2:報價單id) : ".$info."<br>";
 	echo "<input type='hidden' name='NewOrEdit' value='".$NewOrEdit."' >";
 	echo "<input type='hidden' name='NOE_info' value='".$info."' >";
-	
+	echo "<div class='art_top '> 請選擇並輸入要新增或修改的物品的數量跟報價</div>";
 	connect2db() ;
 	global $conn ;
 	global $item_arr ;
@@ -90,20 +90,21 @@ function modify_quo( $NewOrEdit , $info ){
 	
 	echo "<input type='hidden' name='already_amount' value='".$already_amount."' >";
 	
-	
-	echo "<table border=1>";
-	echo "<tr>";
-		echo "<th>刪除";
+	echo "<div class='div_List_top_header'>";
+	echo "<table class='table_List_top_header'>";
+	echo "<tr  class='tr_List_top_header'>";
+		echo "<th  class='th_List_top_header th_List_item_AorE'>刪除";
 		echo "</th>";
-		echo "<th>項次";
+		echo "<th class='th_List_top_header th_List_item_AorE'>項次";
 		echo "</th>";
-		echo "<th>物品選擇";
+		echo "<th class='th_List_top_header th_List_item_AorE'>物品選擇";
 		echo "</th>";
-		echo "<th>數量<br>(only in test)已有資料數：".$already_amount;
+		//echo "<th class='th_List_top_header th_List_item_AorE'>數量<br>(only in test)已有資料數：".$already_amount;
+		echo "<th class='th_List_top_header th_List_item_AorE'>數量";
 		echo "</th>";
-		echo "<th>報價金額";
+		echo "<th class='th_List_top_header th_List_item_AorE'>報價金額";
 		echo "</th>";
-		echo "<th>折扣";
+		echo "<th class='th_List_top_header th_List_item_AorE'>折扣";
 		echo "</th>";
 	echo "</tr>";
 	
@@ -111,19 +112,19 @@ function modify_quo( $NewOrEdit , $info ){
 		
 		if($i<$already_amount){
 			$row = mysql_fetch_array( $result );
-			echo "<tr>";
-				echo "<td>";
+			echo "<tr class='tr_List_top_header'>";
+				echo "<td class='td_List_top_header'>";
 				echo "<input type='checkbox' name='delete[]' value=".$i."><BR/>";
 				echo "</td>";
 				echo "<input type='hidden' name='quo_item_id[]' value='".$row['quo_item_id']."' >";
 				
 				
-				echo "<td>";	
+				echo "<td class='td_List_top_header'>";	
 				echo ($i+1);
 				echo "</td>";
 				
 				
-				echo "<td>";	
+				echo "<td class='td_List_top_header'>";	
 				if($row['currency']!='TWD'){
 							$NotTWD=1;
 				}
@@ -132,11 +133,11 @@ function modify_quo( $NewOrEdit , $info ){
 				echo "</td>";
 				
 				
-				echo "<td>";	
+				echo "<td class='td_List_top_header'>";	
 				echo "<input type=number name='amount[]' value=".$row['amount']." required=1>";
 				echo "</td>";
 				
-				echo "<td>";
+				echo "<td  class='td_List_top_header'>";
 				
 				if ($NotTWD != 1){
 					echo "<input type=number name='price[]' value=".$row['price']." required=1 step = 1>";
@@ -146,7 +147,7 @@ function modify_quo( $NewOrEdit , $info ){
 				}
 				echo "</td>";
 				
-				echo "<td>";
+				echo "<td  class='td_List_top_header'>";
 				//避免建議售價為0的狀況
 				//echo $row['price'];
 				if($row['origin_price']!=0){
@@ -169,19 +170,19 @@ function modify_quo( $NewOrEdit , $info ){
 			echo "</tr>";
 		}
 		else{
-			echo "<tr>";
-				echo "<td>";
+			echo "<tr class='tr_List_top_header'>";
+				echo "<td  class='td_List_top_header'>";
 				echo "</td>";
 				
 				
-				echo "<td>";	
+				echo "<td  class='td_List_top_header'>";	
 				echo ($i+1);
 				echo "</td>";
 				
 				
-				echo "<td>";	
+				echo "<td  class='td_List_top_header'>";	
 				//echo "<input type=text name='selector_item[]' ><BR/>";
-					echo "<select name='selector_item[]' class='select_item'>";
+					echo "<select name='selector_item[]' class='select_item_aoe'>";
 						echo "<option value=NULL> -- 請選擇物品 -- </option>";
 					for( $j=0 ; $j<sizeof($item_arr) ; $j++){
 						//如果存在不為台幣的物品
@@ -196,11 +197,11 @@ function modify_quo( $NewOrEdit , $info ){
 				echo "</td>";
 				
 				
-				echo "<td>";	
+				echo "<td  class='td_List_top_header'>";	
 				echo "<input type=number name='amount[]' value=0 required=1>";
 				echo "</td>";
 				
-				echo "<td>";
+				echo "<td  class='td_List_top_header'>";
 				if ($NotTWD != 1){
 					echo "<input type=number name='price[]' value=0 required=1 step = 1>";
 				}
@@ -209,15 +210,17 @@ function modify_quo( $NewOrEdit , $info ){
 				}
 				echo "</td>";
 				
-				echo "<td>";
+				echo "<td  class='td_List_top_header'>";
 				echo "</td>";
 				
 			echo "</tr>";
 		}		
 	}
 	echo "</table>";
-	echo "<table border=1>";
-	echo "<tr>";
+	echo "</div>";
+	echo "<div class='div_List_left_header'>";
+	echo "<table class='table_List_left_header'>";
+	echo "<tr class='tr_List_left_header'>";
 	
 	if($NewOrEdit==1){
 		$sales_tax = 0;
@@ -225,10 +228,10 @@ function modify_quo( $NewOrEdit , $info ){
 	else{
 		$sales_tax = get_quo_simple_info($target_quo,'sales_tax');
 	}
-	echo "<td>";
-	echo "本報價單內的金額是否已經含營業稅：";
-	echo "</td>";
-	echo "<td>";
+	echo "<th class='th_List_left_header'>";
+	echo "本報價單內的<br>金額是否已經含<br>營業稅：";
+	echo "</th>";
+	echo "<td class='td_List_left_header'>";
 	echo "否";
 	echo "<input type=range name='sales_tax' Value=".$sales_tax." max=1 min=0 step = 1>";
 	echo "是";
@@ -236,6 +239,7 @@ function modify_quo( $NewOrEdit , $info ){
 	
 	echo "</tr>";
 	echo "</table>";
+	echo "</div>";
 	echo "<div>";	
 			if($NewOrEdit==1){
 				echo "<div class='quo_option set_float_left'>";

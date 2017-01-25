@@ -147,6 +147,10 @@ div[id='srch_way'] ul {
 	width: 15%;
 	text-align: center;
 }
+
+.select_item_aoe{
+	width:200px;
+}
 /*創立報價單按鈕*/
 
 
