@@ -59,6 +59,7 @@ header {
 .Main_aside_Style_2{
 	width:50%;
 }
+
 /*次選單*/
 .Sub_aside{
 	width:50%;
@@ -126,7 +127,8 @@ div[id='srch_way'] ul {
 	height:99%;
 	background-color: <?php echo $Main_btn_disable; ?>;
 	color: <? echo $Main_btn_color; ?> ;
-}
+    margin: 20% auto;
+	}
 .btn_main_active{	
 	background-color: <?php echo $Main_btn_activate; ?>;	
 }
@@ -166,6 +168,40 @@ article {
 }
 section{
 	margin:0.3%;
+}
+
+::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #0099cc;
+  border: 0px none #ffffff;
+  border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #223366;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #00ffaa;
+}
+::-webkit-scrollbar-track {
+  background: #eeeeee;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #eeeeee;
+}
+::-webkit-scrollbar-track:active {
+  background: #ffffff;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
 /*主要區塊*/
 
@@ -558,6 +594,10 @@ footer a:visited {color:<?php echo $header_font_color; ?>;} /* 設定過去曾�
 		echo substr($s,0,-1) ;
 	}	
 ?>
+
+.test_nore{
+	font-size:12px;
+}
 
 
 </style>
