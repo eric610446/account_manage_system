@@ -316,21 +316,21 @@ content div[id='invalid'] {
 }
 
 content[id='info'] {
-	padding-top: 50px ;
+	padding-top: 0px ;
 }
 content[id='info'] th {
 	font-size: 2em ;
-	padding: 20px ;
+	padding: 10px ;
 }
 content[id='info'] tr {
-	padding: 40px ;
+	padding: 20px ;
 }
 content[id='info'] td {
-	padding: 40px ;
+	padding: 20px ;
 	padding-left: 80px ;
 }
 content[id='info'] ol {
-	padding: 20px ;
+	padding: 10px ;
 	text-align: left ;
 }
 
