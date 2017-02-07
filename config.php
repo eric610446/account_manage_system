@@ -4,13 +4,13 @@
 	/*標題列配置*/
 	$header_height 			= "10%";					/*標題列高度*/
 	$header_bg_color 		= "#C9CBB1" ;				/*標題列底色*/ //078285 #c9cbb1 : #333147
-	$header_font_color 		= "#333147";				/*標題文字顏色*/
+	$header_font_color 		= "#FFF";				/*標題文字顏色*/
 	$header_shadow_color 	= "#333147";				/*標題文字陰影顏色*/
 	$header_shadow_style 	= "0.03em 0.03em 0.2em";	/*標題文字陰影樣式*/
 	$header_font_size 		= "100%";					/*以主頁面的字體大小為基準，100% = 3em = 48px */
 	$header_line_height		= "170%";					/*標題列單行行高 (這邊用來調整標提列位置)*/
 														/*標題列內容*/
-	$header_context 		= "資銳科技 帳務管理系統";
+	$header_context 		= "立旺鐵工廠 帳務管理系統";
 	
 	/*共通配置*/
 	$default_main_height 	= "87%" ;					/*主要區塊高度*/
