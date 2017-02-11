@@ -151,18 +151,6 @@ div[id='srch_way'] ul {
 }
 /*主選單按鈕*/
 
-/*創立報價單按鈕*/
-#btm_confirm_client, #btm_sent_quotation_list{
-	height: 15%;
-	width: 15%;
-	text-align: center;
-}
-
-.select_item_aoe{
-	width:200px;
-}
-/*創立報價單按鈕*/
-
 
 /* 主要區塊 */
 .article_Style_1 {
@@ -307,7 +295,7 @@ Button:active {
 /*修改報價單 轉換報價單/訂單 輸出PDF */
 
 
-/*查詢功能說明區塊*/
+/*功能說明區塊*/
 .srch_docun{
 	font-size: 100%;
 	margin: 5% 12% ;
@@ -370,6 +358,31 @@ Button:active {
 	text-align: center;
 }
 
+/*建立修改報價單*/
+/*#btm_confirm_client, #btm_sent_quotation_list{
+	height: 15%;
+	width: 15%;
+	text-align: center;
+}*/
+
+.checkbox_item_aoe{
+	 -webkit-transform: scale(2); /* Safari and Chrome */
+}
+
+.select_item_aoe{
+	width:100%;
+	font-size:100%;
+}
+
+.input_number_item_aoe{
+	width:100%;
+	font-size:100%;
+}
+
+.td_discount_item_AorE{
+	font-size:80%;
+}
+/*建立修改報價單*/
 
 
 /*查詢功能 城市按鈕*/
@@ -473,7 +486,13 @@ Button:active {
 /*查詢功能 列表按鈕*/
 
 
-
+/*創建修改物品清單列表各欄位寬度*/
+.th_List_item_AorE:nth-child(1){ 	width : 4%; }
+.th_List_item_AorE:nth-child(2){ 	width : 4%; }
+.th_List_item_AorE:nth-child(3){ 	width : 39%; }
+.th_List_item_AorE:nth-child(4){ 	width : 20%; }
+.th_List_item_AorE:nth-child(5){ 	width : 20%; }
+.th_List_item_AorE:nth-child(6){ 	width : 13%; }
 /*城市內客戶列表各欄位寬度*/
 .th_List_city_customer:nth-child(1){ 	width : 7.5%; }
 .th_List_city_customer:nth-child(2){ 	width : 15%; }
@@ -511,6 +530,13 @@ Button:active {
 .th_List_mth_smpl_quo:nth-child(6){ 	width : 20%; }
 .th_List_mth_smpl_quo:nth-child(7){ 	width : 12%; }
 
+/*創建修改報價單列表*/
+.td_List_item_AorE {
+	font-size: 70%;
+	padding:0.5%;
+	border: 1px solid <? echo $table_border_color; ?> ;	
+}
+/*創建修改報價單列表*/
 
 /*國內城市中客戶列表*/
 .td_List_city_customer {
@@ -523,6 +549,7 @@ Button:active {
 	border: 0 ;	
 }
 /*國內城市中客戶列表*/
+
 /*國外客戶列表*/
 .td_List_worldwide_customer {
 	font-size: 80%;

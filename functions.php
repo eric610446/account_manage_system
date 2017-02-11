@@ -114,40 +114,41 @@ function modify_quo( $NewOrEdit , $info ){
 		if($i<$already_amount){
 			$row = mysql_fetch_array( $result );
 			echo "<tr class='tr_List_top_header'>";
-				echo "<td class='td_List_top_header'>";
-				echo "<input type='checkbox' name='delete[]' value=".$i."><BR/>";
+				echo "<td class='td_List_top_header td_List_item_AorE'>";
+				echo "<input type='checkbox' name='delete[]' value=".$i." class='checkbox_item_aoe'><BR/>";
 				echo "</td>";
 				echo "<input type='hidden' name='quo_item_id[]' value='".$row['quo_item_id']."' >";
 				
 				
-				echo "<td class='td_List_top_header'>";	
+				echo "<td class='td_List_top_header td_List_item_AorE'>";	
 				echo ($i+1);
 				echo "</td>";
 				
-				echo "<td class='td_List_top_header'>";	
-				if($row['currency']!='TWD'){
+				echo "<td class='td_List_top_header td_List_item_AorE'>";	
+				/*if($row['currency']!='TWD'){
 							$NotTWD=1;
-				}
-				echo "《(id:".$row['item_id']." only in test)".$row['is_id']."-".$row['currency']."$ ".number_format($row['origin_price'])."》".$row['name'];
+				}*/
+				//echo "《(id:".$row['item_id']." only in test)".$row['is_id']."-".$row['currency']."$ ".number_format($row['origin_price'])."》".$row['name'];
+				echo "《".$row['is_id']."-".$row['currency']."$ ".number_format($row['origin_price'])."》".$row['name'];
 				echo "<input type=hidden name='selector_item[]' value=".$row['item_id'].">";
 				echo "</td>";
 				
 				
-				echo "<td class='td_List_top_header'>";	
-				echo "<input type=number name='amount[]' value=".$row['amount']." required=1>";
+				echo "<td class='td_List_top_header td_List_item_AorE'>";	
+				echo "<input type=number name='amount[]' value=".$row['amount']." required=1 class='input_number_item_aoe'>";
 				echo "</td>";
 				
-				echo "<td  class='td_List_top_header'>";
+				echo "<td  class='td_List_top_header td_List_item_AorE'>";
 				
 				if ($NotTWD != 1){
-					echo "<input type=number name='price[]' value=".$row['price']." required=1 step = 1>";
+					echo "<input type=number name='price[]' value=".$row['price']." required=1 step = 1 class='input_number_item_aoe'>";
 				}
 				else{
-					echo "<input type=number name='price[]' value=".$row['price']." required=1 step = 0.01>";
+					echo "<input type=number name='price[]' value=".$row['price']." required=1 step = 0.01 class='input_number_item_aoe'>";
 				}
 				echo "</td>";
 				
-				echo "<td  class='td_List_top_header'>";
+				echo "<td  class='td_List_top_header td_discount_item_AorE'>";
 				//避免建議售價為0的狀況
 				//echo $row['price'];
 				if($row['origin_price']!=0){
@@ -171,47 +172,53 @@ function modify_quo( $NewOrEdit , $info ){
 		}
 		else{
 			echo "<tr class='tr_List_top_header'>";
-				echo "<td  class='td_List_top_header'>";
+				echo "<td  class='td_List_top_header td_List_item_AorE'>";
 				echo "</td>";
 				
 				
-				echo "<td  class='td_List_top_header'>";	
+				echo "<td  class='td_List_top_header td_List_item_AorE'>";	
 				echo ($i+1);
 				echo "</td>";
 				
 				
-				echo "<td  class='td_List_top_header'>";	
+				echo "<td  class='td_List_top_header td_List_item_AorE'>";	
 				//echo "<input type=text name='selector_item[]' ><BR/>";
 					echo "<select name='selector_item[]' class='select_item_aoe'>";
-						echo "<option value=NULL> -- 請選擇物品 -- </option>";
+						echo "<option value=NULL class='option_item_aoe'> -- 請選擇物品 -- </option>";
 					for( $j=0 ; $j<sizeof($item_arr) ; $j++){
 						//如果存在不為台幣的物品
-						if($item_arr[$j][3]!='TWD'){
+						/*if($item_arr[$j][3]!='TWD'){
 							$NotTWD=1;
-						}
-						echo "	<option value=".$item_arr[$j][0]." >
-									《(id:".$item_arr[$j][0]." only in test)".$item_arr[$j][1]."-".$item_arr[$j][3]."$ ".number_format($item_arr[$j][4])." 》 ".$item_arr[$j][2]."
-								</option>";
+						}*/
+						echo "		<option value=".$item_arr[$j][0]." >";
+						//option中過長的文字必須截取掉
+						$option_string = "《".$item_arr[$j][1]."-".$item_arr[$j][3]."$ ".number_format($item_arr[$j][4])." 》".$item_arr[$j][2];
+						$max_len = 63;
+						if(mb_strlen($option_string)>$max_len)
+							echo mb_substr($option_string,0,($max_len-1),"utf-8")." ... ";
+						else
+							echo mb_substr($option_string,0,($max_len-1),"utf-8");
+						echo "		</option>";
 					}
 				echo "</select>";
 				echo "</td>";
 				
 
-				echo "<td  class='td_List_top_header'>";	
-				echo "<input type=number name='amount[]' value=0 required=1>";
+				echo "<td  class='td_List_top_header td_List_item_AorE'>";	
+				echo "<input type=number name='amount[]' value=0 required=1 class='input_number_item_aoe'>";
 				echo "</td>";
 				
-				echo "<td  class='td_List_top_header'>";
+				echo "<td  class='td_List_top_header td_List_item_AorE'>";
 
 				if ($NotTWD != 1){
-					echo "<input type=number name='price[]' value=0 required=1 step = 1>";
+					echo "<input type=number name='price[]' value=0 required=1 step = 1 class='input_number_item_aoe'>";
 				}
 				else{
-					echo "<input type=number name='price[]' value=0 required=1 step = 0.01>";
+					echo "<input type=number name='price[]' value=0 required=1 step = 0.01 class='input_number_item_aoe'>";
 				}
 				echo "</td>";
 				
-				echo "<td  class='td_List_top_header'>";
+				echo "<td  class='td_List_top_header td_List_item_AorE'>";
 				echo "</td>";
 				
 			echo "</tr>";
@@ -230,12 +237,12 @@ function modify_quo( $NewOrEdit , $info ){
 		$sales_tax = get_quo_simple_info($target_quo,'sales_tax');
 	}
 	echo "<th class='th_List_left_header'>";
-	echo "本報價單內的<br>金額是否已經含<br>營業稅：";
+	echo "營業稅設定：";
 	echo "</th>";
 	echo "<td class='td_List_left_header'>";
-	echo "否";
+	echo "報價金額不包含營業稅 ";
 	echo "<input type=range name='sales_tax' Value=".$sales_tax." max=1 min=0 step = 1>";
-	echo "是";
+	echo " 報價金額已經包含營業稅";
 	echo "</td>";
 	
 	echo "</tr>";
@@ -979,7 +986,11 @@ function echo_city_customer($location){
 						echo "</th>";
 						echo "<th class='th_List_top_header th_List_city_customer'>客戶<br>詳細資料";
 						echo "</th>";
-						echo "<th class='th_List_top_header th_List_city_customer'>查看<br>".$content_qorp;
+						echo "<th class='th_List_top_header th_List_city_customer'>";
+						if($_POST['Which_Main_choose']==1)
+							echo "創建<br>".$content_qorp;
+						else
+							echo "查看<br>".$content_qorp;
 						echo "</th>";
 					echo "</tr>";
 			}
