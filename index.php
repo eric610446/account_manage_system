@@ -126,7 +126,7 @@
 		}
 
 		//接收 報價單要報價的產品及數量與單價，存到每個客戶的 table
-		$quotation_arr = array() ;
+		/*$quotation_arr = array() ;
 		if(isset($_POST['btm_sent_quotation_list'])) {
 			for ( $i=1 ; $i<=10 ; $i++ ) {
 				$client = $_POST['create_quotation_client'] ;
@@ -144,7 +144,7 @@
 				}
 			}
 			save_quotation( $client, $quotation_arr) ;
-		}
+		}*/
 		// 家睿：下面這個交給偉安寫，現在是空function
 		/*<<<按鈕在查詢報價單中>>>，輸入值為某個訂單/報價單，可修改這個訂單的客戶、增減物品種類(ps.刪物品種類，直接把該項的invaild標記為1比較快)、更改數量*/
 
