@@ -93,7 +93,7 @@ function modify_quo( $NewOrEdit , $info ){
 	echo "<div class='div_List_top_header'>";
 	echo "<table class='table_List_top_header'>";
 	echo "<tr  class='tr_List_top_header'>";
-		echo "<th  class='th_List_top_header th_List_item_AorE'>刪除";
+		echo "<th class='th_List_top_header th_List_item_AorE'>刪除";
 		echo "</th>";
 		echo "<th class='th_List_top_header th_List_item_AorE'>項次";
 		echo "</th>";
@@ -112,19 +112,19 @@ function modify_quo( $NewOrEdit , $info ){
 		
 		if($i<$already_amount){
 			$row = mysql_fetch_array( $result );
-			echo "<tr class='tr_List_top_header'>";
+			echo "<tr class='tr_List_top_header tr_item_show_name'>";
 				echo "<td class='td_List_top_header'>";
 				echo "<input type='checkbox' name='delete[]' value=".$i."><BR/>";
 				echo "</td>";
 				echo "<input type='hidden' name='quo_item_id[]' value='".$row['quo_item_id']."' >";
 				
 				
-				echo "<td class='td_List_top_header'>";	
+				echo "<td class='td_List_top_header td_item_show_name'>";	
 				echo ($i+1);
 				echo "</td>";
 				
 				
-				echo "<td class='td_List_top_header'>";	
+				echo "<td class='td_List_top_header' td_item_show_name>";	
 				if($row['currency']!='TWD'){
 							$NotTWD=1;
 				}
@@ -134,7 +134,7 @@ function modify_quo( $NewOrEdit , $info ){
 				
 				
 				echo "<td class='td_List_top_header'>";	
-				echo "<input type=number name='amount[]' value=".$row['amount']." required=1>";
+				echo "<input type=number name='amount[]' class='input_item_aoe' value=".$row['amount']." required=1>";
 				echo "</td>";
 				
 				echo "<td  class='td_List_top_header'>";

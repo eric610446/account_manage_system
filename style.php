@@ -141,17 +141,26 @@ div[id='srch_way'] ul {
 }
 /*主選單按鈕*/
 
-/*創立報價單按鈕*/
+/*創立報價單區塊*/
 #btm_confirm_client, #btm_sent_quotation_list{
 	height: 15%;
 	width: 15%;
 	text-align: center;
 }
-
-.select_item_aoe{
-	width:200px;
+.tr_item_show_name{
+	font-size:100%;
 }
-/*創立報價單按鈕*/
+.td_item_show_name{
+	font-size:60%;
+}
+.select_item_aoe{
+	width:95%;
+	font-size:60%;
+}
+.input_item_aoe{
+	font-size:50%x;
+}
+/*創立報價單區塊*/
 
 
 /* 主要區塊 */
@@ -429,7 +438,13 @@ Button:active {
 /*查詢功能 列表按鈕*/
 
 
-
+/*創建報價單各欄位寬度*/
+.th_List_item_AorE:nth-child(1){	width : 5%; }
+.th_List_item_AorE:nth-child(2){	width : 5%; }
+.th_List_item_AorE:nth-child(3){	width : 42%; }
+.th_List_item_AorE:nth-child(4){	width : 15%; }
+.th_List_item_AorE:nth-child(5){	width : 15%; }
+.th_List_item_AorE:nth-child(6){	width : 8%; }
 /*城市內客戶列表各欄位寬度*/
 .th_List_city_customer:nth-child(1){ 	width : 7.5%; }
 .th_List_city_customer:nth-child(2){ 	width : 15%; }
