@@ -11,7 +11,7 @@
 
 		<!-- Banner -->
 			<section id="banner">
-				<h2><strong>ZIRUEI Prominent Tech.Inc.</strong><br>資銳科技公司 製作 <br>帳務管理軟體</h2>
+				<h2><strong>ZIRUEI Prominent Tech.Inc.</strong><br>資銳科技公司 製作 <br>帳務管理軟體 <br> 版本： 2.00 版 </h2>
 				<p>感謝所有為這個系統付出的人！</p>
 				
 			</section>
@@ -26,27 +26,27 @@
 						<div class="feature">
 							<i class="fa fa-diamond"></i>
 							<h3>蔡秉霖</h3>
-							<p>主技術支援、主架構設計<br>暨設定功能設計</p>
+							<p>系統主體架構設計、設定功能設計<br>暨主技術支援</p>
 						</div>
 						<div class="feature">
 							<i class="fa fa-copy"></i>
 							<h3>李家睿</h3>
-							<p>資料庫設計、查詢功能設計<br>暨專案整合</p>
-						</div>
-						<div class="feature">
-							<i class="fa fa-save"></i>
-							<h3>田偉安</h3>
-							<p>創建功能設計</p>
+							<p>資料庫設計、查詢報價單功能設計<br>暨專案整合</p>
 						</div>
 						<div class="feature">
 							<i class="fa fa-paper-plane-o"></i>
 							<h3>陳威誌</h3>
-							<p>介面美化設計</p>
+							<p>介面美化設計<br>暨系統測試</p>
 						</div>
+						<div class="feature">
+							<i class="fa fa-save"></i>
+							<h3>田偉安</h3>
+							<p>創建報價單功能設計<br>暨系統測試</p>
+						</div>						
 						<div class="feature">
 							<i class="fa fa-envelope-o"></i>
 							<h3>劉康威</h3>
-							<p>特別感謝</p>
+							<p>技術支援<br>暨系統測試</p>
 						</div>
 					</div>
 				</div>
