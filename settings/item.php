@@ -389,8 +389,6 @@
 	<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<header>
 			<?php echo $header_context; ?>
-			<!--<h1>SIX MONSTER ACCOUNT MANAGEMENT SYSTEM</h1>
-			<h2><font face="Droid Serif"><<物品清單>></font></h2>-->
 		</header>
 
 		<nav>
