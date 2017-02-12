@@ -105,8 +105,7 @@
 				echo "<td class='td_srch_docun'>設定資料";
 				echo "</td>";
 				echo "<td class='td_srch_docun'>
-						列出有<b>".$content_qorp."</b>紀錄的月份，<br>
-						選擇月份後，列出該月所有<b>".$content_qorp."</b>。";
+						可以在此新增、修改以及查詢客戶、供應商、物品以及地點的資料。";
 				echo "</td>";
 				echo "</tr>";
 				
