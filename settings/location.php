@@ -125,7 +125,7 @@
 			location_get_html_input();
 			$test=$test.' modify button<br/>';
 
-			// 確認至少 sid 不可以是空的
+			// 確認至少 sid 不可以是空的 //必須更正為全部都不可以是空的
 			if( $location_city_sid != "" and $location_country_sid != "" ) {
 				$go=1 ;
 				//檢查 Database 有沒有重複建立的 location
@@ -360,8 +360,6 @@
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<header>
 			<?php echo $header_context; ?>
-			<!--<h1>SIX MONSTER ACCOUNT MANAGEMENT SYSTEM</h1>
-			<h2><font face="Droid Serif"><<地點>></font></h2>-->
 		</header>
 
 		<nav>
