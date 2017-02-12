@@ -11,7 +11,7 @@
 
 		<!-- Banner -->
 			<section id="banner">
-				<h2><strong>ZIRUEI Prominent Tech.Inc.</strong><br>資銳科技公司 製作 <br>帳務管理軟體 <br> 版本： 2.01 版 </h2>
+				<h2><strong>ZIRUEI Prominent Tech.Inc.</strong><br>資銳科技公司 製作 <br>帳務管理軟體 <br> 版本： 2.02 版 </h2>
 				<p>感謝所有為這個系統付出的人！</p>
 				
 			</section>
