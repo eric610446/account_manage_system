@@ -25,6 +25,14 @@ header {
 	text-shadow: <?php echo $header_shadow_color; ?> <?php echo $header_shadow_style; ?>; /*陰影特效*/
 	display: block; /*將header以區塊的方式呈現，不要是 inline，像是一般的文字標籤，在一行。*/
 	height: <? echo $header_height; ?>;
+	
+	background: rgb(122,188,255); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(122,188,255,1) 0%, rgba(96,171,248,1) 44%, rgba(64,150,238,1) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  rgba(122,188,255,1) 0%,rgba(96,171,248,1) 44%,rgba(64,150,238,1) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  rgba(122,188,255,1) 0%,rgba(96,171,248,1) 44%,rgba(64,150,238,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7abcff', endColorstr='#4096ee',GradientType=0 ); /* IE6-9 */
+
+
 
 }
 /*標題列*/
@@ -59,6 +67,7 @@ header {
 .Main_aside_Style_2{
 	width:50%;
 }
+
 /*次選單*/
 .Sub_aside{
 	width:50%;
@@ -126,7 +135,8 @@ div[id='srch_way'] ul {
 	height:99%;
 	background-color: <?php echo $Main_btn_disable; ?>;
 	color: <? echo $Main_btn_color; ?> ;
-}
+    margin: 20% auto;
+	}
 .btn_main_active{	
 	background-color: <?php echo $Main_btn_activate; ?>;	
 }
@@ -178,8 +188,42 @@ article {
 	overflow-x:hidden;
 }
 section{
-	margin:0.3%;
+	margin:1%;
 }
+
+/*::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #0099cc;
+  border: 0px none #ffffff;
+  border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #223366;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #00ffaa;
+}
+::-webkit-scrollbar-track {
+  background: #eeeeee;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #eeeeee;
+}
+::-webkit-scrollbar-track:active {
+  background: #ffffff;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}*/
 /*主要區塊*/
 
 /*按鈕全域變數*/
@@ -562,6 +606,13 @@ footer {
 	text-align: center;
 	color: <?php echo $header_font_color; ?> ;
 	overflow:hidden;
+	
+	background: rgb(122,188,255); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(122,188,255,1) 0%, rgba(96,171,248,1) 44%, rgba(64,150,238,1) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  rgba(122,188,255,1) 0%,rgba(96,171,248,1) 44%,rgba(64,150,238,1) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  rgba(122,188,255,1) 0%,rgba(96,171,248,1) 44%,rgba(64,150,238,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7abcff', endColorstr='#4096ee',GradientType=0 ); /* IE6-9 */
+
 }
 footer a:link {color:<?php echo $header_font_color; ?>;} /* 設定尚未點閱過的連結樣式顏色 */
 footer a:visited {color:<?php echo $header_font_color; ?>;} /* 設定過去曾經閱過的連結顏色 */

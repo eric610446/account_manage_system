@@ -34,6 +34,7 @@ function modify_quo( $NewOrEdit , $info ){
 	echo "<input type='hidden' name='NewOrEdit' value='".$NewOrEdit."' >";
 	echo "<input type='hidden' name='NOE_info' value='".$info."' >";
 	echo "<div class='art_top '> 請選擇並輸入要新增或修改的物品的數量跟報價</div>";
+
 	connect2db() ;
 	global $conn ;
 	global $item_arr ;
@@ -123,8 +124,8 @@ function modify_quo( $NewOrEdit , $info ){
 				echo ($i+1);
 				echo "</td>";
 				
-				
-				echo "<td class='td_List_top_header' td_item_show_name>";	
+
+				echo "<td class='td_List_top_header'>";	
 				if($row['currency']!='TWD'){
 							$NotTWD=1;
 				}
@@ -196,12 +197,13 @@ function modify_quo( $NewOrEdit , $info ){
 				echo "</select>";
 				echo "</td>";
 				
-				
+
 				echo "<td  class='td_List_top_header'>";	
 				echo "<input type=number name='amount[]' value=0 required=1>";
 				echo "</td>";
 				
 				echo "<td  class='td_List_top_header'>";
+
 				if ($NotTWD != 1){
 					echo "<input type=number name='price[]' value=0 required=1 step = 1>";
 				}
