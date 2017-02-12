@@ -366,7 +366,7 @@ Button:active {
 }*/
 
 .checkbox_item_aoe{
-	 -webkit-transform: scale(2); /* Safari and Chrome */
+	 -webkit-transform: scale(3); /* Safari and Chrome */
 }
 
 .select_item_aoe{

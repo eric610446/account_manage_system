@@ -129,7 +129,7 @@ function modify_quo( $NewOrEdit , $info ){
 							$NotTWD=1;
 				}*/
 				//echo "《(id:".$row['item_id']." only in test)".$row['is_id']."-".$row['currency']."$ ".number_format($row['origin_price'])."》".$row['name'];
-				echo "《".$row['is_id']."-".$row['currency']."$ ".number_format($row['origin_price'])."》".$row['name'];
+				echo "《".$row['is_id']."-".$row['currency']."$ ".number_format($row['origin_price'])."》<br>".$row['name'];
 				echo "<input type=hidden name='selector_item[]' value=".$row['item_id'].">";
 				echo "</td>";
 				
@@ -1178,7 +1178,12 @@ function echo_worldwide_customer($tgt_cntry){
 						echo "</th>";
 						echo "<th class='th_List_top_header th_List_worldwide_customer'>客戶<br>詳細資料";
 						echo "</th>";
-						echo "<th class='th_List_top_header th_List_worldwide_customer'>查看<br>".$content_qorp;
+						
+						echo "<th class='th_List_top_header th_List_worldwide_customer'>";
+						if($_POST['Which_Main_choose']==1)
+							echo "創建<br>".$content_qorp;
+						else
+							echo "查看<br>".$content_qorp;
 						echo "</th>";
 					echo "</tr>";
 			}
