@@ -305,6 +305,10 @@ Button:active {
 .srch_docun_Style_2{
 	height: 68%;	
 }
+.srch_docun_Style_index{
+	margin: 2.5% 12% ;
+	height: 78%;	
+}
 .table_srch_docun{
 	font-size: 100%;
 	width : 100%;
@@ -313,7 +317,7 @@ Button:active {
 }
 .th_srch_docun{
 	font-size: 62.5%;
-	height : 25%;
+	height : 20%;
 	background-color: <? echo $table_header_color; ?> ;
 }
 .th_srch_docun:nth-child(odd) {
@@ -329,6 +333,18 @@ Button:active {
 .tr_srch_docun:nth-child(even) {
 	background-color: <? echo $even_rows_color; ?> ;
 }
+
+.tr_srch_docun_index{
+	font-size: 100%;
+	height : 18%;
+}
+.tr_srch_docun_index:nth-child(odd) {
+	background-color: <? echo $odd_rows_color; ?> ;
+}
+.tr_srch_docun_index:nth-child(even) {
+	background-color: <? echo $even_rows_color; ?> ;
+}
+
 .td_srch_docun {
 	font-size: 55%;
 	border: 1px solid <? echo $table_border_color; ?> ;	
@@ -517,10 +533,11 @@ Button:active {
 /*報價單物品清單列表各欄位寬度*/
 .th_List_quo_item:nth-child(1){ 	width : 4%; }
 .th_List_quo_item:nth-child(2){ 	width : 10%; }
-.th_List_quo_item:nth-child(3){ 	width : 38%; }
-.th_List_quo_item:nth-child(4){ 	width : 15%; }
-.th_List_quo_item:nth-child(5){ 	width : 20%; }
+.th_List_quo_item:nth-child(3){ 	width : 30%; }
+.th_List_quo_item:nth-child(4){ 	width : 12%; }
+.th_List_quo_item:nth-child(5){ 	width : 21%; }
 .th_List_quo_item:nth-child(6){ 	width : 13%; }
+.th_List_quo_item:nth-child(7){ 	width : 10%; }
 /*單獨客戶簡單報價單列表各欄位寬度*/
 .th_List_mth_smpl_quo:nth-child(1){ 	width : 4%; }
 .th_List_mth_smpl_quo:nth-child(2){ 	width : 17%; }
@@ -595,7 +612,7 @@ Button:active {
 	padding-bottom:0.8%;
 	border: 1px solid <? echo $table_border_color; ?> ;	
 }
-.td_List_quo_item:nth-child(6) {
+.td_List_quo_item:nth-child(7) {
 	padding:0%;
 	padding-top:0%;
 	padding-bottom:0%;
