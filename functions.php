@@ -94,7 +94,7 @@ function modify_quo( $NewOrEdit , $info ){
 	echo "<div class='div_List_top_header'>";
 	echo "<table class='table_List_top_header'>";
 	echo "<tr  class='tr_List_top_header'>";
-		echo "<th  class='th_List_top_header th_List_item_AorE'>刪除";
+		echo "<th class='th_List_top_header th_List_item_AorE'>刪除";
 		echo "</th>";
 		echo "<th class='th_List_top_header th_List_item_AorE'>項次";
 		echo "</th>";
@@ -118,8 +118,7 @@ function modify_quo( $NewOrEdit , $info ){
 				echo "<input type='checkbox' name='delete[]' value=".$i." class='checkbox_item_aoe'><BR/>";
 				echo "</td>";
 				echo "<input type='hidden' name='quo_item_id[]' value='".$row['quo_item_id']."' >";
-				
-				
+						
 				echo "<td class='td_List_top_header td_List_item_AorE'>";	
 				echo ($i+1);
 				echo "</td>";
@@ -132,8 +131,7 @@ function modify_quo( $NewOrEdit , $info ){
 				echo "《".$row['is_id']."-".$row['currency']."$ ".number_format($row['origin_price'])."》<br>".$row['name'];
 				echo "<input type=hidden name='selector_item[]' value=".$row['item_id'].">";
 				echo "</td>";
-				
-				
+								
 				echo "<td class='td_List_top_header td_List_item_AorE'>";	
 				echo "<input type=number name='amount[]' value=".$row['amount']." required=1 class='input_number_item_aoe'>";
 				echo "</td>";

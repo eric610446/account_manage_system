@@ -151,7 +151,6 @@ div[id='srch_way'] ul {
 }
 /*主選單按鈕*/
 
-
 /* 主要區塊 */
 .article_Style_1 {
 	width: 90%;
@@ -484,6 +483,7 @@ Button:active {
 	width: 99%;
 }
 /*查詢功能 列表按鈕*/
+
 
 
 /*創建修改物品清單列表各欄位寬度*/
