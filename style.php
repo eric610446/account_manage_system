@@ -25,6 +25,14 @@ header {
 	text-shadow: <?php echo $header_shadow_color; ?> <?php echo $header_shadow_style; ?>; /*陰影特效*/
 	display: block; /*將header以區塊的方式呈現，不要是 inline，像是一般的文字標籤，在一行。*/
 	height: <? echo $header_height; ?>;
+	
+	background: rgb(122,188,255); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(122,188,255,1) 0%, rgba(96,171,248,1) 44%, rgba(64,150,238,1) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  rgba(122,188,255,1) 0%,rgba(96,171,248,1) 44%,rgba(64,150,238,1) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  rgba(122,188,255,1) 0%,rgba(96,171,248,1) 44%,rgba(64,150,238,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7abcff', endColorstr='#4096ee',GradientType=0 ); /* IE6-9 */
+
+
 
 }
 /*標題列*/
@@ -59,6 +67,7 @@ header {
 .Main_aside_Style_2{
 	width:50%;
 }
+
 /*次選單*/
 .Sub_aside{
 	width:50%;
@@ -126,7 +135,8 @@ div[id='srch_way'] ul {
 	height:99%;
 	background-color: <?php echo $Main_btn_disable; ?>;
 	color: <? echo $Main_btn_color; ?> ;
-}
+    margin: 20% auto;
+	}
 .btn_main_active{	
 	background-color: <?php echo $Main_btn_activate; ?>;	
 }
@@ -140,15 +150,6 @@ div[id='srch_way'] ul {
 	background-color: <?php echo $Main_btn_activate; ?>;
 }
 /*主選單按鈕*/
-
-/*創立報價單按鈕*/
-#btm_confirm_client, #btm_sent_quotation_list{
-	height: 15%;
-	width: 15%;
-	text-align: center;
-}
-/*創立報價單按鈕*/
-
 
 /* 主要區塊 */
 .article_Style_1 {
@@ -165,8 +166,42 @@ article {
 	overflow-x:hidden;
 }
 section{
-	margin:0.3%;
+	margin:1%;
 }
+
+/*::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #0099cc;
+  border: 0px none #ffffff;
+  border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #223366;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #00ffaa;
+}
+::-webkit-scrollbar-track {
+  background: #eeeeee;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #eeeeee;
+}
+::-webkit-scrollbar-track:active {
+  background: #ffffff;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}*/
 /*主要區塊*/
 
 /*按鈕全域變數*/
@@ -259,7 +294,7 @@ Button:active {
 /*修改報價單 轉換報價單/訂單 輸出PDF */
 
 
-/*查詢功能說明區塊*/
+/*功能說明區塊*/
 .srch_docun{
 	font-size: 100%;
 	margin: 5% 12% ;
@@ -270,6 +305,10 @@ Button:active {
 .srch_docun_Style_2{
 	height: 68%;	
 }
+.srch_docun_Style_index{
+	margin: 2.5% 12% ;
+	height: 78%;	
+}
 .table_srch_docun{
 	font-size: 100%;
 	width : 100%;
@@ -278,7 +317,7 @@ Button:active {
 }
 .th_srch_docun{
 	font-size: 62.5%;
-	height : 25%;
+	height : 20%;
 	background-color: <? echo $table_header_color; ?> ;
 }
 .th_srch_docun:nth-child(odd) {
@@ -294,6 +333,18 @@ Button:active {
 .tr_srch_docun:nth-child(even) {
 	background-color: <? echo $even_rows_color; ?> ;
 }
+
+.tr_srch_docun_index{
+	font-size: 100%;
+	height : 18%;
+}
+.tr_srch_docun_index:nth-child(odd) {
+	background-color: <? echo $odd_rows_color; ?> ;
+}
+.tr_srch_docun_index:nth-child(even) {
+	background-color: <? echo $even_rows_color; ?> ;
+}
+
 .td_srch_docun {
 	font-size: 55%;
 	border: 1px solid <? echo $table_border_color; ?> ;	
@@ -322,6 +373,31 @@ Button:active {
 	text-align: center;
 }
 
+/*建立修改報價單*/
+/*#btm_confirm_client, #btm_sent_quotation_list{
+	height: 15%;
+	width: 15%;
+	text-align: center;
+}*/
+
+.checkbox_item_aoe{
+	 -webkit-transform: scale(3); /* Safari and Chrome */
+}
+
+.select_item_aoe{
+	width:100%;
+	font-size:100%;
+}
+
+.input_number_item_aoe{
+	width:100%;
+	font-size:100%;
+}
+
+.td_discount_item_AorE{
+	font-size:80%;
+}
+/*建立修改報價單*/
 
 
 /*查詢功能 城市按鈕*/
@@ -426,6 +502,13 @@ Button:active {
 
 
 
+/*創建修改物品清單列表各欄位寬度*/
+.th_List_item_AorE:nth-child(1){ 	width : 4%; }
+.th_List_item_AorE:nth-child(2){ 	width : 4%; }
+.th_List_item_AorE:nth-child(3){ 	width : 39%; }
+.th_List_item_AorE:nth-child(4){ 	width : 20%; }
+.th_List_item_AorE:nth-child(5){ 	width : 20%; }
+.th_List_item_AorE:nth-child(6){ 	width : 13%; }
 /*城市內客戶列表各欄位寬度*/
 .th_List_city_customer:nth-child(1){ 	width : 7.5%; }
 .th_List_city_customer:nth-child(2){ 	width : 15%; }
@@ -450,10 +533,11 @@ Button:active {
 /*報價單物品清單列表各欄位寬度*/
 .th_List_quo_item:nth-child(1){ 	width : 4%; }
 .th_List_quo_item:nth-child(2){ 	width : 10%; }
-.th_List_quo_item:nth-child(3){ 	width : 38%; }
-.th_List_quo_item:nth-child(4){ 	width : 15%; }
-.th_List_quo_item:nth-child(5){ 	width : 20%; }
+.th_List_quo_item:nth-child(3){ 	width : 30%; }
+.th_List_quo_item:nth-child(4){ 	width : 12%; }
+.th_List_quo_item:nth-child(5){ 	width : 21%; }
 .th_List_quo_item:nth-child(6){ 	width : 13%; }
+.th_List_quo_item:nth-child(7){ 	width : 10%; }
 /*單獨客戶簡單報價單列表各欄位寬度*/
 .th_List_mth_smpl_quo:nth-child(1){ 	width : 4%; }
 .th_List_mth_smpl_quo:nth-child(2){ 	width : 17%; }
@@ -463,6 +547,13 @@ Button:active {
 .th_List_mth_smpl_quo:nth-child(6){ 	width : 20%; }
 .th_List_mth_smpl_quo:nth-child(7){ 	width : 12%; }
 
+/*創建修改報價單列表*/
+.td_List_item_AorE {
+	font-size: 70%;
+	padding:0.5%;
+	border: 1px solid <? echo $table_border_color; ?> ;	
+}
+/*創建修改報價單列表*/
 
 /*國內城市中客戶列表*/
 .td_List_city_customer {
@@ -475,6 +566,7 @@ Button:active {
 	border: 0 ;	
 }
 /*國內城市中客戶列表*/
+
 /*國外客戶列表*/
 .td_List_worldwide_customer {
 	font-size: 80%;
@@ -520,7 +612,7 @@ Button:active {
 	padding-bottom:0.8%;
 	border: 1px solid <? echo $table_border_color; ?> ;	
 }
-.td_List_quo_item:nth-child(6) {
+.td_List_quo_item:nth-child(7) {
 	padding:0%;
 	padding-top:0%;
 	padding-bottom:0%;
@@ -543,6 +635,13 @@ footer {
 	text-align: center;
 	color: <?php echo $header_font_color; ?> ;
 	overflow:hidden;
+	
+	background: rgb(122,188,255); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(122,188,255,1) 0%, rgba(96,171,248,1) 44%, rgba(64,150,238,1) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  rgba(122,188,255,1) 0%,rgba(96,171,248,1) 44%,rgba(64,150,238,1) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  rgba(122,188,255,1) 0%,rgba(96,171,248,1) 44%,rgba(64,150,238,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7abcff', endColorstr='#4096ee',GradientType=0 ); /* IE6-9 */
+
 }
 footer a:link {color:<?php echo $header_font_color; ?>;} /* 設定尚未點閱過的連結樣式顏色 */
 footer a:visited {color:<?php echo $header_font_color; ?>;} /* 設定過去曾經閱過的連結顏色 */
