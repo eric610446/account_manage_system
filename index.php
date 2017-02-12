@@ -104,18 +104,18 @@
 		echo "<article class='article_Style_2'>";
 	echo "<section>";
 		//主畫面的四個 button 的動作
-		if($_POST['main_choose']==1) {
+		if($_REQUEST['main_choose']==1) {
 			//main_create_quotation() ;	//偉安負責的工作項目
 
 			//新版建立報價單入口
 			main_search_way(1,1) ;
 		}
 
-		if($_POST['main_choose']==2) {
+		if($_REQUEST['main_choose']==2) {
 			main_search_way(2,1) ;
 		}
 
-		if($_POST['main_choose']==3) {
+		if($_REQUEST['main_choose']==3) {
 			main_search_way(3,1) ;
 		}
 //////////////----↓ 偉安工作區域 ↓----------------------------------------------------------------------------------------------------
