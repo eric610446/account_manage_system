@@ -38,7 +38,6 @@
 			var_init();
 			$readonly = "" ;
 			$default_div_color = $default_active_input ;
-			$final_status='';
 			$test=$test.' create mode<br/>';
 			$button2='<button type="submit" name="create_button" >建立</button>';
 			// 建立選取地點的下拉式選單
@@ -163,8 +162,6 @@
 				$result = $conn->query($sql_cmd) ;
 				if($supplier_name != $supplier_name_backup) {
 					if ($result->num_rows > 0) {
-						$final_status = $final_status.'<br/>建立產品資料失敗！<br/>原因：'.$supplier_name.' 不可重複建立！<br/>';
-
 						echo "
 						<script>
 							alert('供應商　".$supplier_name."　不可重複建立！') ;
@@ -196,7 +193,6 @@
 					";
 					$result = $conn->query($sql_cmd) ;
 					if( $result > 0 ) {
-						$final_status = $final_status.' <br/>成功修改供應商資料 ...<br/>';
 						echo "
 						<script>
 							alert('成功修改供應商　".$supplier_name."　的資料。') ;
@@ -210,7 +206,6 @@
 						$disabled = "disabled" ;
 					}
 					else {
-						$final_status = $final_status.' <br/>修改供應商資料失敗，錯誤訊息:'.$conn->error.'<br/>';
 						echo "
 						<script>
 							alert('錯誤！　供應商　".$supplier_name."　的資料修改錯誤！錯誤訊息：".$conn->error."') ;
@@ -252,8 +247,6 @@
 				$sql_cmd = "select name from client_info.supplier_db where name='".$supplier_name."' and invalid='0'" ;
 				$result = $conn->query($sql_cmd) ;
 				if ($result->num_rows > 0) {
-					$final_status = $final_status.'<br/>建立產品資料失敗！<br/>原因：'.$supplier_name.' 不可重複建立！<br/>';
-
 					echo "
 					<script>
 						alert('供應商　".$supplier_name."　不可重複建立！') ;
@@ -297,7 +290,6 @@
 					*/
 
 					if ($conn->query($sql_cmd) === TRUE) {
-						$final_status = $final_status.' <br/>成功新增供應商 ...<br/>';
 						var_init() ;
 						echo "
 						<script>
@@ -306,7 +298,6 @@
 						" ;
 					}
 					else {
-						$final_status = $final_status.' <br/>新增供應商失敗，錯誤訊息:'.$conn->error.'<br/>';
 						echo "
 						<script>
 							alert('錯誤！　建立供應商　".$supplier_name."　的資料錯誤！錯誤訊息：".$conn->error."') ;
@@ -344,7 +335,6 @@
 			";
 			$result = $conn->query($sql_cmd) ;
 			if( $result > 0 ) {
-				$final_status = $final_status.' <br/>成功 作廢 供應商資料 ...<br/>';
 				echo "
 				<script>
 					alert('成功 作廢 供應商　".$supplier_name."　的資料。') ;
@@ -360,7 +350,6 @@
 				$default_div_color = $default_sleep_input ;
 			}
 			else {
-				$final_status = $final_status.' <br/>失敗！ 作廢供應商資料失敗，錯誤訊息:'.$conn->error.'<br/>';
 				echo "
 				<script>
 					alert('錯誤！　作廢供應商 ".$supplier_name."　的資料發生錯誤！ 錯誤訊息：".$conn->error."') ;
