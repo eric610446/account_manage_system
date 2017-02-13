@@ -458,7 +458,7 @@ ALTER TABLE `quotation_detail_db`
 -- 使用資料表 AUTO_INCREMENT `quotation_simple_db`
 --
 ALTER TABLE `quotation_simple_db`
-  MODIFY `quo_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '訂單編號', AUTO_INCREMENT=32;
+  MODIFY `quo_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '訂單編號', AUTO_INCREMENT=23;
 --
 -- 使用資料表 AUTO_INCREMENT `supplier_db`
 --
