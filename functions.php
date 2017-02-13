@@ -134,7 +134,7 @@ function modify_quo( $NewOrEdit , $info ){
 				echo "</td>";
 								
 				echo "<td class='td_List_top_header td_List_item_AorE'>";	
-				echo "<input type=number name='amount[]' value=".$row['amount']." required=1 class='input_number_item_aoe'>";
+				echo "<input type=number name='amount[]' value=".$row['amount']." required=1 min=1 class='input_number_item_aoe'>";
 				echo "</td>";
 				
 				echo "<td  class='td_List_top_header td_List_item_AorE'>";
