@@ -74,7 +74,6 @@
 
 			//防止地點名稱沒輸入
 			if ($item_name == '') {
-				$final_status .= "請輸入要查詢的物品名稱";
 				var_init();
 				$default_div_color = $default_sleep_input ;
 				$readonly = "readonly";
@@ -115,11 +114,9 @@
 						$disabled = "" ;
 	    				$button2 = "<button type='submit' name='modify_button'>修改</button>" ;
 	    				$button3 = "<button type='submit' name='invalid_button' class='com_info' id='btn_button3'>作廢</button>" ;
-	    				$final_status .= "查詢成功!" ;
 					}
 				}
 				else {
-					$final_status .= $item_name." 的物品資料尚未被建立 ..." ;
 					$default_div_color = $default_sleep_input ;
 					$readonly = "readonly";
 					$disabled="disabled" ;
@@ -150,7 +147,6 @@
 				$result = $conn->query($sql_cmd) ;
 				if( $item_name != $item_name_backup ) {
 					if($result->num_rows > 0) {
-						$final_status = $final_status."<br/>建立 item 資料失敗！<br/>原因： ".$item_name."不可重複建立！<br/>";
 						$button2 = "<button type='submit' name='modify_button'>修改</button>" ;
 						echo "
 						<script>
@@ -178,7 +174,6 @@
 
 					$result = $conn->query($sql_cmd) ;
 					if( $result > 0 ) {
-						$final_status = $final_status.' <br/>成功修改物品資料 ...<br/>';
 						echo "
 						<script>
 							alert('成功修改物品　".$item_name."　的資料') ;
@@ -194,7 +189,6 @@
 						$item_type_select_option = item_type_select_option( "ro" ) ;
 					}
 					else {
-						$final_status = $final_status.' <br/>修改物品資料失敗，錯誤訊息:'.$conn->error.'<br/>';
 						echo "
 						<script>
 							alert('錯誤！　修改物品　".$item_name."　的資料錯誤！錯誤訊息：".$conn->error."') ;
@@ -230,10 +224,8 @@
 
 				//檢查 Database 有沒有重複建立的資料
 				$sql_cmd = "select * from client_info.item_db where name='".$item_name."' and invalid='0'" ;
-				//echo $sql_cmd ;
 				$result = $conn->query($sql_cmd) ;
 				if ($result->num_rows > 0) {
-					$final_status = $final_status."<br/>建立 item 資料失敗！<br/>原因： ".$item_name."不可重複建立！<br/>";
 					$button2 = "<button type='submit' name='create_button'>建立</button>" ;
 					echo "
 					<script>
@@ -260,7 +252,6 @@
 					";
 
 					if ($conn->query($sql_cmd) === TRUE) {
-						$final_status = $final_status.' <br/>成功新增物品 ...<br/>';
 						echo "
 						<script>
 							alert('成功建立物品　".$item_name."。') ;
@@ -268,7 +259,6 @@
 						" ;
 					}
 					else {
-						$final_status = $final_status.' <br/>新增物品失敗，錯誤訊息:'.$conn->error.'<br/>';
 						echo "
 						<script>
 							alert('錯誤！　建立物品　".$item_name."　的資料錯誤！錯誤訊息：".$conn->error."') ;
@@ -304,7 +294,6 @@
 			";
 			$result = $conn->query($sql_cmd) ;
 			if( $result > 0 ) {
-				$final_status = $final_status.' <br/>成功 作廢 物品資料 ...<br/>';
 				echo "
 				<script>
 					alert('成功 作廢 物品　".$supplier_name."　的資料。') ;
@@ -322,7 +311,6 @@
 				$item_type_select_option = item_type_select_option( "ro" ) ;
 			}
 			else {
-				$final_status = $final_status.' <br/>失敗！ 作廢物品資料失敗，錯誤訊息:'.$conn->error.'<br/>';
 				echo "
 				<script>
 					alert('錯誤！　作廢物品 ".$item_name."　的資料發生錯誤！ 錯誤訊息：".$conn->error."') ;

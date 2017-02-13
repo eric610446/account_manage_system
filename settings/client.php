@@ -36,7 +36,6 @@
 			$mode = "create" ;
 			var_init();
 			$default_div_color = $default_active_input ;
-			$final_status='' ;
 			$test=$test.' create mode<br/>' ;
 			$button2='<button type="submit" name="create_button" class="com_info" id="btn_button2">建立</button>';
 			// 建立選取地點的下拉式選單
@@ -153,7 +152,6 @@
 				$result = $conn->query($sql_cmd) ;
 				if($client_name != $client_name_backup) {
 					if ($result->num_rows > 0) {
-						$final_status = $final_status.'<br/>建立產品資料失敗！<br/>原因：'.$client_name.' 不可重複建立！<br/>';
 						echo "
 						<script>
 							alert('錯誤！　".$client_name."不可重複建立！') ;
@@ -185,7 +183,6 @@
 					";
 					$result = $conn->query($sql_cmd) ;
 					if( $result > 0 ) {
-						$final_status = $final_status.' <br/>成功修改客戶資料 ...<br/>';
 						echo "
 						<script>
 							alert('成功修改客戶　".$client_name."　的資料。') ;
@@ -199,7 +196,6 @@
 						$button3 = "" ;
 					}
 					else {
-						$final_status = $final_status.' <br/>修改客戶資料失敗，錯誤訊息:'.$conn->error.'<br/>';
 						echo "
 						<script>
 							alert('錯誤！　修改客戶".$client_name."　的資料發生錯誤！ 錯誤訊息：".$conn->error."') ;
@@ -240,9 +236,6 @@
 				$sql_cmd = "select name from client_info.customer_db where name='".$client_name."' and invalid='0'" ;
 				$result = $conn->query($sql_cmd) ;
 				if ($result->num_rows > 0) {
-
-					$final_status = $final_status.'<br/>建立產品資料失敗！<br/>原因：'.$client_name.' 不可重複建立！<br/>';
-
 					echo "
 					<script>
 						alert('錯誤！　".$client_name."不可重複建立！') ;
@@ -285,7 +278,6 @@
 					*/
 
 					if ($conn->query($sql_cmd) === TRUE) {
-						$final_status = $final_status.' <br/>成功新增客戶 ...<br/>';
 						var_init();
 						echo "
 						<script>
@@ -294,7 +286,6 @@
 						" ;
 					}
 					else {
-						$final_status = $final_status.' <br/>新增客戶失敗，錯誤訊息:'.$conn->error.'<br/>';
 						echo "
 						<script>
 							alert('錯誤！　新增客戶　".$client_name." 失敗！ 錯誤訊息：".$conn->error."') ;
@@ -332,7 +323,6 @@
 			//update client_info.customer_db set invalid='1' where customer_id='33' ;
 			$result = $conn->query($sql_cmd) ;
 			if( $result > 0 ) {
-				$final_status = $final_status.' <br/>成功 作廢 客戶資料 ...<br/>';
 				echo "
 				<script>
 					alert('成功 作廢 客戶　".$client_name."　的資料。') ;
@@ -346,7 +336,6 @@
 				$button3 = "" ;
 			}
 			else {
-				$final_status = $final_status.' <br/>失敗！ 作廢客戶資料失敗，錯誤訊息:'.$conn->error.'<br/>';
 				echo "
 				<script>
 					alert('錯誤！　作廢客戶 ".$client_name."　的資料發生錯誤！ 錯誤訊息：".$conn->error."') ;

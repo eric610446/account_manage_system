@@ -24,7 +24,6 @@
 		include("initialize.php") ;
 		include("style.php") ;
 		include("../config.php") ;
-		$supplier_select_option = supplier_select_option($conn) ;
 		$where_am_i = "location" ;
 
 
@@ -38,7 +37,6 @@
 			$mode = "create" ;
 			var_init();
 			$readonly='';
-			$final_status='';
 			$test=$test.' create mode<br/>';
 			$button2='<button type="submit" name="create_button" >建立</button>';
 		}
@@ -70,7 +68,6 @@
 
 			//防止地點名稱沒輸入
 			if ($location_country_sid == '' or $location_city_sid == '' ) {
-				$final_status .= "請輸入要查詢的地點名稱";
 				var_init();
 				$readonly='readonly';
 				$default_div_color = $default_sleep_input ;
@@ -101,10 +98,8 @@
 					$readonly='';
     				$button2='<button type="submit" name="modify_button" >修改</button>';
     				$button3 = "<button type='submit' name='invalid_button' class='com_info' id='btn_button3'>作廢</button>" ;
-    				$final_status .= "查詢成功!";
 				}
 				else {
-					$final_status .= $location_country_sid.$location_city_sid." 的地點資料尚未被建立 ...";
 					var_init();
 					$readonly='readonly';
 					$default_div_color = $default_sleep_input ;
@@ -133,7 +128,6 @@
 				$result = $conn->query($sql_cmd) ;
 				if( ($location_city_sid!=$location_city_sid_backup) or ($location_country_sid!=$location_country_sid_backup) ) {
 					if ($result->num_rows > 0 ) {
-						$final_status = $final_status.'<br/>建立地點資料失敗！<br/>原因： '.$location_country." ".$location_city." [".$location_country_sid.$location_city_sid.'] 不可重複建立！<br/>';
 						echo "
 							<script>
 								alert('錯誤！　同一地點  ".$location_country_sid.$location_city_sid."  不可重複建立！錯誤訊息：".$conn->error."') ;
@@ -154,7 +148,6 @@
 					";
 					$result = $conn->query($sql_cmd) ;
 					if( $result > 0 ) {
-						$final_status = $final_status.' <br/>成功修改地點資料 ...<br/>';
 						echo "
 						<script>
 							alert('成功修改地點　".$item_name."　的資料') ;
@@ -167,7 +160,6 @@
 						$default_div_color = $default_sleep_input ;
 					}
 					else {
-						$final_status = $final_status.' <br/>修改地點資料失敗，錯誤訊息:'.$conn->error.'<br/>';
 						echo "
 						<script>
 							alert('錯誤！　修改地點資料錯誤！錯誤訊息：".$conn->error."') ;
@@ -179,7 +171,6 @@
 				}
 			}
 			else {
-				$final_status = $final_status.' <br/>修改客戶資料失敗，錯誤訊息:'.$conn->error.'<br/>';
 					echo "
 					<script>
 						alert('錯誤！　修改資料發生錯誤！ 錯誤訊息：國際代碼不可以是空值') ;
@@ -208,7 +199,6 @@
 				$sql_cmd = "select * from client_info.location_db where city_sid='".$location_city_sid."' and country_sid='".$location_country_sid."' and invalid = '0'" ;
 				$result = $conn->query($sql_cmd) ;
 				if ($result->num_rows > 0) {
-					$final_status = $final_status.'<br/>建立地點資料失敗！<br/>原因： '.$location_country." ".$location_city." [".$location_country_sid.$location_city_sid.'] 不可重複建立！<br/>';
 					echo "
 						<script>
 							alert('錯誤！　同一地點  ".$location_country_sid.$location_city_sid."  不可重複建立！錯誤訊息：".$conn->error."') ;
@@ -236,7 +226,6 @@
 					*/
 
 					if ($conn->query($sql_cmd) === TRUE) {
-						$final_status = $final_status.' <br/>成功新增地點 ...<br/>';
 						echo "
 						<script>
 							alert('成功建立地點資料') ;
@@ -245,7 +234,6 @@
 						var_init() ;
 					}
 					else {
-						$final_status = $final_status.' <br/>新增地點失敗，錯誤訊息:'.$conn->error.'<br/>';
 						echo "
 						<script>
 							alert('錯誤！　建立地點資料錯誤！錯誤訊息：".$conn->error."') ;
@@ -256,7 +244,6 @@
 
 			}
 			else {
-				$final_status .= "<br/>填寫完所有表格再建立<br/>" ;
 				echo "
 				<script>
 					alert('錯誤！　請填寫完所有表格再建立') ;
@@ -280,7 +267,6 @@
 			";
 			$result = $conn->query($sql_cmd) ;
 			if( $result > 0 ) {
-				$final_status = $final_status.' <br/>成功 作廢 資料 ...<br/>';
 				echo "
 				<script>
 					alert('成功 作廢 地點　".$supplier_name."　的資料。') ;
@@ -296,7 +282,6 @@
 				$default_div_color = $default_sleep_input ;
 			}
 			else {
-				$final_status = $final_status.' <br/>失敗！ 作廢地點資料失敗，錯誤訊息:'.$conn->error.'<br/>';
 				echo "
 				<script>
 					alert('錯誤！　作廢地點 ".$item_name."　的資料發生錯誤！ 錯誤訊息：".$conn->error."') ;
