@@ -146,7 +146,7 @@
 			$test=$test.' modify button<br/>';
 
 			// 確認至少 name 不可以是空的
-			if( $client_name != "" ) {
+			if( $client_name != "" and is_numeric($client_ubn) ) {
 				$go=1 ;
 				//檢查 Database 有沒有重複建立的 client
 				$sql_cmd = "select name from client_info.customer_db where name='".$client_name."' and invalid='0'" ;
@@ -213,7 +213,7 @@
 			else {
 				echo "
 				<script>
-					alert('錯誤！　修改客戶".$client_name."　的資料發生錯誤！ 錯誤訊息：名稱不可是空值') ;
+					alert('錯誤！　修改客戶".$client_name."　的資料發生錯誤！ 錯誤訊息：請留意輸入資料是否正確，名稱不可是空值，統編只能有數字') ;
 				</script>
 				" ;
 				$button2 = '<button type="submit" name="modify_button" class="com_info" id="btn_button2">修改</button>';
@@ -234,7 +234,7 @@
 			client_get_html_input();
 
 
-			if ($client_name != "") {
+			if ($client_name != "" and is_numeric($client_ubn) ) {
 
 				//檢查 Database 有沒有重複建立的 client
 				$sql_cmd = "select name from client_info.customer_db where name='".$client_name."' and invalid='0'" ;
@@ -308,7 +308,7 @@
 			else {
 				echo "
 				<script>
-					alert('錯誤！　請填寫完\"客戶名稱\"後再建立！') ;
+					alert('錯誤訊息：請留意輸入資料是否正確，名稱不可是空值，統編只能有數字') ;
 				</script>
 				" ;
 			}
@@ -465,7 +465,7 @@
 						</div>
 						<div id='ubn'>
 							<label for='ubn'>統編</label>
-							<input type=text id='ubn' name=ubn value='$client_ubn' $readonly>
+							<input type=text id='ubn' name=ubn value='$client_ubn' minlength='8' maxlength='8' $readonly>
 							<span></span>
 						</div>
 						<div id='company_phone'>
