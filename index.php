@@ -15,85 +15,44 @@
 		<?php echo $header_context; ?>
 	</header>
 
-	<?php
-	//必須讓主選單的選擇優先於次選單的記憶變數，不然會被記憶變數搶走優先權
-	if(isset($_REQUEST['main_choose']))
-		$action_choose=$_REQUEST['main_choose'];
-	else if(isset($_REQUEST['Which_Main_choose']))
-		$action_choose=$_REQUEST['Which_Main_choose'];
-	else
-		$action_choose=0;
+<aside class='Aside_Style_1'>
 
-	if( $action_choose>0)
-	{
-		$Index_Style=2;
-	//主體<aside>在此縮排
-	echo "<aside class='Aside_Style_2'>";
-		//主選單<div>在此縮排
-		echo "<div class='Main_aside_Style_2 Main_aside'>";
-	}
-	else
-	{		$Index_Style=1;
-	//主體<aside>在此縮排
-	echo "<aside class='Aside_Style_1'>";
-		//主選單<div>在此縮排
-		echo "<div class='Main_aside_Style_1 Main_aside'>";
-	}
-			//列出主選單
-			if($action_choose==1)
-				echo "	<div class='div_Main_asideR'>
-							<button type=submit name=main_choose
-									class='btn_main btn_main_active' value=1 >";
-			else
-				echo "	<div class='div_Main_aside'>
-							<button type=submit name=main_choose
-									class='btn_main btn_main_disable' value=1 >";
-
-				echo "					建立<br>報價單
-							</button>
-						</div>";
-
-				if($action_choose==2)
-					echo "	<div class='div_Main_asideR'>
-								<button type=submit name=main_choose
-										class='btn_main btn_main_active' value=2 >";
-				else
-					echo "	<div class='div_Main_aside'>
-								<button type=submit name=main_choose
-										class='btn_main btn_main_disable' value=2 >";
-
-					echo "					查詢<br>報價單
-								</button>
-							</div>";
-
-				if($action_choose==3)
-					echo "	<div class='div_Main_asideR'>
-								<button type=submit name=main_choose
-										class='btn_main btn_main_active' value=3 >";
-				else
-					echo "	<div class='div_Main_aside'>
-								<button type=submit name=main_choose
-										class='btn_main btn_main_disable' value=3 >";
-
-					echo "					查詢<br>成交訂單
-								</button>
-							</div>";
-	?>
-			<div class='div_Main_aside'>
-				<button type=button
-						onclick=window.open('./settings/index.php')
-						class='btn_main btn_main_disable' >
-						設定<br>資料
-				</button>
-			</div>
+	<div class='Main_aside_Style_1 Main_aside'>
+	
+		<div class='div_Main_aside'>
+			<button type=button 
+					class='btn_main btn_main_disable'
+					onclick="location.href='index2.php?main_choose=1'">
+						建立<br>報價單
+			</button>
 		</div>
-	<?php
-		//次選單區：要存在才會出現這塊div
-		if( $action_choose>0){
-			Sub_Aside($action_choose);
-		}
-	?>
-	</aside>
+	
+		<div class='div_Main_aside'>
+			<button type=button 
+					class='btn_main btn_main_disable'
+					onclick="location.href='index2.php?main_choose=2'">
+						查詢<br>報價單
+			</button>
+		</div>
+
+			
+		<div class='div_Main_aside'>
+			<button type=button 
+					class='btn_main btn_main_disable'
+					onclick="location.href='index2.php?main_choose=3'">
+						查詢<br>成交訂單
+			</button>
+		</div>
+
+		<div class='div_Main_aside'>
+			<button type=button
+					onclick=window.open('./settings/index.php')
+					class='btn_main btn_main_disable' >
+					設定<br>資料
+			</button>
+		</div>
+	</div>
+</aside>
 
 	<?php
 	//尚未動作時 article 寬度為90%
@@ -103,118 +62,58 @@
 	else
 		echo "<article class='article_Style_2'>";
 	echo "<section>";
-		//主畫面的四個 button 的動作
-		if($_POST['main_choose']==1) {
-			//main_create_quotation() ;	//偉安負責的工作項目
-
-			//新版建立報價單入口
-			main_search_way(1,1) ;
-		}
-
-		if($_POST['main_choose']==2) {
-			main_search_way(2,1) ;
-		}
-
-		if($_POST['main_choose']==3) {
-			main_search_way(3,1) ;
-		}
-//////////////----↓ 偉安工作區域 ↓----------------------------------------------------------------------------------------------------
-		//在建立報價單，選擇了一個要建立報價單的客戶，引導到輸入產品數量單價的介面
-		if(isset($_POST['btn_choose_client'])) {
-			//quotation_products_list( $_POST['btm_confirm_client'] ) ;
-			modify_quo(1,$_POST['btn_choose_client']);
-		}
-
-		//接收 報價單要報價的產品及數量與單價，存到每個客戶的 table
-		$quotation_arr = array() ;
-		if(isset($_POST['btm_sent_quotation_list'])) {
-			for ( $i=1 ; $i<=10 ; $i++ ) {
-				$client = $_POST['create_quotation_client'] ;
-				$product_tmp = $_POST['select_product'.$i] ;
-				$count_tmp = $_POST['count'.$i] ;
-				$price_tmp = $_POST['price'.$i] ;
-				if($product_tmp=='null') {
-					continue ;
-				}
-				else {
-					array_push($quotation_arr,$product_tmp) ;
-					array_push($quotation_arr,$count_tmp) ;
-					array_push($quotation_arr,$price_tmp) ;
-					//echo $product_tmp." ".$count_tmp." ".$price_tmp."<br/>" ;
-				}
-			}
-			save_quotation( $client, $quotation_arr) ;
-		}
-		// 家睿：下面這個交給偉安寫，現在是空function
-		/*<<<按鈕在查詢報價單中>>>，輸入值為某個訂單/報價單，可修改這個訂單的客戶、增減物品種類(ps.刪物品種類，直接把該項的invaild標記為1比較快)、更改數量*/
-
-		/*if(isset($_POST['btn_edit_quo'])) {	
-			$qu_id = $_POST['btn_edit_quo'] ;
-			modify_quo(2,$qu_id) ;
-			//edit_quotation($qu_id) ;
-		}*/
-		if(isset($_POST['btn_edit_quo'])) {
-				modify_quo( 2 , $_POST['btn_edit_quo'] ) ;
-		}
-		
-		if(isset($_POST['submit_new_quo'])) {
-			calculate_result() ;
-		}
-//////////////----↑ 偉安工作區域 ↑----------------------------------------------------------------------------------------------------
-
-
-//////////////----↓ 家睿工作區域 ↓----------------------------------------------------------------------------------------------------
-
-		if(isset($_POST['srch_way_choose'])){
-			main_search_way($_POST['Which_Main_choose'],0);
-		}
-
-		//在報價單查詢的畫面，選擇了任何一個地點，要顯示該地點所有的 client
-		if(isset($_POST['btn_city_to_customer'])) {
-			echo_city_customer($_POST['btn_city_to_customer']) ;
-		}
-
-		//選擇一個要查詢年分月份後，依照日期列出報價單。
-		if(isset($_POST['btn_date_to_quo'])) {
-			echo_list_month_all_simple_quo($_POST['btn_date_to_quo']);
-		}
-
-		//選擇一個要查詢報價單的客戶後，依照日期列出報價單。
-		if(  isset( $_POST['btn_list_simple_quo'] )  ) {
-			echo_list_single_customer_simple_quo($_POST['btn_list_simple_quo']);
-		}
-
-		//選擇要查詢客戶的其中一個報價單的詳細內容後
-		if(isset($_POST['btn_list_detail_quo'])) {
-			echo_detail_quotation($_POST['btn_list_detail_quo']) ;
-		}
-
-		/*列出特定物品的供應商詳細資料*/
-		if(isset($_POST['btn_detail_customer'])) {
-			//給的是客戶id
-			list_detail_cus_or_sup_info(1,$_POST['btn_detail_customer']) ;
-		}
-		if(isset($_POST['btn_detail_supplier'])) {
-			//給的是物品id
-			list_detail_cus_or_sup_info(2,$_POST['btn_detail_supplier']) ;
-		}
-
-		/*輸入值為某個訂單/報價單，將其is_order屬性更改為報價單/訂單，如果訂單流水號是空的，要產生新的訂單流水號*/
-		if(isset($_POST['btm_order_change'])) {
-			order_change($_POST['btm_order_change']) ;
-		}
-
-		//建立 pdf
-		if(isset($_POST['create_pdf'])) {
-			$client = $_POST['quotations_client'] ;
-			$index = $_POST['quotation_index'] ;
-			create_quotation_pdf( $client, $index ) ;
-		}
-
-
-//////////////----↑ 家睿工作區域 ↑----------------------------------------------------------------------------------------------------
-
+	
+		echo "<div class ='srch_docun srch_docun_Style_index'>";
+			echo "<table class='table_srch_docun'>";
+			
+				echo "<tr>";
+				echo "<th class='th_srch_docun'>按鈕名稱";
+				echo "</th>";
+				echo "<th class='th_srch_docun'>功能說明";
+				echo "</th>";
+				echo "</tr>";
+				
+				echo "<tr class='tr_srch_docun_index'>";
+				echo "<td class='td_srch_docun'>建立報價單";
+				echo "</td>";
+				echo "<td class='td_srch_docun'>
+						選擇客戶來創建一筆<b>全新的報價單</b>。";
+				echo "</td>";
+				echo "</tr>";
+				
+				echo "<tr class='tr_srch_docun_index'>";
+				echo "<td class='td_srch_docun'>查詢報價單";
+				echo "</td>";
+				echo "<td class='td_srch_docun'>
+						依照客戶或流水碼來列出所有<b>尚未交易完成</b>的<b>一般報價單</b>，<br>
+						可在此查詢詳細報價單內容、客戶以及物品供應商資料，<br>
+						並可以在完成交易後把<b>一般報價單</b>設定為<b>已為成訂單</b>。";
+				echo "</td>";
+				echo "</tr>";
+				
+				echo "<tr class='tr_srch_docun_index'>";
+				echo "<td class='td_srch_docun'>查詢訂單";
+				echo "</td>";
+				echo "<td class='td_srch_docun'>
+						依照客戶或流水碼來列出所有<b>已經交易完成的訂單</b>，<br>
+						可在此查詢詳細訂單內容、客戶以及物品供應商資料，<br>
+						並可以在取消交易或者要繼續修改報價時，把<b>已完成訂單</b>恢復為<b>一般報價單</b>。";
+				echo "</td>";
+				echo "</tr>";
+				
+				echo "<tr class='tr_srch_docun_index'>";
+				echo "<td class='td_srch_docun'>設定資料";
+				echo "</td>";
+				echo "<td class='td_srch_docun'>
+						可以在此新增、修改以及查詢客戶、供應商、物品以及地點的資料。";
+				echo "</td>";
+				echo "</tr>";
+				
+			echo "</table>";
+		echo "</div>";
+	
 	?>
+	
 	</section>
 	</article>
 	<footer>

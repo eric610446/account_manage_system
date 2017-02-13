@@ -156,7 +156,7 @@
 
 
 			// 確認至少 name 不可以是空的
-			if( $supplier_name != "" ) {
+			if( $supplier_name != "" and is_numeric($supplier_ubn) ) {
 				$go=1 ;
 				//檢查 Database 有沒有重複建立的 supplier
 				$sql_cmd = "select name from client_info.supplier_db where name='".$supplier_name."' and invalid='0'" ;
@@ -224,7 +224,7 @@
 			else {
 				echo "
 				<script>
-					alert('錯誤！　修改供應商 ".$supplier_name."　的資料發生錯誤！ 錯誤訊息：名稱不可是空值') ;
+					alert('錯誤！　修改供應商 ".$supplier_name."　的資料發生錯誤！ 錯誤訊息：請留意輸入資料是否正確，名稱不可是空值，統編只能有數字') ;
 				</script>
 				" ;
 				$button2 = '<button type="submit" name="modify_button" class="com_info">修改</button>';
@@ -426,8 +426,6 @@
 	<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<header>
 			<?php echo $header_context; ?>
-			<!--<h1>SIX MONSTER ACCOUNT MANAGEMENT SYSTEM</h1>
-			<h2><font face="Droid Serif"><<供應商>></font></h2>-->
 		</header>
 
 		<nav>
@@ -480,7 +478,7 @@
 						</div>
 						<div id='ubn'>
 							<label for='ubn'>統編</label>
-							<input type=text id='ubn' name=ubn value='$supplier_ubn' $readonly>
+							<input type=text id='ubn' name=ubn value='$supplier_ubn' minlength='8' maxlength='8' $readonly>
 							<span></span>
 						</div>
 						<div id='company_phone'>

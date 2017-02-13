@@ -151,28 +151,6 @@ div[id='srch_way'] ul {
 }
 /*主選單按鈕*/
 
-/*創立報價單區塊*/
-#btm_confirm_client, #btm_sent_quotation_list{
-	height: 15%;
-	width: 15%;
-	text-align: center;
-}
-.tr_item_show_name{
-	font-size:100%;
-}
-.td_item_show_name{
-	font-size:60%;
-}
-.select_item_aoe{
-	width:95%;
-	font-size:60%;
-}
-.input_item_aoe{
-	font-size:50%x;
-}
-/*創立報價單區塊*/
-
-
 /* 主要區塊 */
 .article_Style_1 {
 	width: 90%;
@@ -316,7 +294,7 @@ Button:active {
 /*修改報價單 轉換報價單/訂單 輸出PDF */
 
 
-/*查詢功能說明區塊*/
+/*功能說明區塊*/
 .srch_docun{
 	font-size: 100%;
 	margin: 5% 12% ;
@@ -327,6 +305,10 @@ Button:active {
 .srch_docun_Style_2{
 	height: 68%;	
 }
+.srch_docun_Style_index{
+	margin: 2.5% 12% ;
+	height: 78%;	
+}
 .table_srch_docun{
 	font-size: 100%;
 	width : 100%;
@@ -335,7 +317,7 @@ Button:active {
 }
 .th_srch_docun{
 	font-size: 62.5%;
-	height : 25%;
+	height : 20%;
 	background-color: <? echo $table_header_color; ?> ;
 }
 .th_srch_docun:nth-child(odd) {
@@ -351,6 +333,18 @@ Button:active {
 .tr_srch_docun:nth-child(even) {
 	background-color: <? echo $even_rows_color; ?> ;
 }
+
+.tr_srch_docun_index{
+	font-size: 100%;
+	height : 18%;
+}
+.tr_srch_docun_index:nth-child(odd) {
+	background-color: <? echo $odd_rows_color; ?> ;
+}
+.tr_srch_docun_index:nth-child(even) {
+	background-color: <? echo $even_rows_color; ?> ;
+}
+
 .td_srch_docun {
 	font-size: 55%;
 	border: 1px solid <? echo $table_border_color; ?> ;	
@@ -379,6 +373,31 @@ Button:active {
 	text-align: center;
 }
 
+/*建立修改報價單*/
+/*#btm_confirm_client, #btm_sent_quotation_list{
+	height: 15%;
+	width: 15%;
+	text-align: center;
+}*/
+
+.checkbox_item_aoe{
+	 -webkit-transform: scale(3); /* Safari and Chrome */
+}
+
+.select_item_aoe{
+	width:100%;
+	font-size:100%;
+}
+
+.input_number_item_aoe{
+	width:100%;
+	font-size:100%;
+}
+
+.td_discount_item_AorE{
+	font-size:80%;
+}
+/*建立修改報價單*/
 
 
 /*查詢功能 城市按鈕*/
@@ -482,13 +501,14 @@ Button:active {
 /*查詢功能 列表按鈕*/
 
 
-/*創建報價單各欄位寬度*/
-.th_List_item_AorE:nth-child(1){	width : 5%; }
-.th_List_item_AorE:nth-child(2){	width : 5%; }
-.th_List_item_AorE:nth-child(3){	width : 42%; }
-.th_List_item_AorE:nth-child(4){	width : 15%; }
-.th_List_item_AorE:nth-child(5){	width : 15%; }
-.th_List_item_AorE:nth-child(6){	width : 8%; }
+
+/*創建修改物品清單列表各欄位寬度*/
+.th_List_item_AorE:nth-child(1){ 	width : 4%; }
+.th_List_item_AorE:nth-child(2){ 	width : 4%; }
+.th_List_item_AorE:nth-child(3){ 	width : 39%; }
+.th_List_item_AorE:nth-child(4){ 	width : 20%; }
+.th_List_item_AorE:nth-child(5){ 	width : 20%; }
+.th_List_item_AorE:nth-child(6){ 	width : 13%; }
 /*城市內客戶列表各欄位寬度*/
 .th_List_city_customer:nth-child(1){ 	width : 7.5%; }
 .th_List_city_customer:nth-child(2){ 	width : 15%; }
@@ -513,10 +533,11 @@ Button:active {
 /*報價單物品清單列表各欄位寬度*/
 .th_List_quo_item:nth-child(1){ 	width : 4%; }
 .th_List_quo_item:nth-child(2){ 	width : 10%; }
-.th_List_quo_item:nth-child(3){ 	width : 38%; }
-.th_List_quo_item:nth-child(4){ 	width : 15%; }
-.th_List_quo_item:nth-child(5){ 	width : 20%; }
+.th_List_quo_item:nth-child(3){ 	width : 30%; }
+.th_List_quo_item:nth-child(4){ 	width : 12%; }
+.th_List_quo_item:nth-child(5){ 	width : 21%; }
 .th_List_quo_item:nth-child(6){ 	width : 13%; }
+.th_List_quo_item:nth-child(7){ 	width : 10%; }
 /*單獨客戶簡單報價單列表各欄位寬度*/
 .th_List_mth_smpl_quo:nth-child(1){ 	width : 4%; }
 .th_List_mth_smpl_quo:nth-child(2){ 	width : 17%; }
@@ -526,6 +547,13 @@ Button:active {
 .th_List_mth_smpl_quo:nth-child(6){ 	width : 20%; }
 .th_List_mth_smpl_quo:nth-child(7){ 	width : 12%; }
 
+/*創建修改報價單列表*/
+.td_List_item_AorE {
+	font-size: 70%;
+	padding:0.5%;
+	border: 1px solid <? echo $table_border_color; ?> ;	
+}
+/*創建修改報價單列表*/
 
 /*國內城市中客戶列表*/
 .td_List_city_customer {
@@ -538,6 +566,7 @@ Button:active {
 	border: 0 ;	
 }
 /*國內城市中客戶列表*/
+
 /*國外客戶列表*/
 .td_List_worldwide_customer {
 	font-size: 80%;
@@ -583,7 +612,7 @@ Button:active {
 	padding-bottom:0.8%;
 	border: 1px solid <? echo $table_border_color; ?> ;	
 }
-.td_List_quo_item:nth-child(6) {
+.td_List_quo_item:nth-child(7) {
 	padding:0%;
 	padding-top:0%;
 	padding-bottom:0%;

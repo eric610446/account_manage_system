@@ -125,7 +125,7 @@
 			location_get_html_input();
 			$test=$test.' modify button<br/>';
 
-			// 確認至少 sid 不可以是空的
+			// 確認至少 sid 不可以是空的 //必須更正為全部都不可以是空的
 			if( $location_city_sid != "" and $location_country_sid != "" ) {
 				$go=1 ;
 				//檢查 Database 有沒有重複建立的 location
@@ -360,8 +360,6 @@
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<header>
 			<?php echo $header_context; ?>
-			<!--<h1>SIX MONSTER ACCOUNT MANAGEMENT SYSTEM</h1>
-			<h2><font face="Droid Serif"><<地點>></font></h2>-->
 		</header>
 
 		<nav>
@@ -403,7 +401,7 @@
 						<div id='location_country_sid'>
 							<label id='location_country_sid' for='location_country_sid'>國家 國際代碼</label>
 							<input type=text id='location_country_sid' name='location_country_sid' value='$location_country_sid' maxlength='2'>
-							<span>國際代碼可點選 <a href='http://www.unece.org/cefact/locode/service/location' target='_blank'>連結</a> 查詢</span>
+							<span>國際代碼可點選 <a href='http://www.unece.org/cefact/locode/service/location' target='_blank'>連結</a> 來查詢 (請勿輸入大寫英文以及阿拉伯數字之外的文字)</span>
 						</div>
 					</li>
 					<li id='list2'>
@@ -415,7 +413,7 @@
 						<div id='location_city_sid'>
 							<label id='location_city_sid' for='location_city_sid'>城市 國際代碼</label>
 							<input type=text id='location_city_sid' name=location_city_sid value='$location_city_sid' maxlength='3'>
-							<span>國際代碼可點選 <a href='http://www.unece.org/cefact/locode/service/location' target='_blank'>連結</a> 查詢</span>
+							<span>國際代碼可點選 <a href='http://www.unece.org/cefact/locode/service/location' target='_blank'>連結</a> 來查詢 (請勿輸入大寫英文以及阿拉伯數字之外的文字)</span>
 						</div>
 					</li>
 					<li id='list3'>
