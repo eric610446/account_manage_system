@@ -143,7 +143,7 @@
 			item_get_html_input();
 			$test=$test.' modify button<br/>';
 			// 確認至少 name 不可以是空的
-			if( $item_name != "" ) {
+			if( $item_name != "" and $item_price >=0 ) {
 				$go=1 ;
 				//檢查 Database 有沒有重複建立的資料
 				$sql_cmd = "select * from client_info.item_db where name='".$item_name."' and invalid='0'" ;
@@ -208,7 +208,7 @@
 			else {
 				echo "
 				<script>
-					alert('錯誤！　修改 ".$item_name."　的資料發生錯誤！ 錯誤訊息：名稱不可是空值') ;
+					alert('錯誤！　修改 ".$item_name."　的資料發生錯誤！ 錯誤訊息：請留意是否為空值，價格不可為負數') ;
 				</script>
 				" ;
 				$button2 = '<button type="submit" name="modify_button" class="com_info">修改</button>';
@@ -226,7 +226,7 @@
 			$test=$test.' create button<br/>';
 			item_get_html_input();
 
-			if ($item_name != "" ) {
+			if ($item_name != "" and $item_price >=0 ) {
 
 				//檢查 Database 有沒有重複建立的資料
 				$sql_cmd = "select * from client_info.item_db where name='".$item_name."' and invalid='0'" ;
@@ -280,11 +280,10 @@
 
 			}
 			else {
-				$final_status .= "<br/>填寫完所有表格再建立<br/>" ;
 				$button2 = "<button type='submit' name='create_button' id='create_button'>建立</button>" ;
 				echo "
 				<script>
-					alert('錯誤！　填寫完所有表格再建立！') ;
+					alert('錯誤！　請留意是否為空值，價格不可為負數！') ;
 				</script>
 				" ;
 			}

@@ -401,7 +401,7 @@
 						<div id='location_country_sid'>
 							<label id='location_country_sid' for='location_country_sid'>國家 國際代碼</label>
 							<input type=text id='location_country_sid' name='location_country_sid' value='$location_country_sid' maxlength='2'>
-							<span>國際代碼可點選 <a href='http://www.unece.org/cefact/locode/service/location' target='_blank'>連結</a> 查詢</span>
+							<span>國際代碼可點選 <a href='http://www.unece.org/cefact/locode/service/location' target='_blank'>連結</a> 來查詢 (請勿輸入大寫英文以及阿拉伯數字之外的文字)</span>
 						</div>
 					</li>
 					<li id='list2'>
@@ -413,7 +413,7 @@
 						<div id='location_city_sid'>
 							<label id='location_city_sid' for='location_city_sid'>城市 國際代碼</label>
 							<input type=text id='location_city_sid' name=location_city_sid value='$location_city_sid' maxlength='3'>
-							<span>國際代碼可點選 <a href='http://www.unece.org/cefact/locode/service/location' target='_blank'>連結</a> 查詢</span>
+							<span>國際代碼可點選 <a href='http://www.unece.org/cefact/locode/service/location' target='_blank'>連結</a> 來查詢 (請勿輸入大寫英文以及阿拉伯數字之外的文字)</span>
 						</div>
 					</li>
 					<li id='list3'>
