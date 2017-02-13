@@ -134,7 +134,7 @@ function modify_quo( $NewOrEdit , $info ){
 				echo "</td>";
 								
 				echo "<td class='td_List_top_header td_List_item_AorE'>";	
-				echo "<input type=number name='amount[]' value=".$row['amount']." required=1 class='input_number_item_aoe'>";
+				echo "<input type=number name='amount[]' value=".$row['amount']." required=1 min=1 class='input_number_item_aoe'>";
 				echo "</td>";
 				
 				echo "<td  class='td_List_top_header td_List_item_AorE'>";
@@ -420,11 +420,11 @@ function calculate_result(){
 	}
 	
 	if($alert_price_0orless==1){
-		echo_alert('警告：有些物品的報價被設定成零元以下，請再次確認該物品的價格是否無誤。');
+		echo_alert('提醒：\n有些物品的報價被設定成零元以下，\n請再次確認該物品的價格是否無誤。');
 		//echo "警告：有些物品的報價被設定成零元以下，請再次確認該物品的價格是否無誤。<br>";
 	}
 	if($alert_amount_0orless==1){
-		echo_alert('警告：有個新增或修改的項目，物品數量被設定成零個以下，該項目將不會被新增或被做任何修改。');
+		echo_alert('提醒：\n有個新增或修改的項目，\n物品數量被設定成零個以下，\n該項目將不會被新增或被做任何修改。');
 		//echo "警告：有個新增或修改的項目，物品數量被設定成零個以下，該項目將不會被新增或被做任何修改。<br>";
 	}
 	//if mode = add create quo_simple
@@ -486,11 +486,11 @@ function calculate_result(){
 				echo "<br>";
 			*/
 		}
-		echo_alert('新增/修改 報價單完成。');
+		echo_alert('《提醒》：\n所有合法的新增/修改動作皆已執行完畢，\n新增/修改 報價單完成。');
 		//echo "警告：新增/修改 報價單完成。<br>";
 	}
 	else{
-		echo_alert('警告：沒有任何合格的 新增/修改 物品動作，故本次的 新增/修改 程序失敗，將不做任何紀錄。');
+		echo_alert('《警告》：\n沒有任何合格的 新增/修改 物品動作，\n故本次的 新增/修改 程序失敗，\n將不做任何紀錄。');
 		//echo "警告：沒有任何合格的 新增/修改 物品動作，故本次的 新增/修改 程序失敗，將不做任何紀錄。<br>";
 	}
 	//echo "<br> --- Debug 區 End (only in test) ---<br>";
