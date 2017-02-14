@@ -442,14 +442,14 @@
 						</div>
 						<div id='name'>
 							<label for='name'>客戶名稱</label>
-							<input type=text id='name' name=name value='$client_name' maxlength='50' $name_readonly>
+							<input type=text id='name' name=name value='$client_name' maxlength='100' $name_readonly>
 							<span>請輸入完整名稱</span>
 						</div>
 					</li>
 					<li id='list2'>
 						<div id='nickname'>
 							<label for='nickname'>簡稱</label>
-							<input type=text id='nickname' name=nickname value='$client_nickname' $readonly>
+							<input type=text id='nickname' name=nickname value='$client_nickname' maxlength='8' $readonly>
 							<span></span>
 						</div>
 						<div id='ubn'>
@@ -459,12 +459,12 @@
 						</div>
 						<div id='company_phone'>
 							<label for='company_phone'>公司電話</label>
-							<input type=text id='company_phone' name=company_phone value='$client_company_phone' $readonly>
+							<input type=text id='company_phone' name=company_phone value='$client_company_phone' maxlength='30' $readonly>
 							<span>格式範例： 02-7736-0456 </span>
 						</div>
 						<div id='company_fax'>
 							<label for='company_fax'>傳真</label>
-							<input type=text id='company_fax' name=company_fax value='$client_company_fax' $readonly>
+							<input type=text id='company_fax' name=company_fax value='$client_company_fax' maxlength='30' $readonly>
 							<span>格式建議同公司電話 </span>
 						</div>
 					</li>
@@ -476,25 +476,25 @@
 						</div>
 						<div id='address'>
 							<label for='address'>完整地址</label>
-							<input type=text id='address' name=address value='$client_address' $readonly>
+							<input type=text id='address' name=address value='$client_address' maxlength='500' $readonly>
 							<span>輸入完整地址 Ex： 台北市南港區三重路777號</span>
 						</div>
 					</li>
 					<li id='list4'>
 						<div id='contact'>
 							<label for='contact'>聯絡人</label>
-							<input type=text id='contact' name=contact value='$client_contact' $readonly>
+							<input type=text id='contact' name=contact value='$client_contact' maxlength='50' $readonly>
 							<span> 主要聯繫的聯絡人 </span>
 						</div>
 						<div id='contact_phone'>
 							<label for='contact_phone'>聯絡人電話</label>
-							<input type=text id='contact_phone' name=contact_phone value='$client_contact_phone' $readonly>
+							<input type=text id='contact_phone' name=contact_phone value='$client_contact_phone' maxlength='30' $readonly>
 							<span> 聯絡人的聯絡方式： 分機 或 手機</span>
 						</div>
 						<div id='email'>
 							<label for='email'>Email</label>
-							<input type=text id='email' name=email value='$client_email' $readonly  class='default'>
-							<span>聯絡人 或是 公司電子信箱</span>
+							<input type=text id='email' name=email value='$client_email' $readonly maxlength='500'  class='default'>
+							<span>聯絡人的電子信箱 或是 公司的電子信箱</span>
 						</div>
 					</li>
 					<li id='list5'>
