@@ -36,7 +36,7 @@
 						<div class="feature">
 							<i class="fa fa-paper-plane-o"></i>
 							<h3>陳威誌</h3>
-							<p>介面美化設計</p>
+							<p>介面美化設計<br>暨場地提供</p>
 						</div>
 						<div class="feature">
 							<i class="fa fa-save"></i>
