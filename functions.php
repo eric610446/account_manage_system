@@ -1634,6 +1634,9 @@ function order_change( $qu_id ) {
 	else if($qs_info['is_order']==0){
 		$sql_cmd = "UPDATE client_info.quotation_simple_db SET is_order=1 WHERE quo_id = ".$qu_id;
 		mysql_query( $sql_cmd, $conn ) ;
+		echo "	<script>
+				window.open('outputpdf.php?action_choose=3&qu_id=".$qu_id."&output_pdf_rightnow=1&paper_break=10&sales_tax_number=5.0'); 
+			</script>";
 		echo "<script>";
 		echo "    alert('《提醒》：已經成功轉換成[已成交訂單]！');";
 		echo "</script>";
@@ -1645,6 +1648,7 @@ function order_change( $qu_id ) {
 		echo "    alert('《提醒》：已經成功恢復成[一般報價單]！');";
 		echo "</script>";
 	}
+	echo_detail_quotation( $qu_id );
 }
 
 /* 
