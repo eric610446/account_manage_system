@@ -59,7 +59,7 @@
 			
 			<!--
 			<div style="height: 40%; width: 34%; text-align: center ; float:left;"> 			
-				<button type=submit class = 'btn_submit' name=company_setting >鐵工廠<br>資料設定</button>
+				<button type=submit class = 'btn_submit' onclick="openwin()" name=company_setting >鐵工廠<br>資料設定</button>
 			</div>-->
 				
 			<div style="height: 40%; width: 33%; text-align: center ; float:left;"> 
@@ -92,7 +92,9 @@
 				if(isset($_POST['save_pdf'])) {	//save_pdf > $view_or_save =2
 					create_quo_pdf($action_choose,$qu_id,2) ;
 				}
-				
+				if(isset($_REQUEST['output_pdf_rightnow'])) {
+					create_quo_pdf($_REQUEST['action_choose'],$_REQUEST['qu_id'],2) ;
+				}
 			?>
 			
 		</div>
