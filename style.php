@@ -540,12 +540,12 @@ Button:active {
 .th_List_quo_item:nth-child(7){ 	width : 10%; }
 /*單獨客戶簡單報價單列表各欄位寬度*/
 .th_List_mth_smpl_quo:nth-child(1){ 	width : 4%; }
-.th_List_mth_smpl_quo:nth-child(2){ 	width : 17%; }
+.th_List_mth_smpl_quo:nth-child(2){ 	width : 11%; }
 .th_List_mth_smpl_quo:nth-child(3){ 	width : 12%; }
-.th_List_mth_smpl_quo:nth-child(4){ 	width : 10%; }
-.th_List_mth_smpl_quo:nth-child(5){ 	width : 25%; }
-.th_List_mth_smpl_quo:nth-child(6){ 	width : 20%; }
-.th_List_mth_smpl_quo:nth-child(7){ 	width : 12%; }
+.th_List_mth_smpl_quo:nth-child(4){ 	width : 9%; }
+.th_List_mth_smpl_quo:nth-child(5){ 	width : 27%; }
+.th_List_mth_smpl_quo:nth-child(6){ 	width : 27%; }
+.th_List_mth_smpl_quo:nth-child(7){ 	width : 10%; }
 
 /*創建修改報價單列表*/
 .td_List_item_AorE {
@@ -604,6 +604,9 @@ Button:active {
 	padding-top:0%;
 	padding-bottom:0%;
 	border: 0 ;	
+}
+.td_List_mth_smpl_quo:nth-child(6) {
+	font-size:50%;
 }
 .td_List_quo_item {
 	font-size: 60%;
