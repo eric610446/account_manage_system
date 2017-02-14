@@ -416,7 +416,7 @@
 						</div>
 						<div id='name'>
 							<label for='name'>物品名稱</label>
-							<input type=text id='name' name='item_name' value='$item_name' $name_readonly>
+							<input type=text id='name' name='item_name' value='$item_name' maxlength='50' $name_readonly>
 							<span>請輸入完整名稱</span>
 						</div>
 					</li>

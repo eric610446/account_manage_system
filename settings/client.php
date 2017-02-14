@@ -442,7 +442,7 @@
 						</div>
 						<div id='name'>
 							<label for='name'>客戶名稱</label>
-							<input type=text id='name' name=name value='$client_name' $name_readonly>
+							<input type=text id='name' name=name value='$client_name' maxlength='50' $name_readonly>
 							<span>請輸入完整名稱</span>
 						</div>
 					</li>

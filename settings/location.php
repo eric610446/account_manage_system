@@ -380,7 +380,7 @@
 					<li id='list1'>
 						<div id='location_country'>
 							<label for='location_country'>國家</label>
-							<input type=text id='location_country' name='location_country' value='$location_country' $readonly>
+							<input type=text id='location_country' name='location_country' value='$location_country' maxlength='50' $readonly>
 							<span>輸入地點國家名稱 ex: 臺灣</span>
 						</div>
 						<div id='location_country_sid'>
@@ -392,7 +392,7 @@
 					<li id='list2'>
 						<div id='location_city'>
 							<label for='location_city'>城市名稱</label>
-							<input type=text id='location_city' name=location_city value='$location_city' $readonly>
+							<input type=text id='location_city' name=location_city value='$location_city' maxlength='50' $readonly>
 							<span>輸入城市名稱 ex: 臺北</span>
 						</div>
 						<div id='location_city_sid'>
