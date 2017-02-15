@@ -1713,6 +1713,12 @@ function make_qorp_s_id( $Target_Type , $Year , $Month ){
 	
 }
 
+//取得賣方資料的單一資訊
+function get_company_info($info){	
+	$sql_cmd = "SELECT ".$info." FROM client_info.company_db WHERE company_id=0" ;	
+	return single_return_sql_cmd($sql_cmd);	
+}
+
 /*2.0 創建PDF*/
 function create_quo_pdf( $action_choose , $qu_id ,$view_or_save) {
 		
