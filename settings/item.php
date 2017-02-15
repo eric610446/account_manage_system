@@ -416,7 +416,7 @@
 						</div>
 						<div id='name'>
 							<label for='name'>物品名稱</label>
-							<input type=text id='name' name='item_name' value='$item_name' $name_readonly>
+							<input type=text id='name' name='item_name' value='$item_name' maxlength='100' $name_readonly>
 							<span>請輸入完整名稱</span>
 						</div>
 					</li>
@@ -435,7 +435,7 @@
 					<li id='list3'>
 						<div id='price'>
 							<label for='price'>建議售價</label>
-							<input type='number' id='price' name='item_price' value='$item_price' $readonly>
+							<input type='number' id='price' name='item_price' max=2000000000 value='$item_price' $readonly>
 							<span>請輸入台幣售價</span>
 						</div>
 						<div id='currency'>

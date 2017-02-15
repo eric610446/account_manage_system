@@ -142,11 +142,16 @@ function location_select_option($conn, $selected='') {
 		}
 		$html_code = $html_code."</select>" ;
 	} else {
+		/*
+
 		echo "
 		<script>
 			alert('讀取地點下拉選單錯誤') ;
 		</script>
 		" ;
+
+		*/
+		$html_code .= "<option value='none'>請先建立地點資料</option></select>" ;
 	}
 	return $html_code ;
 }
@@ -169,11 +174,11 @@ function supplier_select_option($conn, $selected='') {
 		/*
 		echo "
 		<script>
-			alert('讀取供應商下拉選單錯誤') ;
+			alert('讀取地點下拉選單錯誤') ;
 		</script>
 		" ;
 		*/
-		$html_code .= "<option>目前沒有已建立的供應商</option></select>" ;
+		$html_code .= "<option value='none'>請先建立供應商資料</option></select>" ;
 	}
 
 	return $html_code ;

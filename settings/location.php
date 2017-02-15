@@ -121,7 +121,7 @@
 			$test=$test.' modify button<br/>';
 
 			// 確認至少 sid 不可以是空的 //必須更正為全部都不可以是空的
-			if( $location_city_sid != "" and $location_country_sid != "" ) {
+			if( $location_city_sid != "" and $location_country_sid != "" and $location_city != "" and $location_country ) {
 				$go=1 ;
 				//檢查 Database 有沒有重複建立的 location
 				$sql_cmd = "select * from client_info.location_db where city_sid='".$location_city_sid."' and country_sid='".$location_country_sid."' and invalid = '0'" ;
@@ -141,9 +141,9 @@
 				if($go) {
 					$sql_cmd = "update client_info.location_db set
 						country='".$location_country."',
-						country_sid='".$location_country_sid."',
+						country_sid='".strtoupper($location_country_sid)."',
 						city='".$location_city."',
-						city_sid='".$location_city_sid."'
+						city_sid='".strtoupper($location_city_sid)."'
 					where location_id='".$location_id."'
 					";
 					$result = $conn->query($sql_cmd) ;
@@ -173,7 +173,7 @@
 			else {
 					echo "
 					<script>
-						alert('錯誤！　修改資料發生錯誤！ 錯誤訊息：國際代碼不可以是空值') ;
+						alert('錯誤！　修改資料發生錯誤！ 錯誤訊息：必須填寫完所有資料！') ;
 					</script>
 					" ;
 					$button2 = '<button type="submit" name="modify_button" >修改</button>';
@@ -380,24 +380,24 @@
 					<li id='list1'>
 						<div id='location_country'>
 							<label for='location_country'>國家</label>
-							<input type=text id='location_country' name='location_country' value='$location_country' $readonly>
+							<input type=text id='location_country' name='location_country' value='$location_country' maxlength='20' $readonly>
 							<span>輸入地點國家名稱 ex: 臺灣</span>
 						</div>
 						<div id='location_country_sid'>
-							<label id='location_country_sid' for='location_country_sid'>國家 國際代碼</label>
-							<input type=text id='location_country_sid' name='location_country_sid' value='$location_country_sid' maxlength='2'>
+							<label id='location_country_sid' for='location_country_sid'>國家 國際代碼 (2碼)</label>
+							<input type=text id='location_country_sid' name='location_country_sid' value='$location_country_sid'  pattern='[A-Za-z0-9]{2}' maxlength='2'>
 							<span>國際代碼可點選 <a href='http://www.unece.org/cefact/locode/service/location' target='_blank'>連結</a> 來查詢 (請勿輸入大寫英文以及阿拉伯數字之外的文字)</span>
 						</div>
 					</li>
 					<li id='list2'>
 						<div id='location_city'>
 							<label for='location_city'>城市名稱</label>
-							<input type=text id='location_city' name=location_city value='$location_city' $readonly>
+							<input type=text id='location_city' name=location_city value='$location_city' maxlength='20' $readonly>
 							<span>輸入城市名稱 ex: 臺北</span>
 						</div>
 						<div id='location_city_sid'>
-							<label id='location_city_sid' for='location_city_sid'>城市 國際代碼</label>
-							<input type=text id='location_city_sid' name=location_city_sid value='$location_city_sid' maxlength='3'>
+							<label id='location_city_sid' for='location_city_sid'>城市 國際代碼 (3碼)</label>
+							<input type=text id='location_city_sid' name=location_city_sid value='$location_city_sid' pattern='[A-Za-z0-9]{3}' maxlength='3'>
 							<span>國際代碼可點選 <a href='http://www.unece.org/cefact/locode/service/location' target='_blank'>連結</a> 來查詢 (請勿輸入大寫英文以及阿拉伯數字之外的文字)</span>
 						</div>
 					</li>
