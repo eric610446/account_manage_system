@@ -11,8 +11,8 @@
 	<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<section>
 		<div style="text-align: center ;">
-		<input type="hidden" name="action_choose" value="<?php echo $_GET["action_choose"];?>">
-		<input type="hidden" name="qu_id" value="<?php echo $_GET["qu_id"];?>">
+		<input type="hidden" name="action_choose" value="<?php echo $_REQUEST["action_choose"];?>">
+		<input type="hidden" name="qu_id" value="<?php echo $_REQUEST["qu_id"];?>">
 		
 		<table class="table_cpdf">
 			<tr class="thr_cpdf">
@@ -66,12 +66,18 @@
 							賣方公司<br>資料設定
 				</button>
 			</div>
+			<?php 
+			if($_REQUEST["action_choose"] == 3)
+				$content_qorp = "訂單";
+			else
+				$content_qorp = "報價單";
+			?>
 				
 			<div style="height: 20%; width: 33%; text-align: center ; float:left;"> 
-				<button type=submit class = 'btn_submit' name=view_pdf >預覽<br> 報價單PDF</button>
+				<button type=submit class = 'btn_submit' name=view_pdf >預覽<br> <?php echo $content_qorp;?>PDF</button>
 			</div>
 			<div style="height: 20%; width: 33%; text-align: center ; float:left;">
-				<button type=submit class = 'btn_submit' name=save_pdf >下載<br> 報價單PDF</button>
+				<button type=submit class = 'btn_submit' name=save_pdf >下載<br> <?php echo $content_qorp;?>PDF</button>
 			</div>
 			
 			<?php
