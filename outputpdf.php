@@ -57,15 +57,20 @@
 				
 			</div>
 			
-			<!--
-			<div style="height: 40%; width: 34%; text-align: center ; float:left;"> 			
-				<button type=submit class = 'btn_submit' onclick="openwin()" name=company_setting >鐵工廠<br>資料設定</button>
-			</div>-->
+			
+			<div style="height: 20%; width: 34%; text-align: center ; float:left;"> 			
+				<button type=button 
+						class = 'btn_submit' 
+						onclick="location.href='company_setting.php?<?php echo "action_choose=".$_REQUEST['action_choose']."&qu_id=".$_REQUEST['qu_id']; ?>'"
+						name=company_setting >
+							賣方公司<br>資料設定
+				</button>
+			</div>
 				
-			<div style="height: 40%; width: 33%; text-align: center ; float:left;"> 
+			<div style="height: 20%; width: 33%; text-align: center ; float:left;"> 
 				<button type=submit class = 'btn_submit' name=view_pdf >預覽<br> 報價單PDF</button>
 			</div>
-			<div style="height: 40%; width: 33%; text-align: center ; float:left;">
+			<div style="height: 20%; width: 33%; text-align: center ; float:left;">
 				<button type=submit class = 'btn_submit' name=save_pdf >下載<br> 報價單PDF</button>
 			</div>
 			
@@ -133,15 +138,15 @@
 }
 .td_cpdf10{
 	padding-right:0.5%;
-	font-size:46%;
+	font-size:40%;
 	width:40%;
-	color:#aaa;
+	color:#999;
 	text-align:right ;
 }
 .td_cpdf11{
 	font-size:100%;
 	width:9%;
-	border:1px solid #000;
+	border:1px solid #bbc;
 }
 .td_cpdf12{
 	font-size:100%;
@@ -158,7 +163,7 @@
 	font-size:100%;
 	width:100%;
 	height:100%; 
-	border:1px solid #000;
+	border:1px solid #bbc;
 	
 }
 .input_cpdf_number{
