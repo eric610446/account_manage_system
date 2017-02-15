@@ -143,11 +143,13 @@ function location_select_option($conn, $selected='') {
 		$html_code = $html_code."</select>" ;
 	} else {
 		/*
+
 		echo "
 		<script>
 			alert('讀取地點下拉選單錯誤') ;
 		</script>
 		" ;
+
 		*/
 		$html_code .= "<option value='none'>請先建立地點資料</option></select>" ;
 	}

@@ -134,16 +134,16 @@ function modify_quo( $NewOrEdit , $info ){
 				echo "</td>";
 								
 				echo "<td class='td_List_top_header td_List_item_AorE'>";	
-				echo "<input type=number name='amount[]' value=".$row['amount']." required=1 min=1 class='input_number_item_aoe'>";
+				echo "<input type=number name='amount[]' value=".$row['amount']." required=1 max=100000000 min=1 class='input_number_item_aoe'>";
 				echo "</td>";
 				
 				echo "<td  class='td_List_top_header td_List_item_AorE'>";
 				
 				if ($NotTWD != 1){
-					echo "<input type=number name='price[]' value=".$row['price']." required=1 step = 1 class='input_number_item_aoe'>";
+					echo "<input type=number name='price[]' value=".$row['price']." required=1 max=1000000000 step = 1 class='input_number_item_aoe'>";
 				}
 				else{
-					echo "<input type=number name='price[]' value=".$row['price']." required=1 step = 0.01 class='input_number_item_aoe'>";
+					echo "<input type=number name='price[]' value=".$row['price']." required=1 max=1000000000 step = 0.01 class='input_number_item_aoe'>";
 				}
 				echo "</td>";
 				
@@ -204,16 +204,16 @@ function modify_quo( $NewOrEdit , $info ){
 				
 
 				echo "<td  class='td_List_top_header td_List_item_AorE'>";	
-				echo "<input type=number name='amount[]' value=0 required=1 class='input_number_item_aoe'>";
+				echo "<input type=number name='amount[]' value=0 required=1 max=100000000 class='input_number_item_aoe'>";
 				echo "</td>";
 				
 				echo "<td  class='td_List_top_header td_List_item_AorE'>";
 
 				if ($NotTWD != 1){
-					echo "<input type=number name='price[]' value=0 required=1 step = 1 class='input_number_item_aoe'>";
+					echo "<input type=number name='price[]' value=0 required=1 max=1000000000 step = 1 class='input_number_item_aoe'>";
 				}
 				else{
-					echo "<input type=number name='price[]' value=0 required=1 step = 0.01 class='input_number_item_aoe'>";
+					echo "<input type=number name='price[]' value=0 required=1 max=1000000000 step = 0.01 class='input_number_item_aoe'>";
 				}
 				echo "</td>";
 				
@@ -259,21 +259,31 @@ function modify_quo( $NewOrEdit , $info ){
 		$is_this_order=get_quo_simple_info($target_quo,'is_order');
 		
 		if($is_this_order==1){
-			echo "<script>";
-			echo "    alert('若按下[修改報價單]，即使沒有做任何變動，本訂單也會自動從 [已完成訂單] 恢復為 [一般報價單] ！');";
-			echo "</script>";
+			echo_alert('《提醒》：\n若按下[修改報價單]，即使沒有做任何變動，\n本訂單也會自動從 [已完成訂單] 恢復為 [一般報價單] ！');
 		}
 	}
 	
 	echo "<div>";	
 			if($NewOrEdit==1){
 				echo "<div class='quo_option set_float_left'>";
-					echo "<button type=submit class = 'btn_submit' name='submit_new_quo' value='submit'>創建報價單</button>";
+					echo "	<button 
+								type=submit 
+								class = 'btn_submit' 
+								name='submit_new_quo' 
+								value='submit'>
+									創建報價單
+							</button>";
 				echo "</div>";
 			}
 			else{
 				echo "<div class='quo_option set_float_left'>";
-					echo "<button type=submit class = 'btn_submit' name='submit_new_quo' value='submit'>修改報價單</button>";
+					echo "	<button 
+								type=submit 
+								class = 'btn_submit' 
+								name='submit_new_quo' 
+								value='submit'>
+									修改報價單
+							</button>";
 				echo "</div>";
 			}
 	echo "</div>";
@@ -420,11 +430,11 @@ function calculate_result(){
 	}
 	
 	if($alert_price_0orless==1){
-		echo_alert('提醒：\n有些物品的報價被設定成零元以下，\n請再次確認該物品的價格是否無誤。');
+		echo_alert('《提醒》：\n有些物品的報價被設定成零元以下，\n請再次確認該物品的價格是否無誤，\n(但此項目的操作動作仍被視為合格動作，會被執行)。');
 		//echo "警告：有些物品的報價被設定成零元以下，請再次確認該物品的價格是否無誤。<br>";
 	}
 	if($alert_amount_0orless==1){
-		echo_alert('提醒：\n有個新增或修改的項目，\n物品數量被設定成零個以下，\n該項目將不會被新增或被做任何修改。');
+		echo_alert('《提醒》：\n有個項目的操作動作，\n把物品數量被設定成零個以下，\n該項目的操作動作被認定為不合格，\n將不會被執行。');
 		//echo "警告：有個新增或修改的項目，物品數量被設定成零個以下，該項目將不會被新增或被做任何修改。<br>";
 	}
 	//if mode = add create quo_simple
@@ -486,16 +496,25 @@ function calculate_result(){
 				echo "<br>";
 			*/
 		}
-		echo_alert('《提醒》：\n所有合法的新增/修改動作皆已執行完畢，\n新增/修改 報價單完成。');
+		if ($nore==1)
+			echo_alert('《提醒》：\n所有合格的操作動作皆已執行完畢，\n新增報價單完成。');
+		else if ($nore==2)
+			echo_alert('《提醒》：\n所有合格的操作動作皆已執行完畢，\n修改報價單完成。');
 		//echo "警告：新增/修改 報價單完成。<br>";
 	}
 	else{
-		echo_alert('《警告》：\n沒有任何合格的 新增/修改 物品動作，\n故本次的 新增/修改 程序失敗，\n將不做任何紀錄。');
+		if ($nore==1)	
+			echo_alert('《警告》：\n沒有任何合格的操作動作，\n故本次的新增程序失敗，\n將不做任何紀錄。');
+		else if ($nore==2)	
+			echo_alert('《警告》：\n沒有任何合格的操作動作，\n故本次的修改程序失敗，\n將不做任何紀錄。');
 		//echo "警告：沒有任何合格的 新增/修改 物品動作，故本次的 新增/修改 程序失敗，將不做任何紀錄。<br>";
 	}
 	//echo "<br> --- Debug 區 End (only in test) ---<br>";
 	//echo "<hr>";
 	//echo "</div>";
+	echo "	<script>
+				window.open('outputpdf.php?action_choose=".$_REQUEST['Which_Main_choose']."&qu_id=".$quo_id."&output_pdf_rightnow=1&paper_break=10&sales_tax_number=5.0'); 
+			</script>";
 	echo_detail_quotation( $quo_id );
 }
 
@@ -1609,23 +1628,27 @@ function order_change( $qu_id ) {
 		$sql_cmd = "UPDATE client_info.quotation_simple_db SET po_s_id='".$po_s_id."',is_order=1,date_po_no=".$date_po_no." WHERE quo_id = ".$qu_id;
 		mysql_query( $sql_cmd, $conn ) ;
 		echo "<script>";
-		echo "    alert('已經成功轉換成[已成交訂單]!');";
+		echo "    alert('《提醒》：已經成功轉換成[已成交訂單]！');";
 		echo "</script>";
 	}
 	else if($qs_info['is_order']==0){
 		$sql_cmd = "UPDATE client_info.quotation_simple_db SET is_order=1 WHERE quo_id = ".$qu_id;
 		mysql_query( $sql_cmd, $conn ) ;
+		echo "	<script>
+				window.open('outputpdf.php?action_choose=3&qu_id=".$qu_id."&output_pdf_rightnow=1&paper_break=10&sales_tax_number=5.0'); 
+			</script>";
 		echo "<script>";
-		echo "    alert('已經成功轉換成[已成交訂單]!');";
+		echo "    alert('《提醒》：已經成功轉換成[已成交訂單]！');";
 		echo "</script>";
 	}
 	else{
 		$sql_cmd = "UPDATE client_info.quotation_simple_db SET is_order=0 WHERE quo_id = ".$qu_id;
 		mysql_query( $sql_cmd, $conn ) ;
 		echo "<script>";
-		echo "    alert('已經成功恢復成[一般報價單]!');";
+		echo "    alert('《提醒》：已經成功恢復成[一般報價單]！');";
 		echo "</script>";
 	}
+	echo_detail_quotation( $qu_id );
 }
 
 /* 
@@ -1688,6 +1711,12 @@ function make_qorp_s_id( $Target_Type , $Year , $Month ){
 	echo "max:".$max." max0:".$max[0]." output_no :".$output_no."<br>";
 	
 	
+}
+
+//取得賣方資料的單一資訊
+function get_company_info($info){	
+	$sql_cmd = "SELECT ".$info." FROM client_info.company_db WHERE company_id=0" ;	
+	return single_return_sql_cmd($sql_cmd);	
 }
 
 /*2.0 創建PDF*/
@@ -1883,7 +1912,7 @@ function create_quo_pdf( $action_choose , $qu_id ,$view_or_save) {
 	else{
 	$pdf->setCustomerHeader('<div align="left" ><table ><tr ><td width="65%">客戶編號：'.$cust_result['s_id'].'</td><td width="3%"></td><td width="32%">訂單單號：'.$quo_s_id.'</td></tr><tr><td>客戶名稱：'.$cust_result['name'].'</td><td></td></tr><tr><td>統一編號：'.$cust_result['ubn'].'</td><td></td><td>創建日期：'.date_format($quo_date,"Y/m/d").'</td></tr><tr><td>聯絡人：'.$cust_result['contact'].'</td></tr><tr><td>電話(聯絡人)：'.$cust_result['contact_phone'].'　　</td></tr><tr><td>電話(公　司)：'.$cust_result['company_phone'].'　　</td></tr><tr><td>傳真：'.$cust_result['company_fax'].'</td></tr><tr><td>地址：'.$cust_result['address'].'</td></tr></table></div>');}
 	//物品清單開始
-	$pdf->setItemHeader('<table align="center" border="1" RULES="ROWS"><tr><td width="6%">項次</td><td width="7%">品號</td><td width="37%">品名●規格●描述</td><td width="10%">數量</td><td width="20%">單價</td><td width="20%">金額</td></tr></table>');
+	$pdf->setItemHeader('<table align="center" border="1" RULES="ROWS"><tr><td width="6%">項次</td><td width="6%">品號</td><td width="34%">品名●規格●描述</td><td width="11%">數量</td><td width="17%">單價</td><td width="26%">金額</td></tr></table>');
 	$pdf->SetPrintHeader(true);
 	
 	
@@ -1896,7 +1925,7 @@ function create_quo_pdf( $action_choose , $qu_id ,$view_or_save) {
 	// 第一次加入 ttf 字型到 tcpdf 的指令放在outputpdf.php裡面，使用DroidSansFallback字型
 	$pdf->SetFont('DroidSansFallback', '', 10, true);
 	
-	$break_page_amount = $_POST['paper_break'];
+	$break_page_amount = $_REQUEST['paper_break'];
 	$total_amount=1;
 	for($display_item=1;$display_item<$item_amount;$display_item++)
 	{
@@ -1905,7 +1934,7 @@ function create_quo_pdf( $action_choose , $qu_id ,$view_or_save) {
 			$pdf->writeHTML($output, true, false, false, false, '');
 			$pdf->AddPage();
 		}
-		$output= '<table border="0" RULES="ALL"><tr><td align="left" width="6%">'.$display_item.'</td><td align="left" width="7%">'.$qud_item[$display_item][0].'</td><td align="left" width="37%">'.$qud_item[$display_item][1].'</td><td align="right" width="10%">'.number_format($qud_item[$display_item][2]).'</td><td align="right" width="20%">$'.number_format($qud_item[$display_item][3],2).'</td><td align="right" width="20%">$'.number_format($qud_item[$display_item][4],2) .'</td></tr></table>';
+		$output= '<table border="0" RULES="ALL"><tr><td align="left" width="6%">'.$display_item.'</td><td align="left" width="6%">'.$qud_item[$display_item][0].'</td><td align="left" width="34%">'.$qud_item[$display_item][1].'</td><td align="right" width="11%">'.number_format($qud_item[$display_item][2]).'</td><td align="right" width="17%">$'.number_format($qud_item[$display_item][3],2).'</td><td align="right" width="26%">$'.number_format($qud_item[$display_item][4],2) .'</td></tr></table>';
 		
 		$pdf->writeHTML($output, true, false, false, false, '');
 		$total_amount++;
@@ -1919,9 +1948,9 @@ function create_quo_pdf( $action_choose , $qu_id ,$view_or_save) {
 		$output= '<table border="0" RULES="ALL"><tr><td>《項目列表結束》</td></tr></table>';
 		$pdf->writeHTML($output, true, false, false, false, '');
 	}
-		if(isset($_POST['sales_tax_number'])){
-			$stn=($_POST['sales_tax_number']/100);
-			$sum_stn=1+($_POST['sales_tax_number']/100);
+		if(isset($_REQUEST['sales_tax_number'])){
+			$stn=($_REQUEST['sales_tax_number']/100);
+			$sum_stn=1+($_REQUEST['sales_tax_number']/100);
 		}
 		else{
 			$stn=(5/100);
@@ -1937,8 +1966,8 @@ function create_quo_pdf( $action_choose , $qu_id ,$view_or_save) {
 	
 	// -----------------------------------------------------------------------------
 
-	$datename=date("Y_m_d-H_i_s");
-	$downloadname=$quo_s_id."-".$datename.".pdf";
+	$datename=date("Y-m-d_H-i-s");
+	$downloadname=$quo_s_id."_".$datename.".pdf";
 	// 輸出內容
 	ob_end_clean();	//解決 error: Some data has already been output, can't send PDF file
 	if($view_or_save==1)

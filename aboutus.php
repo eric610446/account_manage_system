@@ -26,22 +26,22 @@
 						<div class="feature">
 							<i class="fa fa-diamond"></i>
 							<h3>蔡秉霖</h3>
-							<p>系統主體架構設計、設定功能設計<br>暨主技術支援</p>
+							<p>系統主體架構、設定頁面功能 設計<br>暨主技術支援</p>
 						</div>
 						<div class="feature">
 							<i class="fa fa-copy"></i>
 							<h3>李家睿</h3>
-							<p>資料庫設計、查詢報價單功能設計<br>暨專案整合</p>
+							<p>系統資料庫、主頁面查詢功能 設計<br>暨專案整合</p>
 						</div>
 						<div class="feature">
 							<i class="fa fa-paper-plane-o"></i>
 							<h3>陳威誌</h3>
-							<p>介面美化設計<br>暨系統測試</p>
+							<p>介面美化 設計<br>暨場地提供</p>
 						</div>
 						<div class="feature">
 							<i class="fa fa-save"></i>
 							<h3>田偉安</h3>
-							<p>創建報價單功能設計<br>暨系統測試</p>
+							<p>主頁面創建功能 設計<br>暨系統測試</p>
 						</div>						
 						<div class="feature">
 							<i class="fa fa-envelope-o"></i>

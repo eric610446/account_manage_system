@@ -24,7 +24,7 @@
 				<td class="td_cpdf10">如果金額已經內含營業稅，則不會被此數值影響			
 				</td>
 				<td class="td_cpdf11" >
-					<input type="number" name="sales_tax_number" class="input_cpdf_number" value=5.0 step=0.1 required="required">
+					<input type="number" name="sales_tax_number" class="input_cpdf_number" value=5.0 step=0.1 min=0 max=1000 required="required">
 				</td>
 				<td class="td_cpdf12">
 					%
@@ -39,28 +39,39 @@
 			</tr>
 			<tr class="tdr_cpdf2">
 				<td class="td_cpdf2" COLSPAN=4>
-					<textarea name="other_memo" placeholder="備註請撰寫在此空白處〈建議文字、特殊符號、標點符號合計不要超過九十三字，超過可能會造成排版混亂〉" class="ta_cpdf"></textarea>
+					<textarea name="other_memo" placeholder="備註請撰寫在此空白處〈文字、特殊符號、標點符號合計限制九十個，超過易造成排版錯誤〉"  maxlength='200' class="ta_cpdf"></textarea>
 				</td>
 			</tr>
 			<tr class="tdr_cpdf1">
-				<td class="td_cpdf10">輸入過大值易造成排版混亂，只建議在下列↓狀況時，調整縮小數值<br>因為物品名稱過長，而導致的換頁排版混亂
+				<td class="td_cpdf10">輸入過大值易造成排版混亂<br>只建議在《因為物品名稱過長，而導致的換頁排版混亂》時，調整縮小數值
 				</td>
 				<td class="td_cpdf11" >
-					<input type="number" name="paper_break" class="input_cpdf_number" value=10 step=1 required="required">
+					<input type="number" name="paper_break" class="input_cpdf_number" value=10 step=1 max=20 min=1 required="required">
 				</td>
 				<td class="td_cpdf12"  COLSPAN=2>
 				筆資料自動換頁
 				</td>
 			</tr>
 		</table>
-			<div style="height: 10%; width: 80%; text-align: center ;"> 
+			<div style="height: 5%; width: 100%; text-align: center ;"> 			
+				
 			</div>
-
-			<div style="height: 20%; width: 100%; text-align: center ;"> 
-				<button type=submit class = 'btn_submit btn_create_pdf' name=view_pdf >直接預覽</button>
+			
+			
+			<div style="height: 20%; width: 34%; text-align: center ; float:left;"> 			
+				<button type=button 
+						class = 'btn_submit' 
+						onclick="location.href='company_setting.php?<?php echo "action_choose=".$_REQUEST['action_choose']."&qu_id=".$_REQUEST['qu_id']; ?>'"
+						name=company_setting >
+							賣方公司<br>資料設定
+				</button>
 			</div>
-			<div style="height: 20%; width: 100%; text-align: center ;">
-				<button type=submit class = 'btn_submit btn_create_pdf' name=save_pdf >下載</button>
+				
+			<div style="height: 20%; width: 33%; text-align: center ; float:left;"> 
+				<button type=submit class = 'btn_submit' name=view_pdf >預覽<br> 報價單PDF</button>
+			</div>
+			<div style="height: 20%; width: 33%; text-align: center ; float:left;">
+				<button type=submit class = 'btn_submit' name=save_pdf >下載<br> 報價單PDF</button>
 			</div>
 			
 			<?php
@@ -86,7 +97,9 @@
 				if(isset($_POST['save_pdf'])) {	//save_pdf > $view_or_save =2
 					create_quo_pdf($action_choose,$qu_id,2) ;
 				}
-				
+				if(isset($_REQUEST['output_pdf_rightnow'])) {
+					create_quo_pdf($_REQUEST['action_choose'],$_REQUEST['qu_id'],2) ;
+				}
 			?>
 			
 		</div>
@@ -125,15 +138,15 @@
 }
 .td_cpdf10{
 	padding-right:0.5%;
-	font-size:46%;
+	font-size:40%;
 	width:40%;
-	color:#aaa;
+	color:#999;
 	text-align:right ;
 }
 .td_cpdf11{
 	font-size:100%;
 	width:9%;
-	border:1px solid #000;
+	border:1px solid #bbc;
 }
 .td_cpdf12{
 	font-size:100%;
@@ -150,7 +163,7 @@
 	font-size:100%;
 	width:100%;
 	height:100%; 
-	border:1px solid #000;
+	border:1px solid #bbc;
 	
 }
 .input_cpdf_number{
