@@ -142,7 +142,16 @@ function location_select_option($conn, $selected='') {
 		}
 		$html_code = $html_code."</select>" ;
 	} else {
-		$final_status = $final_status.'<br/>讀取地點下拉選單錯誤<br/>' ;
+		/*
+
+		echo "
+		<script>
+			alert('讀取地點下拉選單錯誤') ;
+		</script>
+		" ;
+
+		*/
+		$html_code .= "<option value='none'>請先建立地點資料</option></select>" ;
 	}
 	return $html_code ;
 }
@@ -162,7 +171,14 @@ function supplier_select_option($conn, $selected='') {
 		}
 		$html_code = $html_code."</select>" ;
 	} else {
-		echo "<br/>讀取供應商下拉選單錯誤<br/>" ;
+		/*
+		echo "
+		<script>
+			alert('讀取地點下拉選單錯誤') ;
+		</script>
+		" ;
+		*/
+		$html_code .= "<option value='none'>請先建立供應商資料</option></select>" ;
 	}
 
 	return $html_code ;
@@ -215,11 +231,14 @@ function sid_create($conn, $w) {
 			$str=$str.$row['country_sid'].$row['city_sid'] ;
 		}
 	} else {
-		$final_status = $final_status.'<br/>sid_create find location id ERROR<br/>' ;
+		echo "
+		<script>
+			alert('sid_create find location id ERROR') ;
+		</script>
+		" ;
 	}
 	// select s_id from client_info.customer_db where s_id like 'CTWTYN%' order by s_id ;
 	$sql_cmd = "select s_id from client_info.".$w."_db where s_id like '".$str."%' order by s_id desc" ;
-	//$final_status .= "<br/>".$sql_cmd ;
 	$result = $conn->query($sql_cmd) ;
 
 	if ($result->num_rows > 0) {
@@ -240,7 +259,11 @@ function sid_create($conn, $w) {
 		return $str.'001' ;
 	}
 	else {
-		$final_status = $final_status.'<br/>sid_create 錯誤<br/>' ;
+		echo "
+		<script>
+			alert('sid_create 錯誤') ;
+		</script>
+		" ;
 	}
 }
 
@@ -250,7 +273,6 @@ function item_sid_create($conn, $w) {
 	// select s_id from client_info.customer_db where s_id like 'CTWTYN%' order by s_id ;
 	$sql_cmd = "select s_id from client_info.item_db where s_id like '".$str."%' order by s_id desc" ;
 
-	$final_status .= "<br/>".$sql_cmd ;
 	$result = $conn->query($sql_cmd) ;
 
 	if ($result->num_rows > 0) {
@@ -272,7 +294,11 @@ function item_sid_create($conn, $w) {
 		return $str.'001' ;
 	}
 	else {
-		$final_status = $final_status.'<br/>item_sid_create 錯誤<br/>' ;
+		echo "
+		<script>
+			alert('item_sid_create 錯') ;
+		</script>
+		" ;
 	}
 }
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機: localhost
--- 產生時間： 2017-02-13 12:18:42
+-- 產生時間： 2017-02-14 14:27:37
 -- 伺服器版本: 5.7.15-log
 -- PHP 版本： 5.6.26
 
@@ -46,7 +46,7 @@ CREATE TABLE `company_db` (
 --
 
 INSERT INTO `company_db` (`company_id`, `name`, `nickname`, `location`, `ubn`, `contact`, `contact_phone`, `company_phone`, `company_fax`, `address`, `email`, `invalid`) VALUES
-(0, '立旺鐵工廠', '立旺', 7, '08319015', '詹愛珠', '04-25276007', '04-25276007', '04-25200785', '臺中市神岡區豐洲里神洲路330巷33弄71號', '', 0);
+(0, '立旺鐵工廠', '立旺', 7, '08319015', '詹愛珠', '(04)2527-6007', '(04)2527-6007', '(04)2520-0785', '臺中市神岡區豐洲里神洲路330巷33弄71號', '', 0);
 
 -- --------------------------------------------------------
 
@@ -75,7 +75,7 @@ CREATE TABLE `customer_db` (
 --
 
 INSERT INTO `customer_db` (`customer_id`, `s_id`, `name`, `nickname`, `location`, `ubn`, `contact`, `contact_phone`, `company_phone`, `company_fax`, `address`, `email`, `invalid`) VALUES
-(0, NULL, '預設資料', '立旺', 7, '08319015', '', '謝謝您的配合', '在創建第一筆資料後', '04-25200785', '請立刻將本項設定為作廢', '', 0);
+(0, '請在創建第一筆客戶資料後作廢"預設資料"', '預設資料', '預設資料', 7, '20170214', '', '謝謝您的配合', '在創建第一筆資料後', '', '請立刻將本項設定為作廢', '', 0);
 
 -- --------------------------------------------------------
 
@@ -98,7 +98,7 @@ CREATE TABLE `item_db` (
 --
 
 INSERT INTO `item_db` (`item_id`, `s_id`, `name`, `supplier_id`, `price`, `currency`, `invalid`) VALUES
-(0, 'P000', '預設物品(在創建第一筆資料後,請立刻將本項設定為作廢)', NULL, 0, '', 0);
+(0, '請在創建第一筆物品資料後作廢"預設資料"', '預設資料', 0, 0, '', 0);
 
 -- --------------------------------------------------------
 
@@ -213,7 +213,7 @@ CREATE TABLE `supplier_db` (
 --
 
 INSERT INTO `supplier_db` (`supplier_id`, `s_id`, `name`, `nickname`, `location`, `ubn`, `contact`, `contact_phone`, `company_phone`, `company_fax`, `address`, `email`, `invalid`) VALUES
-(0, NULL, '預設資料', '立旺', 7, '08319015', '', '謝謝您的配合', '在創建第一筆資料後', '04-25200785', '請立刻將本項設定為作廢', '', 0);
+(0, '請在創建第一筆供應商資料後作廢"預設資料', '預設資料', '預設資料', 7, '20140214', '', '謝謝您的配合', '在創建第一筆資料後', '', '請立刻將本項設定為作廢', '', 0);
 
 --
 -- 已匯出資料表的索引
@@ -305,7 +305,7 @@ ALTER TABLE `quotation_simple_db`
 -- 使用資料表 AUTO_INCREMENT `supplier_db`
 --
 ALTER TABLE `supplier_db`
-  MODIFY `supplier_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '供應商編號', AUTO_INCREMENT=2;
+  MODIFY `supplier_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '供應商編號';
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

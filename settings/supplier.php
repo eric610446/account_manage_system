@@ -38,7 +38,6 @@
 			var_init();
 			$readonly = "" ;
 			$default_div_color = $default_active_input ;
-			$final_status='';
 			$test=$test.' create mode<br/>';
 			$button2='<button type="submit" name="create_button" >建立</button>';
 			// 建立選取地點的下拉式選單
@@ -163,8 +162,6 @@
 				$result = $conn->query($sql_cmd) ;
 				if($supplier_name != $supplier_name_backup) {
 					if ($result->num_rows > 0) {
-						$final_status = $final_status.'<br/>建立產品資料失敗！<br/>原因：'.$supplier_name.' 不可重複建立！<br/>';
-
 						echo "
 						<script>
 							alert('供應商　".$supplier_name."　不可重複建立！') ;
@@ -196,7 +193,6 @@
 					";
 					$result = $conn->query($sql_cmd) ;
 					if( $result > 0 ) {
-						$final_status = $final_status.' <br/>成功修改供應商資料 ...<br/>';
 						echo "
 						<script>
 							alert('成功修改供應商　".$supplier_name."　的資料。') ;
@@ -210,7 +206,6 @@
 						$disabled = "disabled" ;
 					}
 					else {
-						$final_status = $final_status.' <br/>修改供應商資料失敗，錯誤訊息:'.$conn->error.'<br/>';
 						echo "
 						<script>
 							alert('錯誤！　供應商　".$supplier_name."　的資料修改錯誤！錯誤訊息：".$conn->error."') ;
@@ -252,8 +247,6 @@
 				$sql_cmd = "select name from client_info.supplier_db where name='".$supplier_name."' and invalid='0'" ;
 				$result = $conn->query($sql_cmd) ;
 				if ($result->num_rows > 0) {
-					$final_status = $final_status.'<br/>建立產品資料失敗！<br/>原因：'.$supplier_name.' 不可重複建立！<br/>';
-
 					echo "
 					<script>
 						alert('供應商　".$supplier_name."　不可重複建立！') ;
@@ -297,7 +290,6 @@
 					*/
 
 					if ($conn->query($sql_cmd) === TRUE) {
-						$final_status = $final_status.' <br/>成功新增供應商 ...<br/>';
 						var_init() ;
 						echo "
 						<script>
@@ -306,7 +298,6 @@
 						" ;
 					}
 					else {
-						$final_status = $final_status.' <br/>新增供應商失敗，錯誤訊息:'.$conn->error.'<br/>';
 						echo "
 						<script>
 							alert('錯誤！　建立供應商　".$supplier_name."　的資料錯誤！錯誤訊息：".$conn->error."') ;
@@ -344,7 +335,6 @@
 			";
 			$result = $conn->query($sql_cmd) ;
 			if( $result > 0 ) {
-				$final_status = $final_status.' <br/>成功 作廢 供應商資料 ...<br/>';
 				echo "
 				<script>
 					alert('成功 作廢 供應商　".$supplier_name."　的資料。') ;
@@ -360,7 +350,6 @@
 				$default_div_color = $default_sleep_input ;
 			}
 			else {
-				$final_status = $final_status.' <br/>失敗！ 作廢供應商資料失敗，錯誤訊息:'.$conn->error.'<br/>';
 				echo "
 				<script>
 					alert('錯誤！　作廢供應商 ".$supplier_name."　的資料發生錯誤！ 錯誤訊息：".$conn->error."') ;
@@ -381,7 +370,7 @@
 		if($_POST["invalid_btn"]) {
 			// 取得 id
 			$id = $_POST["invalid_btn"] ;
-			// 繼續庭僚在垃圾桶畫面
+			// 繼續停留在垃圾桶畫面
 			$invalid_mode = 1 ;
 			// 取得 id 與 name
 			$id_arr = explode("-", $id[0]) ;
@@ -406,7 +395,7 @@
 		if($_POST["del_btn"]) {
 			// 取得 id
 			$id = $_POST["del_btn"] ;
-			// 繼續庭僚在垃圾桶畫面
+			// 繼續停留在垃圾桶畫面
 			$invalid_mode = 1 ;
 			// 取得 id 與 name
 			$id_arr = explode("-", $id[0]) ;
@@ -466,14 +455,14 @@
 						</div>
 						<div id='name'>
 							<label for='name'>供應商名稱</label>
-							<input type=text id='name' name=name value='$supplier_name' $name_readonly>
+							<input type=text id='name' name=name value='$supplier_name' maxlength='100' $name_readonly>
 							<span>請輸入完整名稱</span>
 						</div>
 					</li>
 					<li id='list2'>
 						<div id='nickname'>
 							<label for='nickname'>簡稱</label>
-							<input type=text id='nickname' name=nickname value='$supplier_nickname' $readonly>
+							<input type=text id='nickname' name=nickname value='$supplier_nickname' maxlength='8' $readonly>
 							<span></span>
 						</div>
 						<div id='ubn'>
@@ -483,12 +472,12 @@
 						</div>
 						<div id='company_phone'>
 							<label for='company_phone'>公司電話</label>
-							<input type=text id='company_phone' name=company_phone value='$supplier_company_phone' $readonly>
+							<input type=text id='company_phone' name=company_phone value='$supplier_company_phone' maxlength='30' $readonly>
 							<span>格式範例： 02-7736-0456 </span>
 						</div>
 						<div id='company_fax'>
 							<label for='company_fax'>傳真</label>
-							<input type=text id='company_fax' name=company_fax value='$supplier_company_fax' $readonly>
+							<input type=text id='company_fax' name=company_fax value='$supplier_company_fax' maxlength='30' $readonly>
 							<span>格式建議同公司電話 </span>
 						</div>
 					</li>
@@ -500,25 +489,25 @@
 						</div>
 						<div id='address'>
 							<label for='address'>完整地址</label>
-							<input type=text id='address' name=address value='$supplier_address' $readonly>
+							<input type=text id='address' name=address value='$supplier_address' maxlength='500' $readonly>
 							<span>輸入完整地址 Ex： 台北市南港區三重路777號</span>
 						</div>
 					</li>
 					<li id='list4'>
 						<div id='contact'>
 							<label for='contact'>聯絡人</label>
-							<input type=text id='contact' name=contact value='$supplier_contact' $readonly>
+							<input type=text id='contact' name=contact value='$supplier_contact' maxlength='50' $readonly>
 							<span> 主要聯繫的聯絡人 </span>
 						</div>
 						<div id='contact_phone'>
 							<label for='contact_phone'>聯絡人電話</label>
-							<input type=text id='contact_phone' name=contact_phone value='$supplier_contact_phone' $readonly>
+							<input type=text id='contact_phone' name=contact_phone value='$supplier_contact_phone' maxlength='30' $readonly>
 							<span> 聯絡人的聯絡方式： 分機 或 手機</span>
 						</div>
 						<div id='email'>
 							<label for='email'>Email</label>
-							<input type=text id='email' name=email value='$supplier_email' $readonly  class='default'>
-							<span>聯絡人 或是 公司電子信箱</span>
+							<input type=text id='email' name=email value='$supplier_email' $readonly maxlength='500'  class='default'>
+							<span>聯絡人的電子信箱 或是 公司的電子信箱</span>
 						</div>
 					</li>
 					<li id='list5'>

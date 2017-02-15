@@ -24,7 +24,6 @@
 		include("initialize.php") ;
 		include("style.php") ;
 		include("../config.php") ;
-		$supplier_select_option = supplier_select_option($conn) ;
 		$where_am_i = "location" ;
 
 
@@ -38,7 +37,6 @@
 			$mode = "create" ;
 			var_init();
 			$readonly='';
-			$final_status='';
 			$test=$test.' create mode<br/>';
 			$button2='<button type="submit" name="create_button" >建立</button>';
 		}
@@ -70,7 +68,6 @@
 
 			//防止地點名稱沒輸入
 			if ($location_country_sid == '' or $location_city_sid == '' ) {
-				$final_status .= "請輸入要查詢的地點名稱";
 				var_init();
 				$readonly='readonly';
 				$default_div_color = $default_sleep_input ;
@@ -101,10 +98,8 @@
 					$readonly='';
     				$button2='<button type="submit" name="modify_button" >修改</button>';
     				$button3 = "<button type='submit' name='invalid_button' class='com_info' id='btn_button3'>作廢</button>" ;
-    				$final_status .= "查詢成功!";
 				}
 				else {
-					$final_status .= $location_country_sid.$location_city_sid." 的地點資料尚未被建立 ...";
 					var_init();
 					$readonly='readonly';
 					$default_div_color = $default_sleep_input ;
@@ -126,14 +121,13 @@
 			$test=$test.' modify button<br/>';
 
 			// 確認至少 sid 不可以是空的 //必須更正為全部都不可以是空的
-			if( $location_city_sid != "" and $location_country_sid != "" ) {
+			if( $location_city_sid != "" and $location_country_sid != "" and $location_city != "" and $location_country ) {
 				$go=1 ;
 				//檢查 Database 有沒有重複建立的 location
 				$sql_cmd = "select * from client_info.location_db where city_sid='".$location_city_sid."' and country_sid='".$location_country_sid."' and invalid = '0'" ;
 				$result = $conn->query($sql_cmd) ;
 				if( ($location_city_sid!=$location_city_sid_backup) or ($location_country_sid!=$location_country_sid_backup) ) {
 					if ($result->num_rows > 0 ) {
-						$final_status = $final_status.'<br/>建立地點資料失敗！<br/>原因： '.$location_country." ".$location_city." [".$location_country_sid.$location_city_sid.'] 不可重複建立！<br/>';
 						echo "
 							<script>
 								alert('錯誤！　同一地點  ".$location_country_sid.$location_city_sid."  不可重複建立！錯誤訊息：".$conn->error."') ;
@@ -147,14 +141,13 @@
 				if($go) {
 					$sql_cmd = "update client_info.location_db set
 						country='".$location_country."',
-						country_sid='".$location_country_sid."',
+						country_sid='".strtoupper($location_country_sid)."',
 						city='".$location_city."',
-						city_sid='".$location_city_sid."'
+						city_sid='".strtoupper($location_city_sid)."'
 					where location_id='".$location_id."'
 					";
 					$result = $conn->query($sql_cmd) ;
 					if( $result > 0 ) {
-						$final_status = $final_status.' <br/>成功修改地點資料 ...<br/>';
 						echo "
 						<script>
 							alert('成功修改地點　".$item_name."　的資料') ;
@@ -167,7 +160,6 @@
 						$default_div_color = $default_sleep_input ;
 					}
 					else {
-						$final_status = $final_status.' <br/>修改地點資料失敗，錯誤訊息:'.$conn->error.'<br/>';
 						echo "
 						<script>
 							alert('錯誤！　修改地點資料錯誤！錯誤訊息：".$conn->error."') ;
@@ -179,10 +171,9 @@
 				}
 			}
 			else {
-				$final_status = $final_status.' <br/>修改客戶資料失敗，錯誤訊息:'.$conn->error.'<br/>';
 					echo "
 					<script>
-						alert('錯誤！　修改資料發生錯誤！ 錯誤訊息：國際代碼不可以是空值') ;
+						alert('錯誤！　修改資料發生錯誤！ 錯誤訊息：必須填寫完所有資料！') ;
 					</script>
 					" ;
 					$button2 = '<button type="submit" name="modify_button" >修改</button>';
@@ -208,7 +199,6 @@
 				$sql_cmd = "select * from client_info.location_db where city_sid='".$location_city_sid."' and country_sid='".$location_country_sid."' and invalid = '0'" ;
 				$result = $conn->query($sql_cmd) ;
 				if ($result->num_rows > 0) {
-					$final_status = $final_status.'<br/>建立地點資料失敗！<br/>原因： '.$location_country." ".$location_city." [".$location_country_sid.$location_city_sid.'] 不可重複建立！<br/>';
 					echo "
 						<script>
 							alert('錯誤！　同一地點  ".$location_country_sid.$location_city_sid."  不可重複建立！錯誤訊息：".$conn->error."') ;
@@ -236,7 +226,6 @@
 					*/
 
 					if ($conn->query($sql_cmd) === TRUE) {
-						$final_status = $final_status.' <br/>成功新增地點 ...<br/>';
 						echo "
 						<script>
 							alert('成功建立地點資料') ;
@@ -245,7 +234,6 @@
 						var_init() ;
 					}
 					else {
-						$final_status = $final_status.' <br/>新增地點失敗，錯誤訊息:'.$conn->error.'<br/>';
 						echo "
 						<script>
 							alert('錯誤！　建立地點資料錯誤！錯誤訊息：".$conn->error."') ;
@@ -256,7 +244,6 @@
 
 			}
 			else {
-				$final_status .= "<br/>填寫完所有表格再建立<br/>" ;
 				echo "
 				<script>
 					alert('錯誤！　請填寫完所有表格再建立') ;
@@ -280,7 +267,6 @@
 			";
 			$result = $conn->query($sql_cmd) ;
 			if( $result > 0 ) {
-				$final_status = $final_status.' <br/>成功 作廢 資料 ...<br/>';
 				echo "
 				<script>
 					alert('成功 作廢 地點　".$supplier_name."　的資料。') ;
@@ -296,7 +282,6 @@
 				$default_div_color = $default_sleep_input ;
 			}
 			else {
-				$final_status = $final_status.' <br/>失敗！ 作廢地點資料失敗，錯誤訊息:'.$conn->error.'<br/>';
 				echo "
 				<script>
 					alert('錯誤！　作廢地點 ".$item_name."　的資料發生錯誤！ 錯誤訊息：".$conn->error."') ;
@@ -395,24 +380,24 @@
 					<li id='list1'>
 						<div id='location_country'>
 							<label for='location_country'>國家</label>
-							<input type=text id='location_country' name='location_country' value='$location_country' $readonly>
+							<input type=text id='location_country' name='location_country' value='$location_country' maxlength='20' $readonly>
 							<span>輸入地點國家名稱 ex: 臺灣</span>
 						</div>
 						<div id='location_country_sid'>
-							<label id='location_country_sid' for='location_country_sid'>國家 國際代碼</label>
-							<input type=text id='location_country_sid' name='location_country_sid' value='$location_country_sid' maxlength='2'>
+							<label id='location_country_sid' for='location_country_sid'>國家 國際代碼 (2碼)</label>
+							<input type=text id='location_country_sid' name='location_country_sid' value='$location_country_sid'  pattern='[A-Za-z0-9]{2}' maxlength='2'>
 							<span>國際代碼可點選 <a href='http://www.unece.org/cefact/locode/service/location' target='_blank'>連結</a> 來查詢 (請勿輸入大寫英文以及阿拉伯數字之外的文字)</span>
 						</div>
 					</li>
 					<li id='list2'>
 						<div id='location_city'>
 							<label for='location_city'>城市名稱</label>
-							<input type=text id='location_city' name=location_city value='$location_city' $readonly>
+							<input type=text id='location_city' name=location_city value='$location_city' maxlength='20' $readonly>
 							<span>輸入城市名稱 ex: 臺北</span>
 						</div>
 						<div id='location_city_sid'>
-							<label id='location_city_sid' for='location_city_sid'>城市 國際代碼</label>
-							<input type=text id='location_city_sid' name=location_city_sid value='$location_city_sid' maxlength='3'>
+							<label id='location_city_sid' for='location_city_sid'>城市 國際代碼 (3碼)</label>
+							<input type=text id='location_city_sid' name=location_city_sid value='$location_city_sid' pattern='[A-Za-z0-9]{3}' maxlength='3'>
 							<span>國際代碼可點選 <a href='http://www.unece.org/cefact/locode/service/location' target='_blank'>連結</a> 來查詢 (請勿輸入大寫英文以及阿拉伯數字之外的文字)</span>
 						</div>
 					</li>
