@@ -1878,16 +1878,17 @@ function create_quo_pdf( $action_choose , $qu_id ,$view_or_save) {
 	// set document information
 	// $pdf->SetCreator(PDF_CREATOR);
 	// $pdf->SetAuthor('Eric Tsai');
+		
 	if($action_choose==2){
-		$pdf->SetTitle($qus_result['qu_s_id']);
-		$pdf->SetSubject('報價單');
-		$quo_s_id=$qus_result['qu_s_id'];
-	}		
-	else{
 		$pdf->SetTitle($qus_result['po_s_id']);
 		$pdf->SetSubject('訂單');
 		$quo_s_id=$qus_result['po_s_id'];
 	}
+	else{
+		$pdf->SetTitle($qus_result['qu_s_id']);
+		$pdf->SetSubject('報價單');
+		$quo_s_id=$qus_result['qu_s_id'];
+	}	
 		
 	
 	//$pdf->SetKeywords('TCPDF, PDF, example, test, guide');
