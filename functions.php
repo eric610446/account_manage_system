@@ -1963,7 +1963,7 @@ function create_quo_pdf( $action_choose , $qu_id ,$view_or_save) {
 		}
 		
 		if($qus_result['sales_tax']==0)
-			$output= '<table border="2" rules="all" width="100%" cellpadding="5"><tr align="right" ><td width="35%">合　計 : '.$qus_result['currency'].' $'.number_format($sum_price,2).'</td><td width="30%">營業稅 : '.$qus_result['currency'].' $'.number_format($sum_price*$stn,2).'</td><td width="35%">總　計 : '.$qus_result['currency'].' $'.number_format($sum_price*$sum_stn,2).'</td></tr><tr><td colspan="2">備註：'.$_POST['other_memo'].'</td><td>訂購確認簽章：<br><br>(確認後回傳傳真：'.$company_result['company_fax'].')</td></tr></table>';
+			$output= '<table border="2" rules="all" width="100%" cellpadding="5"><tr align="right" ><td width="35%">合　計 : '.$qus_result['currency'].' $'.number_format($sum_price,2).'</td><td width="30%">營業稅 : '.$qus_result['currency'].' $'.number_format((int)($sum_price*$stn),2).'</td><td width="35%">總　計 : '.$qus_result['currency'].' $'.number_format((int)($sum_price*$sum_stn),2).'</td></tr><tr><td colspan="2">備註：'.$_POST['other_memo'].'</td><td>訂購確認簽章：<br><br>(確認後回傳傳真：'.$company_result['company_fax'].')</td></tr></table>';
 		else
 			$output= '<table border="2" rules="all" width="100%" cellpadding="5"><tr align="right" ><td width="35%">合　計 : '.$qus_result['currency'].' $'.number_format($sum_price,2).'</td><td width="30%">營業稅 : 金　額　已　內　含　營　業　稅</td><td width="35%">總　計 : '.$qus_result['currency'].' $'.number_format($sum_price,2).'</td></tr><tr><td colspan="2">備註：'.$_POST['other_memo'].'</td><td>訂購確認簽章：<br><br>(確認後回傳傳真：'.$company_result['company_fax'].')</td></tr></table>';
 		$pdf->writeHTML($output, true, false, false, false, '');
