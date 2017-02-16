@@ -227,6 +227,7 @@ table {
 	border: 1px solid <? echo $table_border_color; ?> ;
 	margin: 5% auto ;
 	width: 90% ;
+	word-break:break-all;
 }
 td {
 	border: 1px solid <? echo $table_border_color; ?> ;

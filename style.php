@@ -212,50 +212,6 @@ Button {
 	width: 90%;
 	border : 0;
 }
-/*舊版button 全捨棄*/
-/*Button {
-	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
-	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
-	box-shadow:inset 0px 1px 0px 0px #ffffff;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
-	background:-moz-linear-gradient(top, #ededed 5%, #dfdfdf 100%);
-	background:-webkit-linear-gradient(top, #ededed 5%, #dfdfdf 100%);
-	background:-o-linear-gradient(top, #ededed 5%, #dfdfdf 100%);
-	background:-ms-linear-gradient(top, #ededed 5%, #dfdfdf 100%);
-	background:linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf',GradientType=0);
-	background-color:#ededed;
-	-moz-border-radius:6px;
-	-webkit-border-radius:6px;
-	border-radius:4px;
-	border:1px solid #161616;
-	display:inline-block;
-	cursor:pointer;
-	color:#777777;
-	font-family: <?php echo $body_font_family; ?> ;	
-	font-size:80%;
-	font-weight:250;
-	height:80%;
-	width: 90%;
-	text-decoration:none;
-	text-shadow:0px 0.5px 1.5px #161616;
-	word-wrap:break-word;
-	overflow:hidden;
-}
-Button:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
-	background:-moz-linear-gradient(top, #dfdfdf 5%, #ededed 100%);
-	background:-webkit-linear-gradient(top, #dfdfdf 5%, #ededed 100%);
-	background:-o-linear-gradient(top, #dfdfdf 5%, #ededed 100%);
-	background:-ms-linear-gradient(top, #dfdfdf 5%, #ededed 100%);
-	background:linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed',GradientType=0);
-	background-color:#dfdfdf;
-}
-Button:active {
-	position:relative;
-	top:1px;
-}*/
 /*按鈕全域變數*/
 
 
@@ -293,6 +249,9 @@ Button:active {
 }
 /*修改報價單 轉換報價單/訂單 輸出PDF */
 
+table{
+	word-break:break-all;
+}
 
 /*功能說明區塊*/
 .srch_docun{
@@ -371,6 +330,7 @@ Button:active {
 	min-height: 8%; /*2.0 new_add*/
 	font-size: 80%;
 	text-align: center;
+	word-break:break-all;
 }
 
 /*建立修改報價單*/
