@@ -1743,7 +1743,7 @@ function create_quo_pdf( $action_choose , $qu_id ,$view_or_save) {
 	$temp = mysql_query( $sql_cmd, $conn ) ;
 	$cust_result = mysql_fetch_array($temp) ;
 	
-	$sql_cmd = "SELECT * FROM client_info.item_db" ;
+	$sql_cmd = "SELECT * FROM client_info.item_db WHERE item_id >0" ;
 	$temp = mysql_query( $sql_cmd, $conn ) ;
 	$item_array=array();
 	for( $i=1 ; $row = mysql_fetch_array($temp) ; $i++){
