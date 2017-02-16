@@ -471,16 +471,16 @@ table{
 .th_List_item_AorE:nth-child(6){ 	width : 13%; }
 /*城市內客戶列表各欄位寬度*/
 .th_List_city_customer:nth-child(1){ 	width : 7.5%; }
-.th_List_city_customer:nth-child(2){ 	width : 15%; }
+.th_List_city_customer:nth-child(2){ 	width : 17.5%; }
 .th_List_city_customer:nth-child(3){ 	width : 45%; }
 .th_List_city_customer:nth-child(4){ 	width : 15%; }
 .th_List_city_customer:nth-child(5){ 	width : 15%; }
 /*外國客戶列表各欄位寬度*/
 .th_List_worldwide_customer:nth-child(1){ 	width : 4%; }
-.th_List_worldwide_customer:nth-child(2){ 	width : 14%; }
+.th_List_worldwide_customer:nth-child(2){ 	width : 18%; }
 .th_List_worldwide_customer:nth-child(3){ 	width : 14%; }
-.th_List_worldwide_customer:nth-child(4){ 	width : 18%; }
-.th_List_worldwide_customer:nth-child(5){ 	width : 18%; }
+.th_List_worldwide_customer:nth-child(4){ 	width : 17%; }
+.th_List_worldwide_customer:nth-child(5){ 	width : 17%; }
 .th_List_worldwide_customer:nth-child(6){ 	width : 15%; }
 .th_List_worldwide_customer:nth-child(7){ 	width : 15%; }
 /*單獨客戶簡單報價單列表各欄位寬度*/
