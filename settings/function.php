@@ -337,9 +337,9 @@ function find_all($conn, $w) {
 			<table>
 				<tr>
 					<th>國家</th>
-					<th>國家 code</th>
+					<th>國家 國際代碼</th>
 					<th>城市</th>
-					<th>城市 code</th>
+					<th>城市 國際代碼</th>
 				</tr>
 			" ;
 			while( $row = $result->fetch_assoc() ) {
@@ -358,6 +358,7 @@ function find_all($conn, $w) {
 			$find_all = "
 			<table>
 				<tr>
+					<th>流水編號</th>
 					<th>名稱</th>
 					<th>電話</th>
 					<th>地址</th>
@@ -368,6 +369,7 @@ function find_all($conn, $w) {
 			while( $row = $result->fetch_assoc() ) {
 				$find_all .= "
 				<tr>
+					<td>".$row['s_id']."</td>
 					<td>".$row['name']."</td>
 					<td>".$row['company_phone']."</td>
 					<td>".$row['address']."</td>
@@ -382,6 +384,7 @@ function find_all($conn, $w) {
 			$find_all = "
 			<table>
 				<tr>
+					<th>流水編號</th>
 					<th>名稱</th>
 					<th>電話</th>
 					<th>地址</th>
@@ -392,6 +395,7 @@ function find_all($conn, $w) {
 			while( $row = $result->fetch_assoc() ) {
 				$find_all .= "
 				<tr>
+					<td>".$row['s_id']."</td>
 					<td>".$row['name']."</td>
 					<td>".$row['company_phone']."</td>
 					<td>".$row['address']."</td>
@@ -407,6 +411,7 @@ function find_all($conn, $w) {
 			<table>
 				<tr>
 					<th>物品種類</th>
+					<th>流水編號</th>
 					<th>物品名稱</th>
 					<th>供應商</th>
 					<th>建議售價</th>
@@ -422,6 +427,7 @@ function find_all($conn, $w) {
 				$find_all .= "
 				<tr>
 					<td>".$i_type."</td>
+					<td>".$row['is_id']."</td>
 					<td>".$row['iname']."</td>
 					<td>".$row['sname']."</td>
 					<td>".$row['currency']."$ ".number_format($row['price'])."</td>
