@@ -501,6 +501,10 @@ function calculate_result(){
 		else if ($nore==2)
 			echo_alert('《提醒》：\n所有合格的操作動作皆已執行完畢，\n修改報價單完成。');
 		//echo "警告：新增/修改 報價單完成。<br>";
+		
+		echo "	<script>
+				window.open('outputpdf.php?action_choose=".$_REQUEST['Which_Main_choose']."&qu_id=".$quo_id."&output_pdf_rightnow=1&paper_break=10&sales_tax_number=5.0'); 
+				</script>";
 	}
 	else{
 		if ($nore==1)	
@@ -512,9 +516,7 @@ function calculate_result(){
 	//echo "<br> --- Debug 區 End (only in test) ---<br>";
 	//echo "<hr>";
 	//echo "</div>";
-	echo "	<script>
-				window.open('outputpdf.php?action_choose=".$_REQUEST['Which_Main_choose']."&qu_id=".$quo_id."&output_pdf_rightnow=1&paper_break=10&sales_tax_number=5.0'); 
-			</script>";
+	
 	echo_detail_quotation( $quo_id );
 }
 
@@ -1495,6 +1497,7 @@ function echo_detail_quotation( $qu_id ) {
 								echo "否<br>本單被設定為 <b>一般報價單</b>，但有曾經被設定為已成交訂單的紀錄";
 							else
 								echo "否<br>本單被設定為 <b>一般報價單</b>";
+							$is_order=$row['is_order'];
 						echo "</td>";
 					echo "</tr>";
 					$order_state=$row['is_order'];
@@ -1565,10 +1568,10 @@ function echo_detail_quotation( $qu_id ) {
 		echo "</div>";		
 		echo "<div ='separation'><hr class='set_List_border_color'></div>";
 		
-		if($_REQUEST['Which_Main_choose']==2){
+		if($is_order==0){
 			echo "	<div class='quo_option set_float_left'>
 					<button type=submit class = 'btn_submit' name=btn_edit_quo value=".$qu_id." >
-						修改".$content_qorp."
+						修改報價單
 					</button>
 					</div>" ;
 		}
