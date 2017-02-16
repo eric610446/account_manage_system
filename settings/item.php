@@ -435,7 +435,7 @@
 					<li id='list3'>
 						<div id='price'>
 							<label for='price'>建議售價</label>
-							<input type='number' id='price' name='item_price' max=2000000000 value='$item_price' $readonly>
+							<input type='number' id='price' name='item_price' max=1000000000 value='$item_price' $readonly>
 							<span>請輸入台幣售價</span>
 						</div>
 						<div id='currency'>
