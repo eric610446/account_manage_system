@@ -501,6 +501,10 @@ function calculate_result(){
 		else if ($nore==2)
 			echo_alert('《提醒》：\n所有合格的操作動作皆已執行完畢，\n修改報價單完成。');
 		//echo "警告：新增/修改 報價單完成。<br>";
+		
+		echo "	<script>
+				window.open('outputpdf.php?action_choose=".$_REQUEST['Which_Main_choose']."&qu_id=".$quo_id."&output_pdf_rightnow=1&paper_break=10&sales_tax_number=5.0'); 
+				</script>";
 	}
 	else{
 		if ($nore==1)	
@@ -512,9 +516,7 @@ function calculate_result(){
 	//echo "<br> --- Debug 區 End (only in test) ---<br>";
 	//echo "<hr>";
 	//echo "</div>";
-	echo "	<script>
-				window.open('outputpdf.php?action_choose=".$_REQUEST['Which_Main_choose']."&qu_id=".$quo_id."&output_pdf_rightnow=1&paper_break=10&sales_tax_number=5.0'); 
-			</script>";
+	
 	echo_detail_quotation( $quo_id );
 }
 
@@ -813,15 +815,15 @@ function month_of_year(){
 	global $conn ;			
 	
 	//是否篩選掉不是訂單的報價單
-	if( $_REQUEST['Which_Main_choose']==2 )
+	if( $_REQUEST['Which_Main_choose']==3 )
 	{
-		$content_qorp ="報價單";
-		$check_order = 0;
+		$content_qorp ="訂單";
+		$check_order = 1;
 	}
 	else
 	{	
-		$content_qorp ="訂單";
-		$check_order = 1;
+		$content_qorp ="報價單";
+		$check_order = 0;
 	}
 	
 	//抓出所有有報價單的客戶的所在位置
@@ -972,15 +974,16 @@ function echo_list_month_all_simple_quo( $dateYYYYMM ) {
 	global $conn ;
 	
 	//抓出客戶所有的 0:報價單資料   1:訂單資料
-	if($_REQUEST['Which_Main_choose']==2){
-		$check_qorp=0;
-		$content_qorp="報價單";
-		$sql_qorp="qu_s_id";
-	}
-	else{
+	if($_REQUEST['Which_Main_choose']==3){
+		
 		$check_qorp=1;
 		$content_qorp="訂單";
 		$sql_qorp="po_s_id";
+	}
+	else{
+		$check_qorp=0;
+		$content_qorp="報價單";
+		$sql_qorp="qu_s_id";
 	}
 	//抓取該月的所有報價單、客戶簡稱、物品名稱
 	$sql_cmd = "SELECT QS.*, C.nickname AS cname, I.name AS iname
@@ -1494,6 +1497,7 @@ function echo_detail_quotation( $qu_id ) {
 								echo "否<br>本單被設定為 <b>一般報價單</b>，但有曾經被設定為已成交訂單的紀錄";
 							else
 								echo "否<br>本單被設定為 <b>一般報價單</b>";
+							$is_order=$row['is_order'];
 						echo "</td>";
 					echo "</tr>";
 					$order_state=$row['is_order'];
@@ -1564,10 +1568,10 @@ function echo_detail_quotation( $qu_id ) {
 		echo "</div>";		
 		echo "<div ='separation'><hr class='set_List_border_color'></div>";
 		
-		if($_REQUEST['Which_Main_choose']==2){
+		if($is_order==0){
 			echo "	<div class='quo_option set_float_left'>
 					<button type=submit class = 'btn_submit' name=btn_edit_quo value=".$qu_id." >
-						修改".$content_qorp."
+						修改報價單
 					</button>
 					</div>" ;
 		}
@@ -1627,6 +1631,9 @@ function order_change( $qu_id ) {
 		
 		$sql_cmd = "UPDATE client_info.quotation_simple_db SET po_s_id='".$po_s_id."',is_order=1,date_po_no=".$date_po_no." WHERE quo_id = ".$qu_id;
 		mysql_query( $sql_cmd, $conn ) ;
+		echo "	<script>
+				window.open('outputpdf.php?action_choose=3&qu_id=".$qu_id."&output_pdf_rightnow=1&paper_break=10&sales_tax_number=5.0'); 
+			</script>";
 		echo "<script>";
 		echo "    alert('《提醒》：已經成功轉換成[已成交訂單]！');";
 		echo "</script>";
@@ -1739,7 +1746,7 @@ function create_quo_pdf( $action_choose , $qu_id ,$view_or_save) {
 	$temp = mysql_query( $sql_cmd, $conn ) ;
 	$cust_result = mysql_fetch_array($temp) ;
 	
-	$sql_cmd = "SELECT * FROM client_info.item_db" ;
+	$sql_cmd = "SELECT * FROM client_info.item_db WHERE item_id >0" ;
 	$temp = mysql_query( $sql_cmd, $conn ) ;
 	$item_array=array();
 	for( $i=1 ; $row = mysql_fetch_array($temp) ; $i++){
@@ -1878,16 +1885,17 @@ function create_quo_pdf( $action_choose , $qu_id ,$view_or_save) {
 	// set document information
 	// $pdf->SetCreator(PDF_CREATOR);
 	// $pdf->SetAuthor('Eric Tsai');
-	if($action_choose==2){
-		$pdf->SetTitle($qus_result['qu_s_id']);
-		$pdf->SetSubject('報價單');
-		$quo_s_id=$qus_result['qu_s_id'];
-	}		
-	else{
+		
+	if($action_choose==3){
 		$pdf->SetTitle($qus_result['po_s_id']);
 		$pdf->SetSubject('訂單');
 		$quo_s_id=$qus_result['po_s_id'];
 	}
+	else{
+		$pdf->SetTitle($qus_result['qu_s_id']);
+		$pdf->SetSubject('報價單');
+		$quo_s_id=$qus_result['qu_s_id'];
+	}	
 		
 	
 	//$pdf->SetKeywords('TCPDF, PDF, example, test, guide');
@@ -1902,15 +1910,15 @@ function create_quo_pdf( $action_choose , $qu_id ,$view_or_save) {
 	//公司資料
 	$pdf->setCompanyHeader('<div align="right" ><table><tr><td>統一編號：'.$company_result['ubn'].'</td></tr><tr><td>聯絡人：'.$company_result['contact'].'</td></tr><tr><td>電話：'.$company_result['company_phone'].'　　傳真：'.$company_result['company_fax'].'</td></tr><tr><td>地址：'.$company_result['address'].'</td></tr></table><hr></div>');
 	//報價單開始
-	if($action_choose==2){
-		$pdf->setQuoTitleHeader('<div align="center">報價單憑證<hr></div>');	}		
+	if($action_choose==3){
+		$pdf->setQuoTitleHeader('<div align="center">訂單憑證<hr></div>');	}		
 	else{
-		$pdf->setQuoTitleHeader('<div align="center">訂單憑證<hr></div>');	}
+		$pdf->setQuoTitleHeader('<div align="center">報價單憑證<hr></div>');	}
 	//客戶資料以及單號
-	if($action_choose==2){
-	$pdf->setCustomerHeader('<div align="left" ><table ><tr ><td width="65%">客戶編號：'.$cust_result['s_id'].'</td><td width="3%"></td><td width="32%">報價單號：'.$quo_s_id.'</td></tr><tr><td>客戶名稱：'.$cust_result['name'].'</td></tr><tr><td>統一編號：'.$cust_result['ubn'].'</td><td></td><td>報價日期：'.date_format($quo_date,"Y/m/d").'</td></tr><tr><td>聯絡人：'.$cust_result['contact'].'</td><td></td><td>有效日期：'.date("Y/m/d",$quo_date2).'</td></tr><tr><td>電話(聯絡人)：'.$cust_result['contact_phone'].'　　</td></tr><tr><td>電話(公　司)：'.$cust_result['company_phone'].'　　</td></tr><tr><td>傳真：'.$cust_result['company_fax'].'</td></tr><tr><td>地址：'.$cust_result['address'].'</td></tr></table></div>');}
-	else{
+	if($action_choose==3){
 	$pdf->setCustomerHeader('<div align="left" ><table ><tr ><td width="65%">客戶編號：'.$cust_result['s_id'].'</td><td width="3%"></td><td width="32%">訂單單號：'.$quo_s_id.'</td></tr><tr><td>客戶名稱：'.$cust_result['name'].'</td><td></td></tr><tr><td>統一編號：'.$cust_result['ubn'].'</td><td></td><td>創建日期：'.date_format($quo_date,"Y/m/d").'</td></tr><tr><td>聯絡人：'.$cust_result['contact'].'</td></tr><tr><td>電話(聯絡人)：'.$cust_result['contact_phone'].'　　</td></tr><tr><td>電話(公　司)：'.$cust_result['company_phone'].'　　</td></tr><tr><td>傳真：'.$cust_result['company_fax'].'</td></tr><tr><td>地址：'.$cust_result['address'].'</td></tr></table></div>');}
+	else{
+	$pdf->setCustomerHeader('<div align="left" ><table ><tr ><td width="65%">客戶編號：'.$cust_result['s_id'].'</td><td width="3%"></td><td width="32%">報價單號：'.$quo_s_id.'</td></tr><tr><td>客戶名稱：'.$cust_result['name'].'</td></tr><tr><td>統一編號：'.$cust_result['ubn'].'</td><td></td><td>報價日期：'.date_format($quo_date,"Y/m/d").'</td></tr><tr><td>聯絡人：'.$cust_result['contact'].'</td><td></td><td>有效日期：'.date("Y/m/d",$quo_date2).'</td></tr><tr><td>電話(聯絡人)：'.$cust_result['contact_phone'].'　　</td></tr><tr><td>電話(公　司)：'.$cust_result['company_phone'].'　　</td></tr><tr><td>傳真：'.$cust_result['company_fax'].'</td></tr><tr><td>地址：'.$cust_result['address'].'</td></tr></table></div>');}
 	//物品清單開始
 	$pdf->setItemHeader('<table align="center" border="1" RULES="ROWS"><tr><td width="6%">項次</td><td width="6%">品號</td><td width="34%">品名●規格●描述</td><td width="11%">數量</td><td width="17%">單價</td><td width="26%">金額</td></tr></table>');
 	$pdf->SetPrintHeader(true);
@@ -1958,7 +1966,7 @@ function create_quo_pdf( $action_choose , $qu_id ,$view_or_save) {
 		}
 		
 		if($qus_result['sales_tax']==0)
-			$output= '<table border="2" rules="all" width="100%" cellpadding="5"><tr align="right" ><td width="35%">合　計 : '.$qus_result['currency'].' $'.number_format($sum_price,2).'</td><td width="30%">營業稅 : '.$qus_result['currency'].' $'.number_format($sum_price*$stn,2).'</td><td width="35%">總　計 : '.$qus_result['currency'].' $'.number_format($sum_price*$sum_stn,2).'</td></tr><tr><td colspan="2">備註：'.$_POST['other_memo'].'</td><td>訂購確認簽章：<br><br>(確認後回傳傳真：'.$company_result['company_fax'].')</td></tr></table>';
+			$output= '<table border="2" rules="all" width="100%" cellpadding="5"><tr align="right" ><td width="35%">合　計 : '.$qus_result['currency'].' $'.number_format($sum_price,2).'</td><td width="30%">營業稅 : '.$qus_result['currency'].' $'.number_format(ceil($sum_price*$stn),2).'</td><td width="35%">總　計 : '.$qus_result['currency'].' $'.number_format(ceil($sum_price*$sum_stn),2).'</td></tr><tr><td colspan="2">備註：'.$_POST['other_memo'].'</td><td>訂購確認簽章：<br><br>(確認後回傳傳真：'.$company_result['company_fax'].')</td></tr></table>';
 		else
 			$output= '<table border="2" rules="all" width="100%" cellpadding="5"><tr align="right" ><td width="35%">合　計 : '.$qus_result['currency'].' $'.number_format($sum_price,2).'</td><td width="30%">營業稅 : 金　額　已　內　含　營　業　稅</td><td width="35%">總　計 : '.$qus_result['currency'].' $'.number_format($sum_price,2).'</td></tr><tr><td colspan="2">備註：'.$_POST['other_memo'].'</td><td>訂購確認簽章：<br><br>(確認後回傳傳真：'.$company_result['company_fax'].')</td></tr></table>';
 		$pdf->writeHTML($output, true, false, false, false, '');
